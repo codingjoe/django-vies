@@ -59,7 +59,7 @@ class ModelFormTestCase(unittest.TestCase):
         form = VIESModelForm({'vat_0': 'GB', 'vat_1': 'xx123+-'})
         self.assertFalse(form.is_valid())
 
-    def test_is_not_valid_numbers(self):
+    def test_is_not_valid(self):
         """Invalid number"""
         form = VIESModelForm({'vat_0': 'GB', 'vat_1': '000000000'})
         self.assertFalse(form.is_valid())
@@ -67,6 +67,7 @@ class ModelFormTestCase(unittest.TestCase):
     def test_save(self):
         """Form is valid"""
         form = VIESModelForm({'vat_0': 'GB', 'vat_1': '802311782'})
+        self.assertFalse(form.is_valid())
         vies_saved = form.save()
 
         vies_received = VIESModel.objects.get(pk=vies_saved.pk)
