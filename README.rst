@@ -6,6 +6,7 @@ Django-VIES
 =====
 Django-VIES is a django extension that allows storing VAT Information Exchange System (VIES) data in django models and validation.
 Provided are a ModelField and a FormField.
+
 Installation
 --------
 Current Stable
