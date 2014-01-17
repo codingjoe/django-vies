@@ -65,9 +65,9 @@ class ModelFormTestCase(unittest.TestCase):
         self.assertFalse(form.is_valid())
 
     def test_save(self):
-        """Form is valid"""
+        """Form is saved"""
         form = VIESModelForm({'vat_0': 'GB', 'vat_1': '802311782'})
-        self.assertFalse(form.is_valid())
+        self.assertTrue(form.is_valid())
         vies_saved = form.save()
 
         vies_received = VIESModel.objects.get(pk=vies_saved.pk)
