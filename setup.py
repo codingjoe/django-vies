@@ -1,5 +1,23 @@
 # -*- coding: utf-8 -*-
-from setuptools import setup
+from setuptools import setup, Command
+
+
+class PyTest(Command):
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        import sys
+        import subprocess
+
+        errno = subprocess.call([sys.executable, 'runtests.py'])
+        raise SystemExit(errno)
+
 
 setup(
     name='django-vies',
@@ -24,4 +42,5 @@ setup(
     packages=['vies'],
     include_package_data=True,
     requires=['django (>=1.3.1)', 'requests (>=1.0.0)'],
+    cmdclass={'test': PyTest},
 )
