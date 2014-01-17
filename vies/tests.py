@@ -1,8 +1,9 @@
-import unittest
-from vies import models
+from django.utils import unittest
 from django.db.models import Model
 from django.forms import Form, ModelForm
+
 from vies import fields
+from vies import models
 
 
 class VIESModel(Model):
@@ -10,7 +11,6 @@ class VIESModel(Model):
 
 
 class VIESModelForm(ModelForm):
-
     class Meta:
         model = VIESModel
 
@@ -20,14 +20,13 @@ class VIESForm(Form):
 
 
 class ModelTestCase(unittest.TestCase):
-
     def setUp(self):
         pass
 
     def test_create(self):
         """Object is correctly created."""
         vies = VIESModel.objects.create(vat='GB802311782')
-        self.assertGreaterEqual(VIESModel.objects.count(), 1)
+        self.assertNotEqual(VIESModel.objects.count(), 0)
         self.assertEqual(vies.vat, 'GB802311782')
 
     def test_save(self):
@@ -37,12 +36,11 @@ class ModelTestCase(unittest.TestCase):
         vies_saved.save()
 
         vies_received = VIESModel.objects.get(pk=vies_saved.pk)
-        self.assertGreaterEqual(VIESModel.objects.count(), 1)
+        self.assertNotEqual(VIESModel.objects.count(), 0)
         self.assertEqual(vies_received.vat, 'GB802311782')
 
 
 class ModelFormTestCase(unittest.TestCase):
-
     def test_is_valid(self):
         """Form is valid"""
         form = VIESModelForm({'vat_0': 'GB', 'vat_1': '802311782'})
@@ -73,5 +71,5 @@ class ModelFormTestCase(unittest.TestCase):
 
         vies_received = VIESModel.objects.get(pk=vies_saved.pk)
         self.assertEqual(vies_received, vies_saved)
-        self.assertGreaterEqual(VIESModel.objects.count(), 1)
+        self.assertNotEqual(VIESModel.objects.count(), 0)
         self.assertEqual(vies_received.vat, 'GB802311782')

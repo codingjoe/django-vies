@@ -3,8 +3,16 @@ import sys
 
 from os.path import dirname, abspath
 
-from django.conf import settings
 
+def module_exists(module_name):
+    try:
+        __import__(module_name)
+    except ImportError:
+        return False
+    else:
+        return True
+
+from django.conf import settings
 if not settings.configured:
     settings.configure(
         DATABASES={'default': {'ENGINE': 'django.db.backends.sqlite3'}},
@@ -13,7 +21,10 @@ if not settings.configured:
         ]
     )
 
-from django.test.runner import DiscoverRunner
+if module_exists("django.test.runner.Discover"):
+    from django.test.runner import DiscoverRunner as Runner
+else:
+    from django.test.simple import DjangoTestSuiteRunner as Runner
 
 
 def runtests(*test_args):
@@ -21,7 +32,7 @@ def runtests(*test_args):
         test_args = ['vies']
     parent = dirname(abspath(__file__))
     sys.path.insert(0, parent)
-    failures = DiscoverRunner().run_tests(test_args, verbosity=1, interactive=True)
+    failures = Runner().run_tests(test_args, verbosity=1, interactive=True)
     sys.exit(bool(failures))
 
 
