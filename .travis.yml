@@ -8,7 +8,7 @@ env:
   - DJANGO=1.4
   - DJANGO=1.5.5
   - DJANGO=1.6.1
- install:
+install:
   - "pip install requests"
 script:
   - python runtests.py
