@@ -2,3 +2,6 @@
 *.pot
 *.pyc
 .idea/
+django_vies.egg-info/
+build/
+dist/
