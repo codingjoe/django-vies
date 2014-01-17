@@ -9,7 +9,7 @@ env:
   - DJANGO=1.5.5
   - DJANGO=1.6.1
 install:
-  - pip install -q Django==$DJANGO_VERSION
+  - pip install -q Django==$DJANGO
   - pip install -r requirements.txt
 script:
   - python runtests.py
