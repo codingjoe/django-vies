@@ -1,50 +1,22 @@
+from warnings import warn
 from django import forms
 from django.forms.widgets import HiddenInput
 import re
 
+from vies import VIES_COUNTRY_CHOICES
+
 EMPTY_VALUES = (None, '')
 
-VAT_CHOICES = (
-    ('', '----------'),
-    ('AT', 'AT-Austria'),
-    ('BE', 'BE-Belgium'),
-    ('BG', 'BG-Bulgaria'),
-    ('CY', 'CY-Cyprus'),
-    ('CZ', 'CZ-Czech Republic'),
-    ('DE', 'DE-Germany'),
-    ('DK', 'DK-Denmark'),
-    ('EE', 'EE-Estonia'),
-    ('EL', 'EL-Greece'),
-    ('ES', 'ES-Spain'),
-    ('FI', 'FI-Finland'),
-    ('FR', 'FR-France '),
-    ('GB', 'GB-United Kingdom'),
-    ('HU', 'HU-Hungary'),
-    ('IE', 'IE-Ireland'),
-    ('IT', 'IT-Italy'),
-    ('LT', 'LT-Lithuania'),
-    ('LU', 'LU-Luxembourg'),
-    ('LV', 'LV-Latvia'),
-    ('MT', 'MT-Malta'),
-    ('NL', 'NL-The Netherlands'),
-    ('PL', 'PL-Poland'),
-    ('PT', 'PT-Portugal'),
-    ('RO', 'RO-Romania'),
-    ('SE', 'SE-Sweden'),
-    ('SI', 'SI-Slovenia'),
-    ('SK', 'SK-Slovakia'),
-)
 
+class VATINWidget(forms.MultiWidget):
+    """docstring for VATINWidget"""
 
-class VatWidget(forms.MultiWidget):
-    """docstring for VatWidget"""
-
-    def __init__(self, choices=VAT_CHOICES, attrs=None):
+    def __init__(self, choices=VIES_COUNTRY_CHOICES, attrs=None):
         widgets = (
             forms.Select(choices=choices),
             forms.TextInput()
         )
-        super(VatWidget, self).__init__(widgets, attrs)
+        super(VATINWidget, self).__init__(widgets, attrs)
 
     def value_from_datadict(self, data, files, name):
         value = [widget.value_from_datadict(data, files, name + '_%s' % i) for i, widget in enumerate(self.widgets)]
@@ -58,7 +30,7 @@ class VatWidget(forms.MultiWidget):
             if country in EMPTY_VALUES:
                 try:
                     # ex. code="FR09443710785", country="".
-                    empty, country, code = re.split('([a-zA-Z]+)', code)
+                    empty, country, code = re.split('([a-zA-Z])', code)
                 except:
                     return ['', code]
             else:
@@ -84,20 +56,32 @@ class VatWidget(forms.MultiWidget):
                 code = value
             if country in EMPTY_VALUES:
                 try:
-                    empty, country, code = re.split('([a-zA-Z]+)', code)
+                    empty, country, code = re.split('([a-zA-Z])', code)
                 except:
                     pass
             return [country, code]
         return [None, None]
 
 
-class VatHiddenWidget(VatWidget):
+class VATINHiddenWidget(VATINWidget):
     """
     A Widget that splits vat input into two <input type="hidden"> inputs.
     """
 
     def __init__(self, attrs=None):
         widgets = (HiddenInput(attrs=attrs), HiddenInput(attrs=attrs))
-        super(VatWidget, self).__init__(widgets, attrs)
+        super(VATINWidget, self).__init__(widgets, attrs)
 
 
+class VatWidget(VATINWidget):
+    """Deprecated in favor of VATINWidget"""
+    def __init__(self, choices=VIES_COUNTRY_CHOICES, attrs=None):
+        warn(DeprecationWarning, '%(class)s has been deprecated in favor of VATINWidget')
+        super(VatWidget, self).__init__(choices=choices, attrs=attrs)
+
+
+class VatHiddenWidget(VATINHiddenWidget):
+    """Deprecated in favor of VATINHiddenWidget"""
+    def __init__(self, attrs=None):
+        warn(DeprecationWarning, '%(class)s has been deprecated in favor of VATINHiddenWidget')
+        super(VatHiddenWidget, self).__init__(attrs=attrs)
