@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup, Command
+import os
+
+
+def read(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
 class PyTest(Command):
@@ -21,12 +26,12 @@ class PyTest(Command):
 
 setup(
     name='django-vies',
-    version='0.1.0',
+    version='0.2.0',
     description='European VIES VAT field for Django',
     author='codingjoe',
     url='https://github.com/codingjoe/django-vies',
     author_email='info@johanneshoppe.com',
-    license='License :: OSI Approved :: MIT License',
+    license=read('LICENSE'),
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
@@ -41,6 +46,6 @@ setup(
     ],
     packages=['vies'],
     include_package_data=True,
-    requires=['django (>=1.3.1)', 'requests (>=1.0.0)'],
+    requires=['django (>=1.3.1)', 'suds (>=0.4)'],
     cmdclass={'test': PyTest},
 )
