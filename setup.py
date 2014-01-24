@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup, Command
-import os
-
-
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
 class PyTest(Command):
@@ -31,7 +26,7 @@ setup(
     author='codingjoe',
     url='https://github.com/codingjoe/django-vies',
     author_email='info@johanneshoppe.com',
-    license=read('LICENSE'),
+    license='MIT',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
