@@ -1,5 +1,5 @@
 from django.utils import unittest
-from django.db.models import Model
+from django.db.models import Model, CharField
 from django.forms import Form, ModelForm
 
 from vies import fields, VATIN
@@ -14,13 +14,27 @@ class VIESModel(Model):
     vat = models.VATINField()
 
 
+class EmptyVIESModel(Model):
+    name = CharField(default='John Doe', max_length='50')
+    vat = models.VATINField(blank=True, null=True)
+
+
 class VIESModelForm(ModelForm):
     class Meta:
         model = VIESModel
 
 
+class EmptyVIESModelForm(ModelForm):
+    class Meta:
+        model = EmptyVIESModel
+
+
 class VIESForm(Form):
     vat = fields.VATINField()
+
+
+class EmptyVIESForm(Form):
+    vat = fields.VATINField(required=False)
 
 
 class VIESTestCase(unittest.TestCase):
@@ -97,3 +111,7 @@ class ModelFormTestCase(unittest.TestCase):
         self.assertEqual(vies_received, vies_saved)
         self.assertNotEqual(VIESModel.objects.count(), 0)
         self.assertEqual(vies_received.vat, VALID_VIES)
+
+    def test_empty(self):
+        form = EmptyVIESModelForm({'name': 'Eva'})
+        self.assertTrue(form.is_valid())
