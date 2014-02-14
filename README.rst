@@ -1,5 +1,19 @@
 .. image:: https://travis-ci.org/codingjoe/django-vies.png?branch=master
-   :target: https://travis-ci.org/codingjoe/django-vies
+    :target: https://travis-ci.org/codingjoe/django-vies
+    :alt: TravisCI
+
+.. image:: https://pypip.in/d/PYPI_PKG_NAME/badge.png
+    :target: https://pypi.python.org/pypi//django-vies/
+    :alt: Downloads
+
+.. image:: https://pypip.in/v/PYPI_PKG_NAME/badge.png
+    :target: https://pypi.python.org/pypi/django-vies/
+    :alt: Latest Version
+
+.. image:: https://pypip.in/license/PYPI_PKG_NAME/badge.png
+    :target: https://pypi.python.org/pypi/django-vies/
+    :alt: License
+
 
 =====
 Django-VIES
