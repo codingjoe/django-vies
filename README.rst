@@ -2,15 +2,15 @@
     :target: https://travis-ci.org/codingjoe/django-vies
     :alt: TravisCI
 
-.. image:: https://pypip.in/d/PYPI_PKG_NAME/badge.png
+.. image:: https://pypip.in/d/django-vies/badge.png
     :target: https://pypi.python.org/pypi//django-vies/
     :alt: Downloads
 
-.. image:: https://pypip.in/v/PYPI_PKG_NAME/badge.png
+.. image:: https://pypip.in/v/django-vies/badge.png
     :target: https://pypi.python.org/pypi/django-vies/
     :alt: Latest Version
 
-.. image:: https://pypip.in/license/PYPI_PKG_NAME/badge.png
+.. image:: https://pypip.in/license/django-vies/badge.png
     :target: https://pypi.python.org/pypi/django-vies/
     :alt: License
 
@@ -27,6 +27,7 @@ Current Stable
 ::
 
     pip install django-vies
+
 Latest Development
 ::
 
