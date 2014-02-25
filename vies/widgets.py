@@ -56,7 +56,8 @@ class VATINWidget(forms.MultiWidget):
                 code = value
             if country in EMPTY_VALUES:
                 try:
-                    empty, country, code = re.split('([a-zA-Z])', code)
+                    country = code[:2]
+                    code = code[2:]
                 except:
                     pass
             return [country, code]
