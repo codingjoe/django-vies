@@ -42,6 +42,6 @@ setup(
     packages=['vies'],
     include_package_data=True,
     requires=['django (>=1.3.1)', 'suds (>=0.4)'],
-    install_requires=['django (>=1.3.1)', 'suds (>=0.4)'],
+    install_requires=['django>=1.3.1', 'suds>=0.4'],
     cmdclass={'test': PyTest},
 )
