@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup, Command
+from pip.req import parse_requirements
+install_reqs = parse_requirements('requirements.txt')
+reqs = [str(ir.req) for ir in install_reqs]
 
 
 class PyTest(Command):
@@ -21,7 +24,7 @@ class PyTest(Command):
 
 setup(
     name='django-vies',
-    version='0.2.3',
+    version='0.2.4',
     description='European VIES VAT field for Django',
     author='codingjoe',
     url='https://github.com/codingjoe/django-vies',
@@ -42,5 +45,6 @@ setup(
     packages=['vies'],
     include_package_data=True,
     requires=['django (>=1.3.1)', 'suds (>=0.4)'],
+    install_requires=reqs,
     cmdclass={'test': PyTest},
 )
