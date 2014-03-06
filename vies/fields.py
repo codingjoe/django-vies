@@ -22,7 +22,7 @@ class VATINField(forms.MultiValueField):
     def compress(self, data_list):
         if data_list:
             return "".join(data_list)
-        return None
+        return ''
 
     def clean(self, value):
         if not value or not isinstance(value, (list, tuple)):
