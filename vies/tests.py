@@ -119,14 +119,12 @@ class ModelFormTestCase(unittest.TestCase):
         self.assertTrue(form.is_valid())
 
 
-
 class MockRequest(object):
     pass
 
 request = MockRequest()
 
 class AdminTestCase(unittest.TestCase):
-
     def setUp(self):
         self.site = AdminSite()
 
