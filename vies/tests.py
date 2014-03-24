@@ -1,6 +1,8 @@
-from django.utils import unittest
+from django.contrib.admin.options import ModelAdmin
+from django.contrib.admin.sites import AdminSite
 from django.db.models import Model, CharField
 from django.forms import Form, ModelForm
+from django.utils import unittest
 
 from vies import fields, VATIN
 from vies import models
@@ -115,3 +117,22 @@ class ModelFormTestCase(unittest.TestCase):
     def test_empty(self):
         form = EmptyVIESModelForm({'name': 'Eva'})
         self.assertTrue(form.is_valid())
+
+
+class MockRequest(object):
+    pass
+
+request = MockRequest()
+
+class AdminTestCase(unittest.TestCase):
+    def setUp(self):
+        self.site = AdminSite()
+
+    def test_VATINField_admin(self):
+        """Admin form is generated"""
+        ma = ModelAdmin(VIESModel, self.site)
+
+        try:
+            ma.get_form(request)
+        except Exception, e:
+            self.fail(e.message)

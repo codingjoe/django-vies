@@ -16,8 +16,8 @@ class VATINField(forms.MultiValueField):
             forms.ChoiceField(required=False, choices=choices),
             forms.CharField(required=False, max_length=max_length)
         )
-        widget = VATINWidget(choices=choices)
-        super(VATINField, self).__init__(widget=widget, fields=fields, *args, **kwargs)
+        kwargs['widget'] = VATINWidget(choices=choices)
+        super(VATINField, self).__init__(fields=fields, *args, **kwargs)
 
     def compress(self, data_list):
         if data_list:
