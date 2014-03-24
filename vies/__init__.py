@@ -11,34 +11,34 @@ from suds.client import Client
 VIES_WSDL_URL = 'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl'
 
 VIES_COUNTRY_CHOICES = (
-    ('', '----------'),
-    ('AT', 'AT-Austria'),
-    ('BE', 'BE-Belgium'),
-    ('BG', 'BG-Bulgaria'),
-    ('CY', 'CY-Cyprus'),
-    ('CZ', 'CZ-Czech Republic'),
-    ('DE', 'DE-Germany'),
-    ('DK', 'DK-Denmark'),
-    ('EE', 'EE-Estonia'),
-    ('EL', 'EL-Greece'),
-    ('ES', 'ES-Spain'),
-    ('FI', 'FI-Finland'),
-    ('FR', 'FR-France '),
-    ('GB', 'GB-United Kingdom'),
-    ('HU', 'HU-Hungary'),
-    ('IE', 'IE-Ireland'),
-    ('IT', 'IT-Italy'),
-    ('LT', 'LT-Lithuania'),
-    ('LU', 'LU-Luxembourg'),
-    ('LV', 'LV-Latvia'),
-    ('MT', 'MT-Malta'),
-    ('NL', 'NL-The Netherlands'),
-    ('PL', 'PL-Poland'),
-    ('PT', 'PT-Portugal'),
-    ('RO', 'RO-Romania'),
-    ('SE', 'SE-Sweden'),
-    ('SI', 'SI-Slovenia'),
-    ('SK', 'SK-Slovakia'),
+    ('', '--'),
+    ('AT', 'AT'),
+    ('BE', 'BE'),
+    ('BG', 'BG'),
+    ('CY', 'CY'),
+    ('CZ', 'CZ'),
+    ('DE', 'DE'),
+    ('DK', 'DK'),
+    ('EE', 'EE'),
+    ('EL', 'EL'),
+    ('ES', 'ES'),
+    ('FI', 'FI'),
+    ('FR', 'FR '),
+    ('GB', 'GB'),
+    ('HU', 'HU'),
+    ('IE', 'IE'),
+    ('IT', 'IT'),
+    ('LT', 'LT'),
+    ('LU', 'LU'),
+    ('LV', 'LV'),
+    ('MT', 'MT'),
+    ('NL', 'NL'),
+    ('PL', 'PL'),
+    ('PT', 'PT'),
+    ('RO', 'RO'),
+    ('SE', 'SE'),
+    ('SI', 'SI'),
+    ('SK', 'SK'),
 )
 
 
@@ -89,7 +89,6 @@ VIES_OPTIONS = {
 }
 
 MEMBER_COUNTRY_CODES = VIES_OPTIONS.keys()
-
 
 class VATIN(object):
     """

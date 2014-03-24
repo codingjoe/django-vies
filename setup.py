@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
 from setuptools import setup, Command
 
 
@@ -21,7 +21,7 @@ class PyTest(Command):
 
 setup(
     name='django-vies',
-    version='0.2.5',
+    version='0.2.6',
     description='European VIES VAT field for Django',
     author='codingjoe',
     url='https://github.com/codingjoe/django-vies',

@@ -124,6 +124,7 @@ class MockRequest(object):
 
 request = MockRequest()
 
+
 class AdminTestCase(unittest.TestCase):
     def setUp(self):
         self.site = AdminSite()
