@@ -35,6 +35,8 @@ Latest Development
 
 Usage
 --------
+
+``VATINField`` for models
 ::
 
     from vies.models import VATINField
@@ -43,6 +45,25 @@ Usage
     class Company(models.Model):
         name = models.CharField(max_length=100)
         vat = VATINField(blank=True, null=True)
+
+``VATIN`` wrapper class, allows access to result.
+::
+
+    >>> from vies import VATIN
+    >>> vat = VATIN('NL', '124851903B01')
+    >>> vat.is_valid()
+    True
+    >>> vat.result
+    (reply){
+       countryCode = "NL"
+       vatNumber = "124851903B01"
+       requestDate = 2014-03-25
+       valid = True
+       name = "JIETER"
+       address = "(...)"
+     }
+
+
 
 License
 -------

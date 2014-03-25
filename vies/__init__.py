@@ -131,7 +131,7 @@ class VATIN(object):
 
     def _verify(self):
         try:
-            result = self.client.service.checkVat(self.country_code, self.number)
-            return result.valid
+            self.result = self.client.service.checkVat(self.country_code, self.number)
+            return self.result.valid
         except WebFault:
-            raise ValueError('%s is not a valid ISO_3166-1 country code.' % (self.country_code))
+            raise ValueError('VIES checkVat service unavailable.')
