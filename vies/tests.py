@@ -1,3 +1,6 @@
+from mock import patch
+from suds import WebFault
+
 from django.contrib.admin.options import ModelAdmin
 from django.contrib.admin.sites import AdminSite
 from django.db.models import Model, CharField
@@ -56,6 +59,37 @@ class VIESTestCase(unittest.TestCase):
     def test_country_code_getter(self):
         v = VATIN(VALID_VIES_COUNTRY_CODE.lower(), VALID_VIES_NUMBER)
         self.assertEqual(v.country_code, VALID_VIES_COUNTRY_CODE)
+
+    def test_is_valid(self):
+        v = VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
+
+        self.assertTrue(v.is_valid())
+
+    def test_result(self):
+        v = VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
+
+        self.assertFalse(hasattr(v, 'result'))
+        self.assertTrue(v.is_valid())
+
+        # v should have a result now
+        self.assertTrue(hasattr(v, 'result'))
+
+        self.assertEqual(v.result['countryCode'], VALID_VIES_COUNTRY_CODE)
+        self.assertEqual(v.result['vatNumber'], VALID_VIES_NUMBER)
+
+    @patch('vies.Client')
+    def test_raises_when_suds_WebFault(self, mock_client):
+        """Raises an error if suds raises a WebFault"""
+
+        mock_checkVat = mock_client.return_value.service.checkVat
+        mock_checkVat.side_effect = WebFault(500, 'error')
+
+        v = VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
+
+        with self.assertRaises(ValueError):
+            v.is_valid()
+
+        mock_checkVat.assert_called_with(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
 
 
 class ModelTestCase(unittest.TestCase):
