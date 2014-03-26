@@ -21,14 +21,14 @@ class PyTest(Command):
 
 setup(
     name='django-vies',
-    version='0.2.6',
+    version='1.0.0',
     description='European VIES VAT field for Django',
     author='codingjoe',
     url='https://github.com/codingjoe/django-vies',
     author_email='info@johanneshoppe.com',
-    license='MIT',
+    license='MIT License',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Topic :: Office/Business :: Financial :: Accounting',
