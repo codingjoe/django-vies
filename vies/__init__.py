@@ -90,6 +90,7 @@ VIES_OPTIONS = {
 
 MEMBER_COUNTRY_CODES = VIES_OPTIONS.keys()
 
+
 class VATIN(object):
     """
     Object wrapper for the european VAT Identification Number

@@ -152,6 +152,17 @@ class ModelFormTestCase(unittest.TestCase):
         form = EmptyVIESModelForm({'name': 'Eva'})
         self.assertTrue(form.is_valid())
 
+    def test_is_valid_and_has_vatinData(self):
+        """Valid VATINFields' vatinData() return result dict"""
+        form = VIESModelForm({'vat_0': 'NL', 'vat_1': '124851903B01'})
+
+        self.assertEqual(form.fields['vat'].vatinData(), None)
+
+        form.is_valid()
+        data = form.fields['vat'].vatinData()
+
+        self.assertEqual(data['name'], 'JIETER')
+
 
 class MockRequest(object):
     pass
