@@ -22,7 +22,7 @@ class VATINWidget(forms.MultiWidget):
         value = [widget.value_from_datadict(data, files, name + '_%s' % i) for i, widget in enumerate(self.widgets)]
         try:
             country, code = value
-            #the spaces and the dots are removed
+            # the spaces and the dots are removed
             code = code.replace(".", "").replace(" ", "")
         except:
             return data.get(name, None)
@@ -34,7 +34,7 @@ class VATINWidget(forms.MultiWidget):
                 except:
                     return ['', code]
             else:
-                #ex. code ="FR09443710785", country="FR".
+                # ex. code ="FR09443710785", country="FR".
                 re_code = re.compile(r'^%s(\d+)$' % country)
                 if re_code.match(code):
                     code = code.replace(country, "", 1)

@@ -35,13 +35,16 @@ class VATINField(forms.MultiValueField):
             try:
                 vatin = VATIN(*value)
                 if vatin.is_valid():
+                    self._vies_result = vatin.result
                     return super(VATINField, self).clean(value)
-                else:
-                    raise ValidationError(_('%(value)s is not a valid European VAT.'), code='invalid',
-                                          params={'value': self.compress(value)})
             except ValueError:
-                raise ValidationError(_('%(value)s is not a valid European VAT.'), code='invalid',
-                                      params={'value': self.compress(value)})
+                pass
+
+            raise ValidationError(_('%(value)s is not a valid European VAT.'), code='invalid',
+                                  params={'value': self.compress(value)})
+
+    def vatinData(self):
+        return self._vies_result if hasattr(self, '_vies_result') else None
 
 
 class VIESField(VATINField):
