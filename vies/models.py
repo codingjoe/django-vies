@@ -18,6 +18,13 @@ class VATINField(CharField):
         return super(VATINField, self).formfield(**defaults)
 
 
+try:
+    from south.modelsinspector import add_introspection_rules
+    add_introspection_rules([], ["^vies\.models"])
+except ImportError:
+    pass
+
+
 class VIESField(VATINField):
     """Deprecated in favor of VATINField"""
     def __init__(self, *args, **kwargs):
