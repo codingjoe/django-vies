@@ -13,7 +13,7 @@ from suds.client import Client
 logging.basicConfig(level=logging.ERROR)
 logging.getLogger('suds.client').setLevel(logging.INFO)
 
-VIES_WSDL_URL = 'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl'
+VIES_WSDL_URL = str('http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl')
 
 
 def dk_format(v):
