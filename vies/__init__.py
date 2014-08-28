@@ -2,8 +2,10 @@
 from __future__ import (unicode_literals, absolute_import)
 
 import logging
-import re
 
+from django.utils.functional import cached_property
+import re
+from retrying import retry
 from suds import WebFault
 from suds.client import Client
 
@@ -85,12 +87,7 @@ class VATIN(object):
     def __init__(self, country_code, number):
         self._country_code = country_code
         self._number = number
-
-        try:
-            if self._validate():
-                self.client = Client(VIES_WSDL_URL)
-        except ValueError, e:
-            raise e
+        self._validate()
 
     def is_valid(self):
         return self._verify() if self._validate() else False
@@ -104,6 +101,11 @@ class VATIN(object):
         country = dict(map(None, ('country', 'validator', 'formatter'), VIES_OPTIONS[self.country_code]))
         return country['validator'].match('%s%s' % (self.country_code, self.number))
 
+    @cached_property
+    def client(self):
+        return Client(VIES_WSDL_URL)
+
+    @retry(stop_max_delay=10000)
     def _verify(self):
         try:
             self.result = self.client.service.checkVat(self.country_code, self.number)
