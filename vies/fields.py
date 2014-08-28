@@ -1,9 +1,11 @@
-from warnings import warn
+# -*- coding: utf-8 -*-
+from __future__ import (unicode_literals, absolute_import)
+
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-from vies import VATIN, VIES_COUNTRY_CHOICES
-from vies.widgets import VATINWidget, VATINHiddenWidget
+from . import VATIN, VIES_COUNTRY_CHOICES
+from .widgets import VATINWidget, VATINHiddenWidget
 
 
 class VATINField(forms.MultiValueField):
@@ -45,10 +47,3 @@ class VATINField(forms.MultiValueField):
 
     def vatinData(self):
         return self._vies_result if hasattr(self, '_vies_result') else None
-
-
-class VIESField(VATINField):
-    """Deprecated in favor of VATINField"""
-    def __init__(self, *args, **kwargs):
-        warn(DeprecationWarning, '%(class)s has been deprecated in favor of VATINField')
-        super(VIESField, self).__init__(*args, **kwargs)

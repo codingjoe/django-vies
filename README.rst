@@ -2,27 +2,38 @@
     :target: https://travis-ci.org/codingjoe/django-vies
     :alt: TravisCI
 
-.. image:: https://pypip.in/d/django-vies/badge.png
-    :target: https://pypi.python.org/pypi//django-vies/
-    :alt: Downloads
+.. image:: https://coveralls.io/repos/codingjoe/django-vies/badge.png?branch=master
+    :target: https://coveralls.io/r/codingjoe/django-vies
 
 .. image:: https://pypip.in/v/django-vies/badge.png
     :target: https://pypi.python.org/pypi/django-vies/
     :alt: Latest Version
+    
+.. image:: https://pypip.in/status/django-vies/badge.svg
+    :target: https://pypi.python.org/pypi/django-vies/
+    :alt: Development Status
+
+.. image:: https://pypip.in/py_versions/django-vies/badge.svg
+    :target: https://pypi.python.org/pypi/django-vies/
+    :alt: Supported Python versions
+    
+.. image:: https://pypip.in/d/django-vies/badge.png
+    :target: https://pypi.python.org/pypi//django-vies/
+    :alt: Downloads
 
 .. image:: https://pypip.in/license/django-vies/badge.png
     :target: https://pypi.python.org/pypi/django-vies/
     :alt: License
 
 
-=====
+===========
 Django-VIES
-=====
+===========
 Django-VIES is a django extension that allows storing VAT Information Exchange System (VIES) data in django models and validation.
 Provided are a VATIN object, a ModelField and a FormField.
 
 Installation
---------
+------------
 Current Stable
 ::
 
@@ -34,7 +45,7 @@ Latest Development
     pip install -e git://github.com/codingjoe/django-vies.git#egg=django-vies
 
 Usage
---------
+-----
 
 ``VATINField`` for models
 ::
@@ -87,8 +98,3 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-.. image:: https://d2weczhvl823v0.cloudfront.net/codingjoe/django-vies/trend.png
-   :alt: Bitdeli badge
-   :target: https://bitdeli.com/free
-

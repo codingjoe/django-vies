@@ -1,9 +1,12 @@
-from warnings import warn
-from django import forms
-from django.forms.widgets import HiddenInput
+# -*- coding: utf-8 -*-
+from __future__ import (unicode_literals, absolute_import)
+
 import re
 
-from vies import VIES_COUNTRY_CHOICES
+from django import forms
+from django.forms.widgets import HiddenInput
+
+from . import VIES_COUNTRY_CHOICES
 
 EMPTY_VALUES = (None, '')
 
@@ -72,17 +75,3 @@ class VATINHiddenWidget(VATINWidget):
     def __init__(self, attrs=None):
         widgets = (HiddenInput(attrs=attrs), HiddenInput(attrs=attrs))
         super(VATINWidget, self).__init__(widgets, attrs)
-
-
-class VatWidget(VATINWidget):
-    """Deprecated in favor of VATINWidget"""
-    def __init__(self, choices=VIES_COUNTRY_CHOICES, attrs=None):
-        warn(DeprecationWarning, '%(class)s has been deprecated in favor of VATINWidget')
-        super(VatWidget, self).__init__(choices=choices, attrs=attrs)
-
-
-class VatHiddenWidget(VATINHiddenWidget):
-    """Deprecated in favor of VATINHiddenWidget"""
-    def __init__(self, attrs=None):
-        warn(DeprecationWarning, '%(class)s has been deprecated in favor of VATINHiddenWidget')
-        super(VatHiddenWidget, self).__init__(attrs=attrs)

@@ -1,7 +1,9 @@
-from warnings import warn
+# -*- coding: utf-8 -*-
+from __future__ import (unicode_literals, absolute_import)
+
 from django.db.models import CharField
 
-from vies import fields
+from . import fields
 
 
 class VATINField(CharField):
@@ -20,13 +22,6 @@ class VATINField(CharField):
 
 try:
     from south.modelsinspector import add_introspection_rules
-    add_introspection_rules([], ["^vies\.models"])
+    add_introspection_rules([], [r"^vies\.models"])
 except ImportError:
     pass
-
-
-class VIESField(VATINField):
-    """Deprecated in favor of VATINField"""
-    def __init__(self, *args, **kwargs):
-        warn(DeprecationWarning, '%(class)s has been deprecated in favor of VATINField')
-        super(VIESField, self).__init__(*args, **kwargs)
