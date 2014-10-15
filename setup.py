@@ -21,7 +21,7 @@ class PyTest(Command):
 
 setup(
     name='django-vies',
-    version='1.0.2',
+    version='2.0.0',
     description='European VIES VAT field for Django',
     author='codingjoe',
     url='https://github.com/codingjoe/django-vies',
