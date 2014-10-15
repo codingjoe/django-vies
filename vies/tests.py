@@ -23,7 +23,7 @@ class VIESModel(Model):
 
 
 class EmptyVIESModel(Model):
-    name = CharField(default='John Doe', max_length='50')
+    name = CharField(default='John Doe', max_length=50)
     vat = models.VATINField(blank=True, null=True)
 
 
@@ -52,7 +52,7 @@ class VIESTestCase(unittest.TestCase):
     def test_creation(self):
         try:
             VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
-        except Exception, e:
+        except Exception as e:
             self.fail(e.message)
 
     def test_verified(self):
@@ -183,5 +183,5 @@ class AdminTestCase(unittest.TestCase):
 
         try:
             ma.get_form(request)
-        except Exception, e:
+        except Exception as e:
             self.fail(e.message)

@@ -98,7 +98,7 @@ class VATIN(object):
         elif not self.country_code in MEMBER_COUNTRY_CODES:
             raise ValueError('%s is not a VIES member country.' % (self.country_code))
 
-        country = dict(map(None, ('country', 'validator', 'formatter'), VIES_OPTIONS[self.country_code]))
+        country = dict(map(lambda x, y: (x, y), ('country', 'validator', 'formatter'), VIES_OPTIONS[self.country_code]))
         return country['validator'].match('%s%s' % (self.country_code, self.number))
 
     @cached_property
