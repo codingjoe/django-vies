@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import (unicode_literals, absolute_import)
 
-from django import forms
+from django import forms, get_version
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from . import VATIN, VIES_COUNTRY_CHOICES
@@ -42,8 +42,16 @@ class VATINField(forms.MultiValueField):
             except ValueError as e:
                 raise ValidationError(str(e), code='error', params={'value': self.compress(value)})
 
-            raise ValidationError(self.error_messages.get('invalid_vat', _('%(value)s is not a valid European VAT.')),
+            raise ValidationError(self.error_messages.get('invalid_vat', self._get_invalid_error_message()),
                                   code='invalid_vat', params={'value': self.compress(value)})
+
+    def _get_invalid_error_message(self):
+        if get_version() >= '1.6':
+            message = _('%(value)s is not a valid European VAT.')
+        else:
+            message = _('The provided VAT number is not valid.')
+
+        return message
 
     def vatinData(self):
         return self._vies_result if hasattr(self, '_vies_result') else None

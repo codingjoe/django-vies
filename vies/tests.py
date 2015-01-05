@@ -4,6 +4,7 @@ from __future__ import (unicode_literals, absolute_import)
 from mock import patch
 from suds import WebFault
 
+from django import get_version
 from django.contrib.admin.options import ModelAdmin
 from django.contrib.admin.sites import AdminSite
 from django.db.models import Model, CharField
@@ -175,10 +176,17 @@ class ModelFormTestCase(unittest.TestCase):
 
         self.assertEqual(data['name'], 'JIETER')
 
-    def test_invalid_error_message(self):
+    def test_invalid_error_message_1_6(self):
         form = VIESForm({'vat_0': 'NL', 'vat_1': '0000000000'})
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors['vat'][0], u'NL0000000000 is not a valid European VAT.')
+        if get_version() >= '1.6':
+            self.assertEqual(form.errors['vat'][0], u'NL0000000000 is not a valid European VAT.')
+
+    def test_invalid_error_message_1_5(self):
+        form = VIESForm({'vat_0': 'NL', 'vat_1': '0000000000'})
+        self.assertFalse(form.is_valid())
+        if not get_version() >= '1.6':
+            self.assertEqual(form.errors['vat'][0], u'The provided VAT number is not valid.')
 
     def test_custom_invalid_error_message(self):
         form = VIESFormCustomError({'vat_0': 'NL', 'vat_1': '0000000000'})
