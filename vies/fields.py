@@ -12,6 +12,10 @@ class VATINField(forms.MultiValueField):
     """VIES VAT field. That verifies on the fly."""
     hidden_widget = VATINHiddenWidget
 
+    default_error_messages = {
+        'invalid_vat': _('This is not a valid European VAT number.')
+    }
+
     def __init__(self, choices=VIES_COUNTRY_CHOICES, *args, **kwargs):
         max_length = kwargs.pop('max_length', 14)
         fields = (
@@ -19,6 +23,7 @@ class VATINField(forms.MultiValueField):
             forms.CharField(required=False, max_length=max_length)
         )
         kwargs['widget'] = VATINWidget(choices=choices)
+
         super(VATINField, self).__init__(fields=fields, *args, **kwargs)
 
     def compress(self, data_list):
@@ -42,16 +47,8 @@ class VATINField(forms.MultiValueField):
             except ValueError as e:
                 raise ValidationError(str(e), code='error', params={'value': self.compress(value)})
 
-            raise ValidationError(self.error_messages.get('invalid_vat', self._get_invalid_error_message()),
-                                  code='invalid_vat', params={'value': self.compress(value)})
-
-    def _get_invalid_error_message(self):
-        if get_version() >= '1.6':
-            message = _('%(value)s is not a valid European VAT.')
-        else:
-            message = _('The provided VAT number is not valid.')
-
-        return message
+            raise ValidationError(self.error_messages['invalid_vat'], code='invalid_vat',
+                                  params={'value': self.compress(value)})
 
     def vatinData(self):
         return self._vies_result if hasattr(self, '_vies_result') else None
