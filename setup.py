@@ -21,7 +21,7 @@ class PyTest(Command):
 
 setup(
     name='django-vies',
-    version='2.0.2',
+    version='2.1.0',
     description='European VIES VAT field for Django',
     author='codingjoe',
     url='https://github.com/codingjoe/django-vies',
@@ -38,10 +38,9 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Topic :: Software Development',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: Implementation :: PyPy',
     ],
     packages=['vies'],
     include_package_data=True,

@@ -1,14 +1,25 @@
 language: python
+sudo: false
 python:
-  - 2.6
-  - 2.7
-  - 3.2
-  - 3.3
+  - "2.6"
+  - "2.7"
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "pypy"
+  - "pypy3"
 env:
-  - DJANGO=1.5.5
-  - DJANGO=1.6.6
+  - DJANGO=1.5.12
+  - DJANGO=1.6.9
+  - DJANGO=1.7.2
+
+matrix:
+  exclude:
+    - python: "2.6"
+      env: DJANGO=1.7.1
 install:
-  - pip install -q Django==$DJANGO
+  - pip install .
+  - pip install Django==$DJANGO --use-mirrors
   - pip install -r requirements.txt
   - pip install coveralls
 script:

@@ -4,6 +4,7 @@ from __future__ import (unicode_literals, absolute_import)
 from mock import patch
 from suds import WebFault
 
+from django import get_version
 from django.contrib.admin.options import ModelAdmin
 from django.contrib.admin.sites import AdminSite
 from django.db.models import Model, CharField
@@ -43,6 +44,24 @@ class VIESForm(Form):
 
 class EmptyVIESForm(Form):
     vat = fields.VATINField(required=False)
+
+
+custom_error = {
+    'invalid_vat': 'This VAT number is not valid'
+}
+
+
+class VIESFormCustomError(Form):
+    vat = fields.VATINField(error_messages=custom_error)
+
+
+custom_error_16 = {
+    'invalid_vat': '%(value)s is not a valid European VAT.'
+}
+
+
+class VIESFormCustomError16(Form):
+    vat = fields.VATINField(error_messages=custom_error_16)
 
 
 class VIESTestCase(unittest.TestCase):
@@ -165,6 +184,22 @@ class ModelFormTestCase(unittest.TestCase):
         data = form.fields['vat'].vatinData()
 
         self.assertEqual(data['name'], 'JIETER')
+
+    def test_invalid_error_message(self):
+        form = VIESForm({'vat_0': 'NL', 'vat_1': '0000000000'})
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors['vat'][0], '"NL0000000000" is not a valid European VAT number.')
+
+    def test_custom_invalid_error_message(self):
+        form = VIESFormCustomError({'vat_0': 'NL', 'vat_1': '0000000000'})
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors['vat'][0], 'This VAT number is not valid')
+
+    def test_custom_invalid_error_message_with_value(self):
+        form = VIESFormCustomError16({'vat_0': 'NL', 'vat_1': '0000000000'})
+        self.assertFalse(form.is_valid())
+        if get_version() > '1.6':
+            self.assertEqual(form.errors['vat'][0], 'NL0000000000 is not a valid European VAT.')
 
 
 class MockRequest(object):
