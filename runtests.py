@@ -18,8 +18,13 @@ if not settings.configured:
         DATABASES={'default': {'ENGINE': 'django.db.backends.sqlite3'}},
         INSTALLED_APPS=[
             'vies',
-        ]
+        ],
+        MIDDLEWARE_CLASSES=[],
     )
+
+    import django
+    if hasattr(django, 'setup'):
+        django.setup()
 
 if module_exists("django.test.runner.Discover"):
     from django.test.runner import DiscoverRunner as Runner

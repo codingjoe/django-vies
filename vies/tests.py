@@ -188,7 +188,7 @@ class ModelFormTestCase(unittest.TestCase):
     def test_invalid_error_message(self):
         form = VIESForm({'vat_0': 'NL', 'vat_1': '0000000000'})
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors['vat'][0], '"NL0000000000" is not a valid European VAT number.')
+        self.assertEqual(form.errors['vat'][0], 'This is not a valid European VAT number.')
 
     def test_custom_invalid_error_message(self):
         form = VIESFormCustomError({'vat_0': 'NL', 'vat_1': '0000000000'})

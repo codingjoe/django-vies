@@ -1,3 +1,2 @@
 suds-jurko>=0.6
-django>=1.4
 retrying>=1.1.0

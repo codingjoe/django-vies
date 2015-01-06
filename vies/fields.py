@@ -13,7 +13,7 @@ class VATINField(forms.MultiValueField):
     hidden_widget = VATINHiddenWidget
 
     default_error_messages = {
-        'invalid_vat': _('"%(value)s" is not a valid European VAT number.')
+        'invalid_vat': _('This is not a valid European VAT number.')
     }
 
     def __init__(self, choices=VIES_COUNTRY_CHOICES, *args, **kwargs):
