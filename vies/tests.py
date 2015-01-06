@@ -199,7 +199,7 @@ class ModelFormTestCase(unittest.TestCase):
         form = VIESFormCustomError16({'vat_0': 'NL', 'vat_1': '0000000000'})
         self.assertFalse(form.is_valid())
         if get_version() > '1.6':
-            self.assertEqual(form.errors['vat'][0], 'NL000000000 is not a valid European VAT')
+            self.assertEqual(form.errors['vat'][0], 'NL0000000000 is not a valid European VAT.')
 
 
 class MockRequest(object):
