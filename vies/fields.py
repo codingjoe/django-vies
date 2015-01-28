@@ -28,27 +28,21 @@ class VATINField(forms.MultiValueField):
 
     def compress(self, data_list):
         if data_list:
-            return "".join(data_list)
-        return ''
-
-    def clean(self, value):
-        if not value or not isinstance(value, (list, tuple)):
-            if not value or not [v for v in value if v not in self.empty_values]:
-                if self.required:
-                    raise ValidationError(self.error_messages['required'], code='required')
-                else:
-                    return self.compress([])
-        else:
+            value = ''.join(data_list)
             try:
-                vatin = VATIN(*value)
-                if vatin.is_valid():
-                    self._vies_result = vatin.result
-                    return super(VATINField, self).clean(value)
+                vatin = VATIN(*data_list)
             except ValueError as e:
-                raise ValidationError(str(e), code='error', params={'value': self.compress(value)})
-
-            raise ValidationError(self.error_messages['invalid_vat'], code='invalid_vat',
-                                  params={'value': self.compress(value)})
+                raise ValidationError(str(e), code='error', params={'value': value})
+            if vatin.is_valid():
+                self._vies_result = vatin.result
+            else:
+                raise ValidationError(
+                    self.error_messages['invalid_vat'], 
+                    code='invalid_vat',
+                    params={'value': value})
+        else:
+            value = ''
+        return value
 
     def vatinData(self):
         return self._vies_result if hasattr(self, '_vies_result') else None

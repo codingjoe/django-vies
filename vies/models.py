@@ -15,7 +15,10 @@ class VATINField(CharField):
         super(VATINField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
-        defaults = {'form_class': fields.VATINField}
+        defaults = {
+            'form_class': fields.VATINField,
+            'required': not (self.blank or self.null)
+        }
         defaults.update(kwargs)
         return super(VATINField, self).formfield(**defaults)
 
