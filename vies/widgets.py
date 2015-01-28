@@ -46,6 +46,8 @@ class VATINWidget(forms.MultiWidget):
             except:
                 pass
             return [country, code]
+        else:
+            return [None, None]
 
     def format_output(self, rendered_widgets):
         return "%s&nbsp;%s" % (rendered_widgets[0], rendered_widgets[1])
