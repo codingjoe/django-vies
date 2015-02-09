@@ -63,7 +63,7 @@ VIES_OPTIONS = {
     'SK': ('Slovakia', re.compile(r'^SK\d{10}$')),
 }
 
-VIES_COUNTRY_CHOICES = (('', '--'),) + tuple((key, key) for key, value in VIES_OPTIONS.items())
+VIES_COUNTRY_CHOICES = sorted(('', '--'),) + tuple((key, key) for key, value in VIES_OPTIONS.items())
 
 MEMBER_COUNTRY_CODES = VIES_OPTIONS.keys()
 
