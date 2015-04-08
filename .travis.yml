@@ -9,8 +9,7 @@ python:
   - "pypy"
   - "pypy3"
 env:
-  - DJANGO="<1.6,>=1.5"
-  - DJANGO="<1.7,>=1.6"
+  - DJANGO="<1.5,>=1.4"
   - DJANGO="<1.8,>=1.7"
   - DJANGO="<1.9,>=1.8"
 

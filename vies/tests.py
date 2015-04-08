@@ -31,11 +31,13 @@ class EmptyVIESModel(Model):
 class VIESModelForm(ModelForm):
     class Meta:
         model = VIESModel
+        exclude = []
 
 
 class EmptyVIESModelForm(ModelForm):
     class Meta:
         model = EmptyVIESModel
+        exclude = []
 
 
 class VIESForm(Form):

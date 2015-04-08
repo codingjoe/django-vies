@@ -26,10 +26,10 @@ if not settings.configured:
     if hasattr(django, 'setup'):
         django.setup()
 
-if module_exists("django.test.runner.Discover"):
-    from django.test.runner import DiscoverRunner as Runner
-else:
+try:
     from django.test.simple import DjangoTestSuiteRunner as Runner
+except ImportError:
+    from django.test.runner import DiscoverRunner as Runner
 
 
 def runtests(*test_args):
