@@ -2,13 +2,14 @@
 from __future__ import (unicode_literals, absolute_import)
 
 from django.db.models import CharField
+from django.utils.translation import ugettext_lazy as _
 
 from . import fields
 
 
 class VATINField(CharField):
 
-    description = "A VIES VAT field."
+    description = _("A VIES VAT field.")
 
     def __init__(self, *args, **kwargs):
         kwargs['max_length'] = 14

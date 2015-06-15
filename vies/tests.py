@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import (unicode_literals, absolute_import)
 
+import logging
+
 from mock import patch
 from suds import WebFault
 
@@ -110,8 +112,12 @@ class VIESTestCase(unittest.TestCase):
 
         v = VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
 
+        logging.getLogger('vies').setLevel(logging.CRITICAL)
+
         with self.assertRaises(ValueError):
             v.is_valid()
+
+        logging.getLogger('vies').setLevel(logging.NOTSET)
 
         mock_checkVat.assert_called_with(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
 

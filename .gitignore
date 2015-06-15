@@ -1,6 +1,7 @@
 *.log
 *.pot
 *.pyc
+*.mo
 .idea/
 django_vies.egg-info/
 build/
