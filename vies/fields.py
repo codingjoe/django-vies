@@ -31,9 +31,10 @@ class VATINField(forms.MultiValueField):
             value = ''.join(data_list)
             try:
                 vatin = VATIN(*data_list)
+                is_valid = vatin.is_valid()
             except ValueError as e:
                 raise ValidationError(str(e), code='error', params={'value': value})
-            if vatin.is_valid():
+            if is_valid:
                 self._vies_result = vatin.result
             else:
                 raise ValidationError(
