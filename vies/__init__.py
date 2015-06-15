@@ -9,6 +9,7 @@ from retrying import retry
 from suds import WebFault
 from suds.client import Client
 
+logger = logging.getLogger(__name__)
 
 logging.basicConfig(level=logging.ERROR)
 logging.getLogger('suds.client').setLevel(logging.INFO)
@@ -117,4 +118,5 @@ class VATIN(object):
             self.result = self.client.service.checkVat(self.country_code, self.number)
             return self.result.valid
         except WebFault:
+            logger.exception('VIES checkVat service unavailable.')
             raise ValueError('VIES checkVat service unavailable.')
