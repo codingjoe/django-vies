@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from setuptools import setup, Command
+import sys, os
 
 
 class PyTest(Command):
@@ -18,6 +19,15 @@ class PyTest(Command):
         errno = subprocess.call([sys.executable, 'runtests.py'])
         raise SystemExit(errno)
 
+
+# When creating the sdist, make sure the django.mo file also exists:
+if 'sdist' in sys.argv or 'develop' in sys.argv:
+    try:
+        os.chdir('vies')
+        from django.core import management
+        management.call_command('compilemessages')
+    finally:
+        os.chdir('..')
 
 setup(
     name='django-vies',

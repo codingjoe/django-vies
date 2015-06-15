@@ -4,6 +4,7 @@ from __future__ import (unicode_literals, absolute_import)
 import logging
 
 from django.utils.functional import cached_property
+from django.utils.translation import ugettext_lazy as _
 import re
 from retrying import retry
 from suds import WebFault
@@ -101,9 +102,9 @@ class VATIN(object):
 
     def _validate(self):
         if not re.match(r'^[a-zA-Z]', self.country_code):
-            raise ValueError('%s is not a valid ISO_3166-1 country code.' % (self.country_code))
+            raise ValueError(_('%s is not a valid ISO_3166-1 country code.') % (self.country_code))
         elif not self.country_code in MEMBER_COUNTRY_CODES:
-            raise ValueError('%s is not a VIES member country.' % (self.country_code))
+            raise ValueError(_('%s is not a VIES member country.') % (self.country_code))
 
         country = dict(map(lambda x, y: (x, y), ('country', 'validator', 'formatter'), VIES_OPTIONS[self.country_code]))
         return country['validator'].match('%s%s' % (self.country_code, self.number))
@@ -119,4 +120,4 @@ class VATIN(object):
             return self.result.valid
         except WebFault:
             logger.exception('VIES checkVat service unavailable.')
-            raise ValueError('VIES checkVat service unavailable.')
+            raise ValueError(_('VIES check VAT service unavailable.'))
