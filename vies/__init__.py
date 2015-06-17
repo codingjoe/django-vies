@@ -9,7 +9,7 @@ from retrying import retry
 from suds import WebFault
 from suds.client import Client
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('vies')
 
 logging.basicConfig(level=logging.ERROR)
 logging.getLogger('suds.client').setLevel(logging.INFO)
