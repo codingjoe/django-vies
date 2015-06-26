@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import (unicode_literals, absolute_import)
+from __future__ import absolute_import, unicode_literals
 
 import re
 
@@ -12,7 +12,6 @@ EMPTY_VALUES = (None, '')
 
 
 class VATINWidget(forms.MultiWidget):
-    """docstring for VATINWidget"""
 
     def __init__(self, choices=VIES_COUNTRY_CHOICES, attrs=None):
         widgets = (
@@ -22,7 +21,10 @@ class VATINWidget(forms.MultiWidget):
         super(VATINWidget, self).__init__(widgets, attrs)
 
     def value_from_datadict(self, data, files, name):
-        value = [widget.value_from_datadict(data, files, name + '_%s' % i) for i, widget in enumerate(self.widgets)]
+        value = [
+            widget.value_from_datadict(data, files, name + '_%s' % i)
+            for i, widget in enumerate(self.widgets)
+            ]
         try:
             country, code = value
             # the spaces and the dots are removed
@@ -70,9 +72,8 @@ class VATINWidget(forms.MultiWidget):
 
 
 class VATINHiddenWidget(VATINWidget):
-    """
-    A Widget that splits vat input into two <input type="hidden"> inputs.
-    """
+
+    """Widget that splits vat input into two <input type="hidden"> inputs."""
 
     def __init__(self, attrs=None):
         widgets = (HiddenInput(attrs=attrs), HiddenInput(attrs=attrs))

@@ -24,7 +24,13 @@ install:
   - pip install .
   - pip install Django$DJANGO
   - pip install coveralls
+  - pip install isort
+  - pip install flake8
+  - pip install pep257
 script:
   coverage run --source=vies runtests.py
+  flake8 --statistics --show-source vies
+  isort -c -rc -df vies
+  pep257 --ignore=D100,D101,D102,D103 vies
 after_success:
   coveralls

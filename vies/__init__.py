@@ -15,7 +15,7 @@ logger = logging.getLogger('vies')
 logging.basicConfig(level=logging.ERROR)
 logging.getLogger('suds.client').setLevel(logging.INFO)
 
-VIES_WSDL_URL = str('http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl')
+VIES_WSDL_URL = str('http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl')  # NOQA
 
 
 def dk_format(v):
@@ -47,8 +47,12 @@ VIES_OPTIONS = {
     'EL': ('Greece', re.compile(r'^EL\d{9}$')),
     'ES': ('Spain', re.compile(r'^ES[A-Z0-9]\d{7}[A-Z0-9]$')),
     'FI': ('Finland', re.compile(r'^FI\d{8}$')),
-    'FR': ('France', re.compile(r'^FR[A-HJ-NP-Z0-9][A-HJ-NP-Z0-9]\d{9}$'), fr_format),
-    'GB': ('United Kingdom', re.compile(r'^(GB(GD|HA)\d{3}|GB\d{9}|GB\d{12})$'), gb_format),
+    'FR': ('France',
+           re.compile(r'^FR[A-HJ-NP-Z0-9][A-HJ-NP-Z0-9]\d{9}$'),
+           fr_format),
+    'GB': ('United Kingdom',
+           re.compile(r'^(GB(GD|HA)\d{3}|GB\d{9}|GB\d{12})$'),
+           gb_format),
     'HU': ('Hungary', re.compile(r'^HU\d{8}$')),
     'IE': ('Ireland', re.compile(r'^IE\d[A-Z0-9\+\*]\d{5}[A-Z]$')),
     'IT': ('Italy', re.compile(r'^IT\d{11}$')),
@@ -76,9 +80,8 @@ MEMBER_COUNTRY_CODES = VIES_OPTIONS.keys()
 
 
 class VATIN(object):
-    """
-    Object wrapper for the european VAT Identification Number
-    """
+
+    """Object wrapper for the european VAT Identification Number."""
 
     _country_code = None
 
@@ -111,8 +114,13 @@ class VATIN(object):
             msg = ugettext('%s is not a VIES member country.')
             raise ValueError(msg, self.country_code)
 
-        country = dict(map(lambda x, y: (x, y), ('country', 'validator', 'formatter'), VIES_OPTIONS[self.country_code]))
-        return country['validator'].match('%s%s' % (self.country_code, self.number))
+        country = dict(map(
+            lambda x, y: (x, y), ('country', 'validator', 'formatter'),
+            VIES_OPTIONS[self.country_code]
+        ))
+        return country['validator'].match(
+            '%s%s' % (self.country_code, self.number)
+        )
 
     @cached_property
     def client(self):
@@ -121,7 +129,10 @@ class VATIN(object):
     @retry(stop_max_delay=10000)
     def _verify(self):
         try:
-            self.result = self.client.service.checkVat(self.country_code, self.number)
+            self.result = self.client.service.checkVat(
+                self.country_code,
+                self.number
+            )
             return self.result.valid
         except WebFault as e:
             logger.exception(e)

@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
-from __future__ import (unicode_literals, absolute_import)
+from __future__ import absolute_import, unicode_literals
 
 import logging
-
-from mock import patch
-from suds import WebFault
 
 from django import get_version
 from django.contrib.admin.options import ModelAdmin
 from django.contrib.admin.sites import AdminSite
-from django.db.models import Model, CharField
+from django.db.models import CharField, Model
 from django.forms import Form, ModelForm
 from django.utils import unittest
+from mock import patch
+from suds import WebFault
 
-from vies import fields, VATIN
-from vies import models
+from vies import VATIN, fields, models
 
 VALID_VIES = 'DE284754038'
 VALID_VIES_COUNTRY_CODE = 'DE'
@@ -105,8 +103,7 @@ class VIESTestCase(unittest.TestCase):
 
     @patch('vies.Client')
     def test_raises_when_suds_WebFault(self, mock_client):
-        """Raises an error if suds raises a WebFault"""
-
+        """Raise an error if suds raises a WebFault."""
         mock_checkVat = mock_client.return_value.service.checkVat
         mock_checkVat.side_effect = WebFault(500, 'error')
 
@@ -119,7 +116,9 @@ class VIESTestCase(unittest.TestCase):
 
         logging.getLogger('vies').setLevel(logging.NOTSET)
 
-        mock_checkVat.assert_called_with(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
+        mock_checkVat.assert_called_with(
+            VALID_VIES_COUNTRY_CODE,
+            VALID_VIES_NUMBER)
 
 
 class ModelTestCase(unittest.TestCase):
@@ -145,31 +144,39 @@ class ModelTestCase(unittest.TestCase):
 
 class ModelFormTestCase(unittest.TestCase):
     def test_is_valid(self):
-        """Form is valid"""
-        form = VIESModelForm({'vat_0': VALID_VIES_COUNTRY_CODE, 'vat_1': VALID_VIES_NUMBER})
+        """Form is valid."""
+        form = VIESModelForm({
+            'vat_0': VALID_VIES_COUNTRY_CODE,
+            'vat_1': VALID_VIES_NUMBER})
         self.assertTrue(form.is_valid())
 
         vies = form.save()
         self.assertEqual(vies.vat, VALID_VIES)
 
     def test_is_not_valid_country(self):
-        """Invalid country"""
-        form = VIESModelForm({'vat_0': 'xx', 'vat_1': VALID_VIES_NUMBER})
+        """Invalid country."""
+        form = VIESModelForm({
+            'vat_0': 'xx',
+            'vat_1': VALID_VIES_NUMBER})
         self.assertFalse(form.is_valid())
 
     def test_is_not_valid_numbers(self):
-        """Invalid number"""
-        form = VIESModelForm({'vat_0': VALID_VIES_COUNTRY_CODE, 'vat_1': 'xx123+-'})
+        """Invalid number."""
+        form = VIESModelForm({
+            'vat_0': VALID_VIES_COUNTRY_CODE,
+            'vat_1': 'xx123+-'})
         self.assertFalse(form.is_valid())
 
     def test_is_not_valid(self):
-        """Invalid number"""
+        """Invalid number."""
         form = VIESModelForm({'vat_0': 'GB', 'vat_1': '000000000'})
         self.assertFalse(form.is_valid())
 
     def test_save(self):
-        """Form is saved"""
-        form = VIESModelForm({'vat_0': VALID_VIES_COUNTRY_CODE, 'vat_1': VALID_VIES_NUMBER})
+        """Form is saved."""
+        form = VIESModelForm({
+            'vat_0': VALID_VIES_COUNTRY_CODE,
+            'vat_1': VALID_VIES_NUMBER})
         self.assertTrue(form.is_valid())
         vies_saved = form.save()
 
@@ -183,7 +190,7 @@ class ModelFormTestCase(unittest.TestCase):
         self.assertTrue(form.is_valid())
 
     def test_is_valid_and_has_vatinData(self):
-        """Valid VATINFields' vatinData() return result dict"""
+        """Valid VATINFields' vatinData() return result dict."""
         form = VIESModelForm({'vat_0': 'NL', 'vat_1': '124851903B01'})
 
         self.assertEqual(form.fields['vat'].vatinData(), None)
@@ -196,18 +203,22 @@ class ModelFormTestCase(unittest.TestCase):
     def test_invalid_error_message(self):
         form = VIESForm({'vat_0': 'NL', 'vat_1': '0000000000'})
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors['vat'][0], 'Not a valid European VAT number.')
+        self.assertEqual(form.errors['vat'][0],
+                         'Not a valid European VAT number.')
 
     def test_custom_invalid_error_message(self):
-        form = VIESFormCustomError({'vat_0': 'NL', 'vat_1': '0000000000'})
+        form = VIESFormCustomError({'vat_0': 'NL',
+                                    'vat_1': '0000000000'})
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors['vat'][0], 'This VAT number is not valid')
+        self.assertEqual(form.errors['vat'][0],
+                         'This VAT number is not valid')
 
     def test_custom_invalid_error_message_with_value(self):
         form = VIESFormCustomError16({'vat_0': 'NL', 'vat_1': '0000000000'})
         self.assertFalse(form.is_valid())
         if get_version() > '1.6':
-            self.assertEqual(form.errors['vat'][0], 'NL0000000000 is not a valid European VAT.')
+            self.assertEqual(form.errors['vat'][0],
+                             'NL0000000000 is not a valid European VAT.')
 
 
 class MockRequest(object):
@@ -221,7 +232,7 @@ class AdminTestCase(unittest.TestCase):
         self.site = AdminSite()
 
     def test_VATINField_admin(self):
-        """Admin form is generated"""
+        """Admin form is generated."""
         ma = ModelAdmin(VIESModel, self.site)
 
         try:

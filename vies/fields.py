@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
-from __future__ import (unicode_literals, absolute_import)
+from __future__ import absolute_import, unicode_literals
 
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-from . import VATIN, VIES_COUNTRY_CHOICES
 from suds import WebFault
-from .widgets import VATINWidget, VATINHiddenWidget
+
+from . import VATIN, VIES_COUNTRY_CHOICES
+from .widgets import VATINHiddenWidget, VATINWidget
 
 
 class VATINField(forms.MultiValueField):
+
     """VIES VAT field. That verifies on the fly."""
+
     hidden_widget = VATINHiddenWidget
 
     default_error_messages = {
@@ -45,7 +48,7 @@ class VATINField(forms.MultiValueField):
                 self._vies_result = vatin.result
             else:
                 raise ValidationError(
-                    self.error_messages['invalid_vat'], 
+                    self.error_messages['invalid_vat'],
                     code='invalid_vat',
                     params={'value': value})
         else:
