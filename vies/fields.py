@@ -5,6 +5,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from . import VATIN, VIES_COUNTRY_CHOICES
+from suds import WebFault
 from .widgets import VATINWidget, VATINHiddenWidget
 
 
@@ -13,7 +14,8 @@ class VATINField(forms.MultiValueField):
     hidden_widget = VATINHiddenWidget
 
     default_error_messages = {
-        'invalid_vat': _('This is not a valid European VAT number.')
+        'invalid_vat': _('This is not a valid European VAT number.'),
+        'server_error': _('VIES check VAT service currently unavailable.'),
     }
 
     def __init__(self, choices=VIES_COUNTRY_CHOICES, *args, **kwargs):
@@ -32,8 +34,13 @@ class VATINField(forms.MultiValueField):
             try:
                 vatin = VATIN(*data_list)
                 is_valid = vatin.is_valid()
+            except WebFault:
+                raise ValidationError(
+                    self.default_error_messages['server_error'],
+                    code='server_error',
+                    params={'value': value})
             except ValueError as e:
-                raise ValidationError(str(e), code='error', params={'value': value})
+                raise ValidationError(e.message, code='invalid_country_code')
             if is_valid:
                 self._vies_result = vatin.result
             else:

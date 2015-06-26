@@ -114,7 +114,7 @@ class VIESTestCase(unittest.TestCase):
 
         logging.getLogger('vies').setLevel(logging.CRITICAL)
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(WebFault):
             v.is_valid()
 
         logging.getLogger('vies').setLevel(logging.NOTSET)
