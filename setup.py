@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+import sys
+import os
 from setuptools import setup, Command
 
 
@@ -18,10 +20,17 @@ class PyTest(Command):
         errno = subprocess.call([sys.executable, 'runtests.py'])
         raise SystemExit(errno)
 
+if 'sdist' in sys.argv or 'develop' in sys.argv:
+    try:
+        os.chdir('vies')
+        from django.core import management
+        management.call_command('compilemessages')
+    finally:
+        os.chdir('..')
 
 setup(
     name='django-vies',
-    version='2.1.3',
+    version='2.2.0',
     description='European VIES VAT field for Django',
     author='codingjoe',
     url='https://github.com/codingjoe/django-vies',

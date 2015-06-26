@@ -14,7 +14,7 @@ class VATINField(forms.MultiValueField):
     hidden_widget = VATINHiddenWidget
 
     default_error_messages = {
-        'invalid_vat': _('This is not a valid European VAT number.'),
+        'invalid_vat': _('Not a valid European VAT number.'),
         'server_error': _('VIES check VAT service currently unavailable.'),
     }
 

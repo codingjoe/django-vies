@@ -1,29 +1,23 @@
+.. image:: https://img.shields.io/pypi/v/django-vies.svg
+    :target: https://pypi.python.org/pypi/django-vies/
+
 .. image:: https://travis-ci.org/codingjoe/django-vies.png?branch=master
     :target: https://travis-ci.org/codingjoe/django-vies
-    :alt: TravisCI
+    :alt: Iontinuous Integration
+
+.. image:: https://landscape.io/github/codingjoe/django-vies/master/landscape.svg?style=flat
+    :target: https://landscape.io/github/codingjoe/django-vies/master
+    :alt: Code Health
 
 .. image:: https://coveralls.io/repos/codingjoe/django-vies/badge.png?branch=master
     :target: https://coveralls.io/r/codingjoe/django-vies
+    :alt: Test Coverage
 
-.. image:: https://pypip.in/v/django-vies/badge.png
-    :target: https://pypi.python.org/pypi/django-vies/
-    :alt: Latest Version
-    
-.. image:: https://pypip.in/status/django-vies/badge.svg
-    :target: https://pypi.python.org/pypi/django-vies/
-    :alt: Development Status
+.. image:: https://scrutinizer-ci.com/g/codingjoe/django-vies/badges/quality-score.png?b=master
+    :target: https://scrutinizer-ci.com/g/codingjoe/django-vies/?branch=master
 
-.. image:: https://pypip.in/py_versions/django-vies/badge.svg
-    :target: https://pypi.python.org/pypi/django-vies/
-    :alt: Supported Python versions
-    
-.. image:: https://pypip.in/d/django-vies/badge.png
-    :target: https://pypi.python.org/pypi//django-vies/
-    :alt: Downloads
-
-.. image:: https://pypip.in/license/django-vies/badge.png
-    :target: https://pypi.python.org/pypi/django-vies/
-    :alt: License
+.. image:: https://img.shields.io/badge/license-MIT-blue.svg
+    :alt: MIT License
 
 
 ===========
@@ -74,6 +68,18 @@ Usage
        address = "(...)"
      }
 
+
+Translations
+------------
+
+Feel free to contribute translations, it's simple!
+
+```
+cd vies
+django-admin makemessages -l $YOUR_COUNTRY_CODE
+```
+
+Just edit the generated PO file. Pull-Requests are welcome!
 
 
 License
