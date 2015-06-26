@@ -12,7 +12,7 @@ from django.utils import unittest
 from mock import patch
 from suds import WebFault
 
-from vies import VATIN, fields, models
+from . import VATIN, fields, models
 
 VALID_VIES = 'DE284754038'
 VALID_VIES_COUNTRY_CODE = 'DE'
