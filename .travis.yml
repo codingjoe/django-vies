@@ -19,6 +19,9 @@ matrix:
       env: DJANGO="<1.5,>=1.4"
     - python: "pypy3"
       env: DJANGO="<1.5,>=1.4"
+  allow_failures:
+    - python: "pypy"
+    - python: "pypy3"
 install:
   - pip install --upgrade pip
   - pip install .
