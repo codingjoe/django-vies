@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-26 17:35+0200\n"
+"POT-Creation-Date: 2015-08-04 14:39+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Johannes Hoppe <info@johanneshoppe.com>\n"
 "Language-Team: \n"
@@ -17,20 +17,24 @@ msgstr ""
 # This file is distributed under the same license as the vies package.
 # Johannes Hoppe <info@johanneshoppe.com>, 2015
 #
-#: __init__.py:108
+#: __init__.py:111
 #, python-format
 msgid "%s is not a valid ISO_3166-1 country code."
 msgstr "%s ist kein gültiger ISO_3166-1 Ländercode."
 
-#: __init__.py:111
+#: __init__.py:114
 #, python-format
 msgid "%s is not a VIES member country."
 msgstr "%s ist kein VIES Mitgliedsstaat."
 
-#: fields.py:17
+#: fields.py:20
 msgid "Not a valid European VAT number."
 msgstr "Keine gültige europäische Steuernummer."
 
-#: fields.py:18
+#: fields.py:21
 msgid "VIES check VAT service currently unavailable."
 msgstr "VIES Validierungsdiest ist zur Zeit nicht erreichbar."
+
+#: models.py:12
+msgid "A VIES VAT field."
+msgstr ""
