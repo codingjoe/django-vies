@@ -30,7 +30,7 @@ if 'sdist' in sys.argv or 'develop' in sys.argv:
 
 setup(
     name='django-vies',
-    version='2.2.0',
+    version='2.2.1',
     description='European VIES VAT field for Django',
     author='codingjoe',
     url='https://github.com/codingjoe/django-vies',
