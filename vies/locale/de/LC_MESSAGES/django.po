@@ -37,4 +37,4 @@ msgstr "VIES Validierungsdiest ist zur Zeit nicht erreichbar."
 
 #: models.py:12
 msgid "A VIES VAT field."
-msgstr ""
+msgstr "Ein USt-IdNr. Feld."

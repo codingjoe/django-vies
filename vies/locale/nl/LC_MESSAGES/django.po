@@ -25,16 +25,16 @@ msgstr "%s is geen geldige ISO_3166-1 landcode."
 #: __init__.py:114
 #, python-format
 msgid "%s is not a VIES member country."
-msgstr "%s is niet een VIES lidstaat."
+msgstr "%s is geen VIES-lidstaat."
 
 #: fields.py:20
 msgid "Not a valid European VAT number."
-msgstr "Dit is geen geldig Europese BTW nummer"
+msgstr "Dit is geen geldig Europees BTW-nummer"
 
 #: fields.py:21
 msgid "VIES check VAT service currently unavailable."
-msgstr "VIES BTW-nummer verifiatie is momenteel onbeschikbaar."
+msgstr "VIES BTW-nummerverificatie is momenteel niet beschikbaar."
 
 #: models.py:12
 msgid "A VIES VAT field."
-msgstr "Een VIES BTW nummer."
+msgstr "Een VIES BTW-nummer veld."
