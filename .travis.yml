@@ -1,39 +1,34 @@
 language: python
 sudo: false
+cache:
+  - pip
 python:
   - "2.7"
   - "3.3"
   - "3.4"
+  - "3.5"
   - "pypy"
   - "pypy3"
 env:
-  - DJANGO="<1.5,>=1.4"
-  - DJANGO="<1.8,>=1.7"
-  - DJANGO="<1.9,>=1.8"
-
+  matrix:
+    - DJANGO="Django<1.8,>=1.7"
+    - DJANGO="Django<1.9,>=1.8"
+    - DJANGO="-e git+https://github.com/django/django.git@master#egg=Django"
 matrix:
-  exclude:
-    - python: "3.3"
-      env: DJANGO="<1.5,>=1.4"
-    - python: "3.4"
-      env: DJANGO="<1.5,>=1.4"
-    - python: "pypy3"
-      env: DJANGO="<1.5,>=1.4"
+  fast_finish: true
   allow_failures:
-    - python: "pypy"
-    - python: "pypy3"
+    - python: "3.5"
+    - env: DJANGO="-e git+https://github.com/django/django.git@master#egg=Django"
 install:
   - pip install --upgrade pip
-  - pip install .
-  - pip install Django$DJANGO
-  - pip install coveralls
-  - pip install isort
-  - pip install flake8
-  - pip install pep257
+  - pip install $DJANGO
+  - pip install -r requirements-dev.txt
+  - pip install $DJANGO
+  - pip install --upgrade coveralls
 script:
+  - isort --check-only --recursive --diff .
+  - flake8 --jobs=2 .
+  - pep257
   - coverage run --source=vies runtests.py
-  - flake8 --statistics --show-source vies
-  - isort -c -rc -df vies
-  - pep257 --ignore=D100,D101,D102,D103 vies
 after_success:
-  coveralls
+  - coveralls

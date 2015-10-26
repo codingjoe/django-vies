@@ -11,7 +11,6 @@ from .widgets import VATINHiddenWidget, VATINWidget
 
 
 class VATINField(forms.MultiValueField):
-
     """VIES VAT field. That verifies on the fly."""
 
     hidden_widget = VATINHiddenWidget
@@ -55,5 +54,5 @@ class VATINField(forms.MultiValueField):
             value = ''
         return value
 
-    def vatinData(self):
+    def vatin_data(self):
         return self._vies_result if hasattr(self, '_vies_result') else None

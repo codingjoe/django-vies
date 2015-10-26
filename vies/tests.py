@@ -102,10 +102,10 @@ class VIESTestCase(unittest.TestCase):
         self.assertEqual(v.result['vatNumber'], VALID_VIES_NUMBER)
 
     @patch('vies.Client')
-    def test_raises_when_suds_WebFault(self, mock_client):
+    def test_raises_when_suds_web_fault(self, mock_client):
         """Raise an error if suds raises a WebFault."""
-        mock_checkVat = mock_client.return_value.service.checkVat
-        mock_checkVat.side_effect = WebFault(500, 'error')
+        mock_check_vat = mock_client.return_value.service.checkVat
+        mock_check_vat.side_effect = WebFault(500, 'error')
 
         v = VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
 
@@ -116,7 +116,7 @@ class VIESTestCase(unittest.TestCase):
 
         logging.getLogger('vies').setLevel(logging.NOTSET)
 
-        mock_checkVat.assert_called_with(
+        mock_check_vat.assert_called_with(
             VALID_VIES_COUNTRY_CODE,
             VALID_VIES_NUMBER)
 
@@ -189,14 +189,14 @@ class ModelFormTestCase(unittest.TestCase):
         form = EmptyVIESModelForm({'name': 'Eva'})
         self.assertTrue(form.is_valid())
 
-    def test_is_valid_and_has_vatinData(self):
-        """Valid VATINFields' vatinData() return result dict."""
+    def test_is_valid_and_has_vatin_data(self):
+        """Valid VATINFields' vatin_data() return result dict."""
         form = VIESModelForm({'vat_0': 'NL', 'vat_1': '124851903B01'})
 
-        self.assertEqual(form.fields['vat'].vatinData(), None)
+        self.assertEqual(form.fields['vat'].vatin_data(), None)
 
         form.is_valid()
-        data = form.fields['vat'].vatinData()
+        data = form.fields['vat'].vatin_data()
 
         self.assertEqual(data['name'], 'JIETER')
 
@@ -231,7 +231,7 @@ class AdminTestCase(unittest.TestCase):
     def setUp(self):
         self.site = AdminSite()
 
-    def test_VATINField_admin(self):
+    def test_vatin_field_admin(self):
         """Admin form is generated."""
         ma = ModelAdmin(VIESModel, self.site)
 

@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import sys
-
-from os.path import dirname, abspath
+from os.path import abspath, dirname
 
 
 def module_exists(module_name):
@@ -12,7 +11,9 @@ def module_exists(module_name):
     else:
         return True
 
-from django.conf import settings
+
+from django.conf import settings  # NoQA
+
 if not settings.configured:
     settings.configure(
         DATABASES={'default': {'ENGINE': 'django.db.backends.sqlite3'}},
