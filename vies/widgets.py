@@ -72,7 +72,6 @@ class VATINWidget(forms.MultiWidget):
 
 
 class VATINHiddenWidget(VATINWidget):
-
     """Widget that splits vat input into two <input type="hidden"> inputs."""
 
     def __init__(self, attrs=None):

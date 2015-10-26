@@ -1,0 +1,10 @@
+-e .
+isort>=4.2.1
+pep257==0.7.0
+pep8>=1.6.2
+flake8>=2.4.1
+pep8-naming>=0.3.3
+coverage>=4.0
+django_coverage_plugin==1.0
+mccabe>=0.3.0
+pre-commit>=0.5.5

@@ -1,7 +1,9 @@
 #!/usr/bin/env python
-import sys
 import os
-from setuptools import setup, Command
+import subprocess
+import sys
+
+from setuptools import Command, setup
 
 
 class PyTest(Command):
@@ -14,9 +16,6 @@ class PyTest(Command):
         pass
 
     def run(self):
-        import sys
-        import subprocess
-
         errno = subprocess.call([sys.executable, 'runtests.py'])
         raise SystemExit(errno)
 

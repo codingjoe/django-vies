@@ -2,10 +2,10 @@
 from __future__ import (unicode_literals, absolute_import)
 
 import logging
+import re
 
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext
-import re
 from retrying import retry
 from suds import WebFault
 from suds.client import Client
@@ -70,8 +70,8 @@ VIES_OPTIONS = {
 }
 
 VIES_COUNTRY_CHOICES = sorted(
-    (('', '--'),)
-    + tuple(
+    (('', '--'),) +
+    tuple(
         (key, key)
         for key, value in VIES_OPTIONS.items())
 )
@@ -80,7 +80,6 @@ MEMBER_COUNTRY_CODES = VIES_OPTIONS.keys()
 
 
 class VATIN(object):
-
     """Object wrapper for the european VAT Identification Number."""
 
     _country_code = None
