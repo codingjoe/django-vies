@@ -17,6 +17,7 @@ from . import VATIN, fields, models
 VALID_VIES = 'DE284754038'
 VALID_VIES_COUNTRY_CODE = 'DE'
 VALID_VIES_NUMBER = '284754038'
+VALID_VIES_IE = ['1234567X', '1X23456X', '1234567XX', ]
 
 
 class VIESModel(Model):
@@ -100,6 +101,16 @@ class VIESTestCase(unittest.TestCase):
 
         self.assertEqual(v.result['countryCode'], VALID_VIES_COUNTRY_CODE)
         self.assertEqual(v.result['vatNumber'], VALID_VIES_NUMBER)
+
+    def test_ie_regex_validation(self):
+        import re
+        SRE_MATCH_TYPE = type(re.match("", ""))
+
+        for vn in VALID_VIES_IE:
+            v = VATIN('IE', vn)
+            assert isinstance(
+                v._validate(),
+                SRE_MATCH_TYPE), 'Validation failed for {}'.format(vn)
 
     @patch('vies.Client')
     def test_raises_when_suds_WebFault(self, mock_client):
