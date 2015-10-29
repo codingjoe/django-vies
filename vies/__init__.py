@@ -54,7 +54,7 @@ VIES_OPTIONS = {
            re.compile(r'^(GB(GD|HA)\d{3}|GB\d{9}|GB\d{12})$'),
            gb_format),
     'HU': ('Hungary', re.compile(r'^HU\d{8}$')),
-    'IE': ('Ireland', re.compile(r'^IE\d[A-Z0-9\+\*]\d{5}[A-Z]$')),
+    'IE': ('Ireland', re.compile(r'^IE\d[A-Z0-9\+\*]\d{5}[A-Z]{1,2}$')),
     'IT': ('Italy', re.compile(r'^IT\d{11}$')),
     'LT': ('Lithuania', re.compile(r'^LT(\d{9}|\d{12})$')),
     'LU': ('Luxembourg', re.compile(r'^LU\d{8}$')),
