@@ -1,0 +1,35 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-28 13:28+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Christian Pedersen <chripede@gmail.com>\n"
+"Language-Team: \n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: __init__.py:111
+#, python-format
+msgid "%s is not a valid ISO_3166-1 country code."
+msgstr "%s er ikke en gyldig ISO_3166-1 landekode."
+
+#: __init__.py:114
+#, python-format
+msgid "%s is not a VIES member country."
+msgstr "%s er ikke et VIES medlemsland."
+
+#: fields.py:20
+msgid "Not a valid European VAT number."
+msgstr "Ikke et gyldigt EU momsnummer."
+
+#: fields.py:21
+msgid "VIES check VAT service currently unavailable."
+msgstr "VIES moms-servicen er ikke tilgængelig i øjeblikket."
+
+#: models.py:12
+msgid "A VIES VAT field."
+msgstr "Et VIES momsnummer felt."
