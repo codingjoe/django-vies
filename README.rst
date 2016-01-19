@@ -23,7 +23,6 @@
    :alt: Join the chat at https://gitter.im/codingjoe/django-vies
    :target: https://gitter.im/codingjoe/django-vies?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
-
 ===========
 Django-VIES
 ===========
@@ -41,6 +40,12 @@ Latest Development
 ::
 
     pip install -e git://github.com/codingjoe/django-vies.git#egg=django-vies
+
+``INSTALLED_APPS``
+++++++++++++++++++
+
+Add ``'vies.apps.ViesConfig'`` to your ``INSTALLED_APPS``.
+
 
 Usage
 -----
@@ -71,6 +76,21 @@ Usage
        name = "JIETER"
        address = "(...)"
      }
+
+
+Settings
+--------
+
+``allow_server_error``
+++++++++++++++++++++++
+
+Throws a ``ValidationError`` if the VIES check VAT service is currently
+unavailable. Replace ``'vies.apps.ViesConfig'`` with
+``'vies.apps.ViesDisallowServerErrorConfig'`` in
+``settings.INSTALLED_APPS`` to disable this behavior. This change will
+insert a empty string for the ``VATINField`` in ``cleaned_data``, so the
+VATIN will not be saved. You have to inform the user about this by using
+your own implementation.
 
 
 Translations

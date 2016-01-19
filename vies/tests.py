@@ -8,11 +8,12 @@ from django.contrib.admin.options import ModelAdmin
 from django.contrib.admin.sites import AdminSite
 from django.db.models import CharField, Model
 from django.forms import Form, ModelForm
+from django.test import override_settings
 from django.utils import unittest
 from mock import patch
 from suds import WebFault
 
-from . import VATIN, fields, models
+from . import VATIN, VIES_COUNTRY_CHOICES, fields, models
 
 VALID_VIES = 'DE284754038'
 VALID_VIES_COUNTRY_CODE = 'DE'
@@ -151,6 +152,24 @@ class ModelTestCase(unittest.TestCase):
         vies_received = VIESModel.objects.get(pk=vies_saved.pk)
         self.assertNotEqual(VIESModel.objects.count(), 0)
         self.assertEqual(vies_received.vat, VALID_VIES)
+
+
+class FieldTestCase(unittest.TestCase):
+
+    @patch('vies.Client')
+    @override_settings(INSTALLED_APPS=['vies.apps.ViesDisallowServerErrorConfig'])  # noqa
+    def test_not_raises_when_suds_web_fault_exception(self, mock_client):
+        """Do not raise if WebFault exception and allow_server_error=False."""
+        mock_check_vat = mock_client.return_value.service.checkVat
+        mock_check_vat.side_effect = WebFault(500, 'error')
+
+        logging.getLogger('vies').setLevel(logging.CRITICAL)
+
+        v = fields.VATINField(VIES_COUNTRY_CHOICES)
+        out = v.clean([VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER])
+        self.assertEqual(out, '')
+
+        logging.getLogger('vies').setLevel(logging.NOTSET)
 
 
 class ModelFormTestCase(unittest.TestCase):

@@ -2,6 +2,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from django import forms
+from django.apps import apps
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from suds import WebFault
@@ -31,20 +32,26 @@ class VATINField(forms.MultiValueField):
         super(VATINField, self).__init__(fields=fields, *args, **kwargs)
 
     def compress(self, data_list):
+        allow_server_error = apps.get_app_config('vies').allow_server_error
         if data_list:
             value = ''.join(data_list)
             try:
                 vatin = VATIN(*data_list)
                 is_valid = vatin.is_valid()
             except WebFault:
-                raise ValidationError(
-                    self.default_error_messages['server_error'],
-                    code='server_error',
-                    params={'value': value})
+                if allow_server_error:
+                    raise ValidationError(
+                        self.default_error_messages['server_error'],
+                        code='server_error',
+                        params={'value': value})
+                else:
+                    is_valid = False
             except ValueError as e:
                 raise ValidationError(e.message, code='invalid_country_code')
             if is_valid:
                 self._vies_result = vatin.result
+            elif not allow_server_error:
+                value = ''
             else:
                 raise ValidationError(
                     self.error_messages['invalid_vat'],

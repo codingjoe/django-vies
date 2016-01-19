@@ -10,6 +10,8 @@ from retrying import retry
 from suds import WebFault
 from suds.client import Client
 
+default_app_config = 'vies.apps.ViesConfig'
+
 logger = logging.getLogger('vies')
 
 logging.basicConfig(level=logging.ERROR)
