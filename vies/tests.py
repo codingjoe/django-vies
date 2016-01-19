@@ -157,17 +157,17 @@ class ModelTestCase(unittest.TestCase):
 class FieldTestCase(unittest.TestCase):
 
     @patch('vies.Client')
-    @override_settings(INSTALLED_APPS=['vies.apps.ViesDisallowServerErrorConfig'])
-    def test_disable_validation_when_suds_web_fault_exception(self, mock_client):
-        """Disable Validation if WebFault exception and AppConfig.allow_server_error=False."""
+    @override_settings(INSTALLED_APPS=['vies.apps.ViesDisallowServerErrorConfig'])  # noqa
+    def test_not_raises_when_suds_web_fault_exception(self, mock_client):
+        """Do not raise if WebFault exception and allow_server_error=False."""
         mock_check_vat = mock_client.return_value.service.checkVat
         mock_check_vat.side_effect = WebFault(500, 'error')
 
         logging.getLogger('vies').setLevel(logging.CRITICAL)
 
         v = fields.VATINField(VIES_COUNTRY_CHOICES)
-
-        self.assertEqual(v.clean([VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER]), '')
+        out = v.clean([VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER])
+        self.assertEqual(out, '')
 
         logging.getLogger('vies').setLevel(logging.NOTSET)
 
