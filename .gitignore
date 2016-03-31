@@ -6,3 +6,5 @@
 django_vies.egg-info/
 build/
 dist/
+.tox/
+.cache/

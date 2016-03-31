@@ -6,13 +6,16 @@ import logging
 from django import get_version
 from django.contrib.admin.options import ModelAdmin
 from django.contrib.admin.sites import AdminSite
-from django.db.models import CharField, Model
-from django.forms import Form, ModelForm
-from django.utils import unittest
+from django.test import TestCase
 from mock import patch
 from suds import WebFault
 
-from . import VATIN, fields, models
+from tests.testapp.forms import (
+    EmptyVIESModelForm, VIESForm, VIESFormCustomError, VIESFormCustomError16,
+    VIESModelForm
+)
+from tests.testapp.models import VIESModel
+from vies import VATIN
 
 VALID_VIES = 'DE284754038'
 VALID_VIES_COUNTRY_CODE = 'DE'
@@ -20,54 +23,7 @@ VALID_VIES_NUMBER = '284754038'
 VALID_VIES_IE = ['1234567X', '1X23456X', '1234567XX', ]
 
 
-class VIESModel(Model):
-    vat = models.VATINField()
-
-
-class EmptyVIESModel(Model):
-    name = CharField(default='John Doe', max_length=50)
-    vat = models.VATINField(blank=True, null=True)
-
-
-class VIESModelForm(ModelForm):
-    class Meta:
-        model = VIESModel
-        exclude = []
-
-
-class EmptyVIESModelForm(ModelForm):
-    class Meta:
-        model = EmptyVIESModel
-        exclude = []
-
-
-class VIESForm(Form):
-    vat = fields.VATINField()
-
-
-class EmptyVIESForm(Form):
-    vat = fields.VATINField(required=False)
-
-
-custom_error = {
-    'invalid_vat': 'This VAT number is not valid'
-}
-
-
-class VIESFormCustomError(Form):
-    vat = fields.VATINField(error_messages=custom_error)
-
-
-custom_error_16 = {
-    'invalid_vat': '%(value)s is not a valid European VAT.'
-}
-
-
-class VIESFormCustomError16(Form):
-    vat = fields.VATINField(error_messages=custom_error_16)
-
-
-class VIESTestCase(unittest.TestCase):
+class VIESTestCase(TestCase):
     def setUp(self):
         pass
 
@@ -132,7 +88,7 @@ class VIESTestCase(unittest.TestCase):
             VALID_VIES_NUMBER)
 
 
-class ModelTestCase(unittest.TestCase):
+class ModelTestCase(TestCase):
     def setUp(self):
         pass
 
@@ -153,7 +109,7 @@ class ModelTestCase(unittest.TestCase):
         self.assertEqual(vies_received.vat, VALID_VIES)
 
 
-class ModelFormTestCase(unittest.TestCase):
+class ModelFormTestCase(TestCase):
     def test_is_valid(self):
         """Form is valid."""
         form = VIESModelForm({
@@ -238,7 +194,7 @@ class MockRequest(object):
 request = MockRequest()
 
 
-class AdminTestCase(unittest.TestCase):
+class AdminTestCase(TestCase):
     def setUp(self):
         self.site = AdminSite()
 

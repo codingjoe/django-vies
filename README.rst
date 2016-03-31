@@ -1,7 +1,10 @@
+.. image:: https://img.shields.io/badge/Django-CC-ee66dd.svg
+    :target: https://github.com/codingjoe/django-cc
+
 .. image:: https://img.shields.io/pypi/v/django-vies.svg
     :target: https://pypi.python.org/pypi/django-vies/
 
-.. image:: https://travis-ci.org/codingjoe/django-vies.png?branch=master
+.. image:: https://travis-ci.org/codingjoe/django-vies.svg?branch=master
     :target: https://travis-ci.org/codingjoe/django-vies
     :alt: Iontinuous Integration
 
@@ -9,12 +12,9 @@
     :target: https://landscape.io/github/codingjoe/django-vies/master
     :alt: Code Health
 
-.. image:: https://coveralls.io/repos/codingjoe/django-vies/badge.png?branch=master
+.. image:: https://coveralls.io/repos/codingjoe/django-vies/badge.svg?branch=master
     :target: https://coveralls.io/r/codingjoe/django-vies
     :alt: Test Coverage
-
-.. image:: https://scrutinizer-ci.com/g/codingjoe/django-vies/badges/quality-score.png?b=master
-    :target: https://scrutinizer-ci.com/g/codingjoe/django-vies/?branch=master
 
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
     :alt: MIT License
