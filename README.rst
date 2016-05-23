@@ -33,12 +33,14 @@ Provided are a VATIN object, a ModelField and a FormField.
 Installation
 ------------
 Current Stable
-::
+
+.. code:: shell
 
     pip install django-vies
 
 Latest Development
-::
+
+.. code:: shell
 
     pip install -e git://github.com/codingjoe/django-vies.git#egg=django-vies
 
@@ -46,7 +48,8 @@ Usage
 -----
 
 ``VATINField`` for models
-::
+
+.. code:: python
 
     from vies.models import VATINField
 
@@ -56,7 +59,8 @@ Usage
         vat = VATINField(blank=True, null=True)
 
 ``VATIN`` wrapper class, allows access to result.
-::
+
+.. code:: python
 
     >>> from vies import VATIN
     >>> vat = VATIN('NL', '124851903B01')
@@ -77,7 +81,9 @@ The VIES API endpoint can be very unreliable and seems to have an IP based acces
 Therefore the ``VATINField` does NOT perform API based validation by default. It needs
 to be explicitly turned on or performed in a separate task.
 
-e.g.::
+e.g.
+
+.. code:: python
 
     from vies.models import VATINField
     from vies.validators import VATINValidator
@@ -92,7 +98,9 @@ e.g.::
 
 It is recommended to perform VIES API validation inside an asynchronous task.
 
-e.g. using celery::
+e.g. using celery
+
+.. code:: python
 
     from celery import shared_task
     from vies.models import VATINField
@@ -135,10 +143,10 @@ Translations
 
 Feel free to contribute translations, it's simple!
 
-```
-cd vies
-django-admin makemessages -l $YOUR_COUNTRY_CODE
-```
+.. code:: shell
+
+    cd vies
+    django-admin makemessages -l $YOUR_COUNTRY_CODE
 
 Just edit the generated PO file. Pull-Requests are welcome!
 
