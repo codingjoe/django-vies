@@ -3,6 +3,8 @@ from __future__ import (unicode_literals, absolute_import)
 
 import logging
 
+__version__ = "3.0.0"
+
 logger = logging.getLogger('vies')
 
 logging.basicConfig(level=logging.ERROR)

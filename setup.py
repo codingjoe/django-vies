@@ -18,13 +18,20 @@ if django and ('sdist' in sys.argv or 'develop' in sys.argv):
     finally:
         os.chdir('..')
 
+
+PACKAGE = "vies"
+URL = "https://github.com/codingjoe/django-vies"
+DESCRIPTION = __import__(PACKAGE).__doc__
+VERSION = __import__(PACKAGE).__version__
+
+
 setup(
     name='django-vies',
-    version='2.2.2',
-    description='European VIES VAT field for Django',
+    version=VERSION,
+    description=DESCRIPTION,
     author='codingjoe',
-    url='https://github.com/codingjoe/django-vies',
-    download_url='https://github.com/codingjoe/django-vies',
+    url=URL,
+    download_url=URL,
     author_email='info@johanneshoppe.com',
     license='MIT',
     classifiers=[
@@ -41,7 +48,7 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
     ],
-    packages=['vies'],
+    packages=[PACKAGE],
     include_package_data=True,
     install_requires=[
         'suds-jurko>=0.6',
