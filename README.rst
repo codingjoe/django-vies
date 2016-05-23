@@ -73,6 +73,63 @@ Usage
      }
 
 
+The VIES API endpoint can be very unreliable and seems to have an IP based access limit.
+Therefore the ``VATINField` does NOT perform API based validation by default. It needs
+to be explicitly turned on or performed in a separate task.
+
+e.g.::
+
+    from vies.models import VATINField
+    from vies.validators import VATINValidator
+
+
+    class Company(models.Model):
+        name = models.CharField(max_length=100)
+        vat = VATINField(validators=VATINValidator(verify=True, validate=True))
+
+``validate=True`` will tell the validator to validate against the VIES API.
+``verify`` is enabled on by default and will only verify that the VATIN matches the countries specifications.
+
+It is recommended to perform VIES API validation inside an asynchronous task.
+
+e.g. using celery::
+
+    from celery import shared_task
+    from vies.models import VATINField
+    from vies.validators import VATINValidator
+
+
+    class Company(models.Model):
+        name = models.CharField(max_length=100)
+        vat = VATINField()
+        vat_is_valid = models.BooleanField(default=False)
+
+        def __init__(self, *args, **kwargs):
+            self.__vat = self.vat
+            super(Company, self).__init__(*args, **kwargs)
+
+        def save(self, *args, **kwargs):
+            if self.__vat != self.vat:
+                validate_vat_field.delay(self)
+            super(Company, self).save(*args, **kwargs)
+            self.__vat = self.vat
+
+        def refresh_from_db(self)
+            super(Company, self).refresh_from_db()
+            self.__vat = self.vat
+
+    @shared_task
+    def validate_vat_field(company):
+        try:
+            company.vat.validate()
+        except ValidationError:
+            self.vat_is_valid = False
+        else:
+            self.vat_is_valid = False
+        finally:
+            self.save()
+
+
 Translations
 ------------
 
@@ -90,7 +147,7 @@ License
 -------
 The MIT License (MIT)
 
-Copyright (c) 2014 Johannes Hoppe
+Copyright (c) 2014-2016 Johannes Hoppe
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
