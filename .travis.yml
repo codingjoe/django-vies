@@ -14,7 +14,6 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
-    - python: "3.5"
     - env: DJANGO="-e git+https://github.com/django/django.git@master#egg=Django"
 install:
   - pip install --upgrade pip
@@ -25,7 +24,7 @@ install:
 script:
   - isort --check-only --recursive --diff .
   - flake8 --jobs=2 .
-  - pep257
+  - pydocstyle --verbose --explain --source --count {posargs}
   - coverage run --source=vies -m "pytest"
 after_success:
   - coveralls
