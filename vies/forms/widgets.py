@@ -45,7 +45,14 @@ class VATINWidget(forms.MultiWidget):
         return "%s&nbsp;%s" % (rendered_widgets[0], rendered_widgets[1])
 
     def decompress(self, value):
-        return value[:2], value[2:]
+        if value:
+            try:
+                country, code = value
+            except ValueError:
+                country = value[:2]
+                code = value[2:]
+            return country, code
+        return None, None
 
 
 class VATINHiddenWidget(VATINWidget):

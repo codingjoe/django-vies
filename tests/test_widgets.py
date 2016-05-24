@@ -96,6 +96,17 @@ class TestWidget(object):
         v = widget.value_from_datadict(data, [], 'my_field')
         assert v == [VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER]
 
+    def test_decompress(self):
+        assert (VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER) == VATINWidget().decompress(
+            "%s%s" % (VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
+        )
+        assert (VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER) == VATINWidget().decompress(
+            [VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER]
+        )
+        assert (None, None) == VATINWidget().decompress(
+            None
+        )
+
 
 class MockRequest(object):
     pass
