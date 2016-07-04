@@ -91,7 +91,7 @@ e.g.
 
     class Company(models.Model):
         name = models.CharField(max_length=100)
-        vat = VATINField(validators=VATINValidator(verify=True, validate=True))
+        vat = VATINField(validators=[VATINValidator(verify=True, validate=True)])
 
 ``validate=True`` will tell the validator to validate against the VIES API.
 ``verify`` is enabled on by default and will only verify that the VATIN matches the countries specifications.
