@@ -51,8 +51,8 @@ Usage
 
 .. code:: python
 
+    from django.db import models
     from vies.models import VATINField
-
 
     class Company(models.Model):
         name = models.CharField(max_length=100)
@@ -62,7 +62,7 @@ Usage
 
 .. code:: python
 
-    >>> from vies import VATIN
+    >>> from vies.types import VATIN
     >>> vat = VATIN('NL', '124851903B01')
     >>> vat.is_valid()
     True
@@ -85,8 +85,9 @@ from ``str``.
     >>> vat = VATIN.from_str('NL124851903B01')
     >>> vat.is_valid()
     True
+
 The VIES API endpoint can be very unreliable and seems to have an IP based access limit.
-Therefore the ``VATINField` does NOT perform API based validation by default. It needs
+Therefore the ``VATINField`` does NOT perform API based validation by default. It needs
 to be explicitly turned on or performed in a separate task.
 
 e.g.
