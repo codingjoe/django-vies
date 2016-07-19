@@ -76,7 +76,15 @@ Usage
        address = "(...)"
      }
 
+You can also use the classmethod ``VATIN.from_str`` to create ``VATIN``
+from ``str``.
 
+.. code:: python
+
+    >>> from vies.types import VATIN
+    >>> vat = VATIN.from_str('NL124851903B01')
+    >>> vat.is_valid()
+    True
 The VIES API endpoint can be very unreliable and seems to have an IP based access limit.
 Therefore the ``VATINField` does NOT perform API based validation by default. It needs
 to be explicitly turned on or performed in a separate task.
