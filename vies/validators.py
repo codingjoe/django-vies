@@ -19,12 +19,8 @@ class VATINValidator(object):
 
     def __call__(self, value):
         if not isinstance(value, VATIN):
-            value = VATIN(*self.split_vatin(value))
+            value = VATIN.from_str(value)
         if self.verify:
             value.verify()
         if self.validate:
             value.validate()
-
-    def split_vatin(self, value):
-        """Return country code prefix and custom vatin rest."""
-        return value[:2].strip(), value[2:].strip()
