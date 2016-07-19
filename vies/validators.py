@@ -18,7 +18,7 @@ class VATINValidator(object):
         self.validate = validate
 
     def __call__(self, value):
-        if not isinstance(value, VATIN):
+        if isinstance(value, str):
             value = VATIN.from_str(value)
         if self.verify:
             value.verify()
