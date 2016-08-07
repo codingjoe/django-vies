@@ -152,3 +152,8 @@ class VATIN(object):
         if not self.data.valid:
             msg = ugettext("%s is not a valid VATIN.")
             raise ValidationError(msg % self)
+
+    @classmethod
+    def from_str(cls, value):
+        """Return a VATIN object by given string."""
+        return cls(value[:2].strip(), value[2:].strip())

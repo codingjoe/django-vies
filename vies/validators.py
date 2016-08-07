@@ -1,6 +1,8 @@
 from django.utils.deconstruct import deconstructible
 from django.utils.translation import ugettext_lazy as _
 
+from vies.types import VATIN
+
 
 @deconstructible
 class VATINValidator(object):
@@ -16,6 +18,8 @@ class VATINValidator(object):
         self.validate = validate
 
     def __call__(self, value):
+        if isinstance(value, str):
+            value = VATIN.from_str(value)
         if self.verify:
             value.verify()
         if self.validate:
