@@ -66,7 +66,7 @@ Usage
     >>> vat = VATIN('NL', '124851903B01')
     >>> vat.is_valid()
     True
-    >>> vat.result
+    >>> vat.data
     (reply){
        countryCode = "NL"
        vatNumber = "124851903B01"
