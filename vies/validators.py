@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import six
 from django.utils.deconstruct import deconstructible
 from django.utils.translation import ugettext_lazy as _
