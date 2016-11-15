@@ -111,6 +111,7 @@ class TestWidget(object):
 class MockRequest(object):
     pass
 
+
 request = MockRequest()
 
 
