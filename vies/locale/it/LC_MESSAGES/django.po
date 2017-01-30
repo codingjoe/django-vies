@@ -1,0 +1,47 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-30 19:11+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: models.py:23
+msgid "A VIES VAT field."
+msgstr "Un campo VIES(VAT Information Exchange System) - IVA "
+
+#: types.py:132
+#, python-format
+msgid "%s is not a valid ISO_3166-1 country code."
+msgstr "%s non é un codice paese ISO_3166-1 valido "
+
+#: types.py:135
+#, python-format
+msgid "%s is not a european member state."
+msgstr "%s non e' un paese membro della Comunità Europea"
+
+#: types.py:144
+#, python-format
+msgid "%s does not match the countries VAT ID specifications."
+msgstr "%s non corrisponde alla partita IVA del paese specificato"
+
+#: types.py:153
+#, python-format
+msgid "%s is not a valid VATIN."
+msgstr "%s non é una partita IVA valida."
+
+#: validators.py:14
+msgid "Not a valid European VAT number."
+msgstr "Non é una partita IVA Europea valida."
