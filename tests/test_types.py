@@ -53,7 +53,7 @@ class TestVATIN(object):
         v = VATIN('IE', '1234567890')
         with pytest.raises(ValidationError) as e:
             v.verify()
-        assert 'IE1234567890 does not match the countries VAT ID specifications.' in e.value
+        assert 'IE1234567890 does not match the countries VAT ID specifications.' in e.value  # noqa
 
     def test_is_not_valid(self):
         """Invalid number."""
