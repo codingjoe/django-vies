@@ -26,6 +26,10 @@ class VATINField(forms.MultiValueField):
             forms.CharField(required=False, max_length=max_length)
         )
 
+        # In Django 1.11+, ignore the `empty_value` parameter added by the
+        # `CharField` superclass at the end of `VATINField.formfield`.
+        kwargs.pop('empty_value', None)
+
         super(VATINField, self).__init__(fields=fields, *args, **kwargs)
 
     def compress(self, data_list):
