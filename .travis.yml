@@ -3,9 +3,9 @@ sudo: false
 dist: trusty
 cache: pip
 python:
-  - "2.7"
-  - "3.5"
-  - "3.6"
+- '2.7'
+- '3.5'
+- '3.6'
 env:
   matrix:
   - DJANGO=18
@@ -19,11 +19,11 @@ matrix:
   - env: DJANGO=master
   exclude:
   - env: DJANGO=master
-    python: "2.7"
+    python: '2.7'
   - env: TOXENV=qa
-    python: "2.7"
+    python: '2.7'
   - env: TOXENV=qa
-    python: "3.5"
+    python: '3.5'
 install:
 - pip install --upgrade pip tox coveralls
 before_script:
@@ -36,3 +36,12 @@ script:
 - tox -e $TOXENV
 after_success:
 - coveralls
+deploy:
+  provider: pypi
+  user: codingjoe
+  password:
+    secure: G8ApGxb9eZ0kOiHVPz1x6CMbr2PxPPtWGSz8GGgNnEi92tA8aNv2gmOzZU1SLQqJT15SSOAcDCvUwlV1U5CGlVNn1WjTLVpM57T1vmPK/gErgmJmpG4Z8Y/5sN4Zb1v8P4z//+UZtzZrO8hVdDscPYI5e0yowaB/Wz6TJnTcaPM=
+  on:
+    tags: true
+    distributions: sdist bdist_wheel
+    repo: codingjoe/django-vies
