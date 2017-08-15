@@ -3,7 +3,7 @@ import re
 from django.core.exceptions import ValidationError
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext as _
 from suds import WebFault
 from suds.client import Client
 
@@ -39,8 +39,8 @@ VIES_OPTIONS = {
     'EL': ('Greece', re.compile(r'^EL\d{9}$')),
     'ES': ('Spain', re.compile(r'^ES[A-Z0-9]\d{7}[A-Z0-9]$')),
     'FI': ('Finland', re.compile(r'^FI\d{8}$')),
-    'FR': ('France', re.compile(r'^FR[A-HJ-NP-Z0-9][A-HJ-NP-Z0-9]\d{9}$'), fr_format),
-    'GB': ('United Kingdom', re.compile(r'^(GB(GD|HA)\d{3}|GB\d{9}|GB\d{12})$'), gb_format),
+    'FR': ('France', re.compile(r'^FR[A-HJ-NP-Z0-9][A-HJ-NP-Z0-9]\d{9}$'), fr_format),  # noqa
+    'GB': ('United Kingdom', re.compile(r'^(GB(GD|HA)\d{3}|GB\d{9}|GB\d{12})$'), gb_format),  # noqa
     'HU': ('Hungary', re.compile(r'^HU\d{8}$')),
     'IE': ('Ireland', re.compile(r'^IE\d[A-Z0-9\+\*]\d{5}[A-Z]{1,2}$')),
     'IT': ('Italy', re.compile(r'^IT\d{11}$')),
@@ -129,10 +129,10 @@ class VATIN(object):
 
     def verify_country_code(self):
         if not re.match(r'^[a-zA-Z]', self.country_code):
-            msg = ugettext('%s is not a valid ISO_3166-1 country code.')
+            msg = _('%s is not a valid ISO_3166-1 country code.')
             raise ValidationError(msg % self.country_code)
         elif self.country_code not in MEMBER_COUNTRY_CODES:
-            msg = ugettext('%s is not a european member state.')
+            msg = _('%s is not a european member state.')
             raise ValidationError(msg % self.country_code)
 
     def verify_regex(self):
@@ -140,8 +140,8 @@ class VATIN(object):
             lambda x, y: (x, y), ('country', 'validator', 'formatter'),
             VIES_OPTIONS[self.country_code]
         ))
-        if not country['validator'].match("%s%s" % (self.country_code, self.number)):
-            msg = ugettext("%s does not match the countries VAT ID specifications.")
+        if not country['validator'].match("%s%s" % (self.country_code, self.number)):  # noqa
+            msg = _("%s does not match the countries VAT ID specifications.")
             raise ValidationError(msg % self)
 
     def verify(self):
@@ -150,7 +150,7 @@ class VATIN(object):
 
     def validate(self):
         if not self.data.valid:
-            msg = ugettext("%s is not a valid VATIN.")
+            msg = _("%s is not a valid VATIN.")
             raise ValidationError(msg % self)
 
     @classmethod
