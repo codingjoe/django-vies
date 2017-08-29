@@ -1,0 +1,41 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-29 11:05+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: François-Xavier Thomas <fxt@airinov.fr>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: vies/models.py:23
+msgid "A VIES VAT field."
+msgstr "Champ TVA VIES"
+
+#: vies/types.py:132
+#, python-format
+msgid "%s is not a valid ISO_3166-1 country code."
+msgstr "%s n'est pas un code pays ISO_3166-1 valide."
+
+#: vies/types.py:135
+#, python-format
+msgid "%s is not a european member state."
+msgstr "%s n'est pas un état membre de l'Union Européenne."
+
+#: vies/types.py:144
+#, python-format
+msgid "%s does not match the countries VAT ID specifications."
+msgstr "%s n'est pas un numéro de TVA intracommunautaire valide pour ce pays."
+
+#: vies/types.py:153
+#, python-format
+msgid "%s is not a valid VATIN."
+msgstr "%s n'est pas un numéro de TVA valide."
+
+#: vies/validators.py:14
+msgid "Not a valid European VAT number."
+msgstr "Numéro de TVA Européen invalide."
