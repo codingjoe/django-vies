@@ -6,7 +6,7 @@ mccabe==0.6.1
 pydocstyle==2.0.0
 pep8==1.7.0
 pep8-naming==0.4.1
-pre-commit==1.0.1
+pre-commit==1.1.0
 py==1.4.34
 pytest==3.2.2
 pytest-django==3.1.2
