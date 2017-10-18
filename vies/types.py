@@ -141,7 +141,7 @@ class VATIN(object):
             VIES_OPTIONS[self.country_code]
         ))
         if not country['validator'].match("%s%s" % (self.country_code, self.number)):
-            msg = ugettext("%s does not match the countries VAT ID specifications.")
+            msg = ugettext("%s does not match the country's VAT ID specifications.")
             raise ValidationError(msg % self)
 
     def verify(self):
