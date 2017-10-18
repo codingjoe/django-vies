@@ -103,7 +103,7 @@ e.g.
         vat = VATINField(validators=[VATINValidator(verify=True, validate=True)])
 
 ``validate=True`` will tell the validator to validate against the VIES API.
-``verify`` is enabled on by default and will only verify that the VATIN matches the countries specifications.
+``verify`` is enabled on by default and will only verify that the VATIN matches the country's specifications.
 
 It is recommended to perform VIES API validation inside an asynchronous task.
 

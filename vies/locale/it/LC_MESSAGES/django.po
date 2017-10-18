@@ -34,7 +34,7 @@ msgstr "%s non e' un paese membro della Comunità Europea"
 
 #: types.py:144
 #, python-format
-msgid "%s does not match the countries VAT ID specifications."
+msgid "%s does not match the country's VAT ID specifications."
 msgstr "%s non corrisponde alla partita IVA del paese specificato"
 
 #: types.py:153
