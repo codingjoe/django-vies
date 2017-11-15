@@ -7,7 +7,7 @@ pydocstyle==2.1.1
 pep8==1.7.1
 pep8-naming==0.4.1
 pre-commit==1.4.1
-py==1.4.34
+py==1.5.1
 pytest==3.2.3
 pytest-django==3.1.2
 mock==2.0.0
