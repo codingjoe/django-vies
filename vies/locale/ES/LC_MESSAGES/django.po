@@ -29,7 +29,7 @@ msgstr "%s no es un código de país válido (ISO_3166-1)."
 #: types.py:135
 #, python-format
 msgid "%s is not a european member state."
-msgstr "%s no es un miembro de la Union Europea."
+msgstr "%s no es un miembro de la Unión Europea."
 
 #: types.py:144
 #, python-format
