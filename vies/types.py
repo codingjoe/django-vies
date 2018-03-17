@@ -4,8 +4,7 @@ from django.core.exceptions import ValidationError
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext
-from suds import WebFault
-from suds.client import Client
+from zeep import Client
 
 from vies import VIES_WSDL_URL, logger
 
@@ -114,7 +113,7 @@ class VATIN(object):
                 self.country_code,
                 self.number
             )
-        except WebFault as e:
+        except Exception as e:
             logger.exception(e)
             raise
 

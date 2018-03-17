@@ -3,7 +3,6 @@ import logging
 import pytest
 from django.core.exceptions import ValidationError
 from mock import patch
-from suds import WebFault
 
 from tests import VALID_VIES_COUNTRY_CODE, VALID_VIES_IE, VALID_VIES_NUMBER
 from vies.types import VATIN
@@ -61,16 +60,16 @@ class TestVATIN(object):
         assert not vatin.is_valid()
 
     @patch('vies.types.Client')
-    def test_raises_when_suds_web_fault(self, mock_client):
-        """Raise an error if suds raises a WebFault."""
+    def test_raises_when_zeep_web_fault(self, mock_client):
+        """Raise an error if zeep raises a WebFault."""
         mock_check_vat = mock_client.return_value.service.checkVat
-        mock_check_vat.side_effect = WebFault(500, 'error')
+        mock_check_vat.side_effect = Exception(500, 'error')
 
         v = VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
 
         logging.getLogger('vies').setLevel(logging.CRITICAL)
 
-        with pytest.raises(WebFault):
+        with pytest.raises(Exception):
             v.validate()
 
         logging.getLogger('vies').setLevel(logging.NOTSET)
