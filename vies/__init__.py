@@ -3,7 +3,7 @@ from __future__ import (unicode_literals, absolute_import)
 
 import logging
 
-__version__ = "3.4.1"
+__version__ = "3.5.0"
 
 logger = logging.getLogger('vies')
 
