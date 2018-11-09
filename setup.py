@@ -51,7 +51,7 @@ setup(
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     include_package_data=True,
     install_requires=[
-        'suds-jurko>=0.6',
+        'suds-community>=0.7',
         'retrying>=1.1.0',
     ],
 )
