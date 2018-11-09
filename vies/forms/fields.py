@@ -18,7 +18,7 @@ class VATINField(forms.MultiValueField):
     def __init__(self, choices=VIES_COUNTRY_CHOICES, *args, **kwargs):
         max_length = kwargs.pop('max_length', VATIN_MAX_LENGTH)
 
-        kwargs['widget'] = self.widget(choices=choices)
+        kwargs['widget'] = kwargs.get('widget', self.widget)(choices=choices)
         kwargs.setdefault('validators', [VATINValidator()])
 
         fields = (
