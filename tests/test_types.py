@@ -60,8 +60,8 @@ class TestVATIN(object):
         assert not vatin.is_valid()
 
     @patch('vies.types.Client')
-    def test_raises_when_zeep_web_fault(self, mock_client):
-        """Raise an error if zeep raises a WebFault."""
+    def test_raises_when_zeep_exception(self, mock_client):
+        """Raise an error if zeep raises an exception."""
         mock_check_vat = mock_client.return_value.service.checkVat
         mock_check_vat.side_effect = Exception(500, 'error')
 
