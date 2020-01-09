@@ -77,11 +77,11 @@ class ModelFormTestCase(TestCase):
 
     def test_is_valid_and_has_vatin_data(self):
         """Valid VATINFields' vatin_data() return result dict."""
-        form = VIESModelForm({'vat_0': 'NL', 'vat_1': '124851903B01'})
+        form = VIESModelForm({'vat_0': 'CZ', 'vat_1': '24147931'})
 
         assert form.is_valid()
         data = form.cleaned_data['vat'].data
-        assert data['name'] == 'JIETER'
+        assert data['name'] == 'Braiins Systems s.r.o.'
 
 
 class TestWidget(object):
