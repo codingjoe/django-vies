@@ -1,30 +1,35 @@
 language: python
-sudo: false
-dist: trusty
+dist: bionic
 cache: pip
 python:
 - '2.7'
 - '3.5'
 - '3.6'
+- '3.7'
+- '3.8'
 env:
   matrix:
-  - DJANGO=18
-  - DJANGO=110
   - DJANGO=111
   - DJANGO=30
-  - DJANGO=master
   - TOXENV=qa
 matrix:
   fast_finish: true
   allow_failures:
   - env: DJANGO=master
-  exclude:
+  include:
   - env: DJANGO=master
+    python: '3.8'
+  exclude:
+  - env: DJANGO=30
     python: '2.7'
-  - env: TOXENV=qa
-    python: '2.7'
+  - env: DJANGO=30
+    python: '3.5'
   - env: TOXENV=qa
     python: '3.5'
+  - env: TOXENV=qa
+    python: '3.6'
+  - env: TOXENV=qa
+    python: '3.7'
 install:
 - pip install --upgrade pip tox coveralls
 before_script:
