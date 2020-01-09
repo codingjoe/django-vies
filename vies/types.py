@@ -1,9 +1,9 @@
 import re
 
 from django.core.exceptions import ValidationError
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext
+from six import python_2_unicode_compatible
 from zeep import Client
 
 from vies import VIES_WSDL_URL, logger

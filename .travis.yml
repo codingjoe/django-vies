@@ -11,6 +11,7 @@ env:
   - DJANGO=18
   - DJANGO=110
   - DJANGO=111
+  - DJANGO=30
   - DJANGO=master
   - TOXENV=qa
 matrix:
