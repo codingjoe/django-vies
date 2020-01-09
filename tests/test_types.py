@@ -39,11 +39,11 @@ class TestVATIN(object):
         assert not v.is_valid()
 
     def test_result(self):
-        v = VATIN('NL', '124851903B01')
+        v = VATIN('CZ', '24147931')
         assert v.is_valid()
-        assert v.data['countryCode'] == 'NL'
-        assert v.data['vatNumber'] == '124851903B01'
-        assert v.data['name'] == 'JIETER'
+        assert v.data['countryCode'] == 'CZ'
+        assert v.data['vatNumber'] == '24147931'
+        assert v.data['name'] == 'Braiins Systems s.r.o.'
 
     def test_ie_regex_verification(self):
         for vn in VALID_VIES_IE:
