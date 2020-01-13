@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
-
 from django import forms
 
 from vies.types import VATIN, VIES_COUNTRY_CHOICES

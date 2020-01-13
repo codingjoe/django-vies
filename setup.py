@@ -32,6 +32,7 @@ setup(
     author='codingjoe',
     url=URL,
     download_url=URL,
+    python_requires='>=3.5',
     author_email='info@johanneshoppe.com',
     license='MIT',
     classifiers=[
@@ -45,7 +46,6 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Topic :: Software Development',
-        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
     ],
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),

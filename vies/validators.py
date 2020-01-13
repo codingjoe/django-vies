@@ -1,8 +1,5 @@
-from __future__ import unicode_literals
-
-import six
 from django.utils.deconstruct import deconstructible
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from vies.types import VATIN
 
@@ -21,7 +18,7 @@ class VATINValidator(object):
         self.validate = validate
 
     def __call__(self, value):
-        if isinstance(value, six.text_type):
+        if isinstance(value, str):
             value = VATIN.from_str(value)
         if self.verify:
             value.verify()
