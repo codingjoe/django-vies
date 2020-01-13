@@ -2,8 +2,7 @@ import re
 
 from django.core.exceptions import ValidationError
 from django.utils.functional import cached_property
-from django.utils.translation import ugettext
-from six import python_2_unicode_compatible
+from django.utils.translation import gettext
 from zeep import Client
 
 from vies import VIES_WSDL_URL, logger
@@ -66,7 +65,6 @@ VIES_COUNTRY_CHOICES = sorted(
 MEMBER_COUNTRY_CODES = VIES_OPTIONS.keys()
 
 
-@python_2_unicode_compatible
 class VATIN(object):
     """Object wrapper for the european VAT Identification Number."""
 
@@ -128,10 +126,10 @@ class VATIN(object):
 
     def verify_country_code(self):
         if not re.match(r'^[a-zA-Z]', self.country_code):
-            msg = ugettext('%s is not a valid ISO_3166-1 country code.')
+            msg = gettext('%s is not a valid ISO_3166-1 country code.')
             raise ValidationError(msg % self.country_code)
         elif self.country_code not in MEMBER_COUNTRY_CODES:
-            msg = ugettext('%s is not a european member state.')
+            msg = gettext('%s is not a european member state.')
             raise ValidationError(msg % self.country_code)
 
     def verify_regex(self):
@@ -140,7 +138,7 @@ class VATIN(object):
             VIES_OPTIONS[self.country_code]
         ))
         if not country['validator'].match("%s%s" % (self.country_code, self.number)):
-            msg = ugettext("%s does not match the country's VAT ID specifications.")
+            msg = gettext("%s does not match the country's VAT ID specifications.")
             raise ValidationError(msg % self)
 
     def verify(self):
@@ -149,7 +147,7 @@ class VATIN(object):
 
     def validate(self):
         if not self.data.valid:
-            msg = ugettext("%s is not a valid VATIN.")
+            msg = gettext("%s is not a valid VATIN.")
             raise ValidationError(msg % self)
 
     @classmethod

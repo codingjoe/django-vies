@@ -2,14 +2,13 @@ language: python
 dist: bionic
 cache: pip
 python:
-- '2.7'
 - '3.5'
 - '3.6'
 - '3.7'
 - '3.8'
 env:
   matrix:
-  - DJANGO=111
+  - DJANGO=22
   - DJANGO=30
   - TOXENV=qa
 matrix:
@@ -20,8 +19,6 @@ matrix:
   - env: DJANGO=master
     python: '3.8'
   exclude:
-  - env: DJANGO=30
-    python: '2.7'
   - env: DJANGO=30
     python: '3.5'
   - env: TOXENV=qa
