@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 
-__version__ = "3.5.0"
+__version__ = "5.0.1"
 
 logger = logging.getLogger('vies')
 
