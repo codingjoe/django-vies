@@ -113,7 +113,6 @@ e.g. using celery
 
     from celery import shared_task
     from vies.models import VATINField
-    from vies.validators import VATINValidator
 
 
     class Company(models.Model):
@@ -131,8 +130,8 @@ e.g. using celery
             super(Company, self).save(*args, **kwargs)
             self.__vat = self.vat
 
-        def refresh_from_db(self)
-            super(Company, self).refresh_from_db()
+        def refresh_from_db(self, *args, **kwargs)
+            super(Company, self).refresh_from_db(*args, **kwargs)
             self.__vat = self.vat
 
     @shared_task
@@ -140,11 +139,11 @@ e.g. using celery
         try:
             company.vat.validate()
         except ValidationError:
-            self.vat_is_valid = False
+            company.vat_is_valid = False
         else:
-            self.vat_is_valid = False
+            company.vat_is_valid = True
         finally:
-            self.save()
+            company.save(update_fields=['vat_is_valid'])
 
 
 Translations
