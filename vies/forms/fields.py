@@ -14,19 +14,19 @@ class VATINField(forms.MultiValueField):
     widget = VATINWidget
 
     def __init__(self, choices=VIES_COUNTRY_CHOICES, *args, **kwargs):
-        max_length = kwargs.pop('max_length', VATIN_MAX_LENGTH)
+        max_length = kwargs.pop("max_length", VATIN_MAX_LENGTH)
 
-        kwargs['widget'] = self.widget(choices=choices)
-        kwargs.setdefault('validators', [VATINValidator()])
+        kwargs["widget"] = self.widget(choices=choices)
+        kwargs.setdefault("validators", [VATINValidator()])
 
         fields = (
             forms.ChoiceField(required=False, choices=choices),
-            forms.CharField(required=False, max_length=max_length)
+            forms.CharField(required=False, max_length=max_length),
         )
 
         # In Django 1.11+, ignore the `empty_value` parameter added by the
         # `CharField` superclass at the end of `VATINField.formfield`.
-        kwargs.pop('empty_value', None)
+        kwargs.pop("empty_value", None)
 
         super(VATINField, self).__init__(fields=fields, *args, **kwargs)
 

@@ -1,23 +1,12 @@
-# Contributing Guide [![badge](https://img.shields.io/badge/Django-CC-ee66dd.svg)][django-cc]
-This project follows the **[Django Contributing Commons][django-cc]**.
+# Contributing Guide
 
-## Getting started
-Getting started is simple, just do:
+To get started simply clone the repository to your local machine and run:
+
 ```bash
-pip install dcc
-dcc django-vies
-hub checkout -b patch-1
+python setup.py develop
 ```
 
 To test locally simply run:
 ```bash
-tox
+python setup.py test
 ```
-
-After that just write your code. Once you are done, just follow this easy flow:
-```bash
-hub commit
-hub pull-request -b codingjoe
-```
-
-[django-cc]: https://github.com/codingjoe/django-cc/blob/master/CONTRIBUTING.md

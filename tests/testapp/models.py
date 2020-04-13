@@ -8,5 +8,5 @@ class VIESModel(Model):
 
 
 class EmptyVIESModel(Model):
-    name = CharField(default='John Doe', max_length=50)
+    name = CharField(default="John Doe", max_length=50)
     vat = models.VATINField(blank=True, null=True)

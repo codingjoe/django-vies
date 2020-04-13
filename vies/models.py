@@ -21,9 +21,9 @@ class VATINField(CharField):
     description = _("A VIES VAT field.")
 
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault('max_length', VATIN_MAX_LENGTH)
+        kwargs.setdefault("max_length", VATIN_MAX_LENGTH)
         super(VATINField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
-        kwargs.setdefault('form_class', forms.VATINField)
+        kwargs.setdefault("form_class", forms.VATINField)
         return super(VATINField, self).formfield(**kwargs)
