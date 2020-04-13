@@ -1,57 +1,57 @@
 #!/usr/bin/env python
+import distutils
+import glob
 import os
-import sys
+import subprocess  # nosec
+from distutils.cmd import Command
+from distutils.command.build import build as _build
 
-from setuptools import find_packages, setup
+from setuptools import setup
+from setuptools.command.install_lib import install_lib as _install_lib
 
-try:
-    import django
-except ImportError:
-    django = None
-
-
-if django and ('sdist' in sys.argv or 'develop' in sys.argv):
-    try:
-        os.chdir('vies')
-        from django.core import management
-        management.call_command('compilemessages')
-    finally:
-        os.chdir('..')
+BASE_DIR = os.path.dirname((os.path.abspath(__file__)))
 
 
-PACKAGE = "vies"
-URL = "https://github.com/codingjoe/django-vies"
-DESCRIPTION = __import__(PACKAGE).__doc__
-VERSION = __import__(PACKAGE).__version__
+class compile_translations(Command):
+    description = "Compile i18n translations using gettext."
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        pattern = "vies/locale/*/LC_MESSAGES/django.po"
+        for file in glob.glob(pattern):
+            cmd = ["msgfmt", "-c"]
+            name, ext = os.path.splitext(file)
+
+            cmd += ["-o", "%s.mo" % name]
+            cmd += ["%s.po" % name]
+            self.announce(
+                "running command: %s" % " ".join(cmd), level=distutils.log.INFO
+            )
+            subprocess.check_call(cmd, cwd=BASE_DIR)  # nosec
+
+
+class build(_build):
+    sub_commands = [("compile_translations", None)] + _build.sub_commands
+
+
+class install_lib(_install_lib):
+    def run(self):
+        self.run_command("compile_translations")
+        _install_lib.run(self)
 
 
 setup(
-    name='django-vies',
-    version=VERSION,
-    description=DESCRIPTION,
-    author='codingjoe',
-    url=URL,
-    download_url=URL,
-    python_requires='>=3.5',
-    author_email='info@johanneshoppe.com',
-    license='MIT',
-    classifiers=[
-        'Development Status :: 5 - Production/Stable',
-        'Environment :: Web Environment',
-        'Framework :: Django',
-        'Topic :: Office/Business :: Financial :: Accounting',
-        'Intended Audience :: Developers',
-        'Intended Audience :: Financial and Insurance Industry',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Topic :: Software Development',
-        'Programming Language :: Python :: 3',
-    ],
-    packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
-    include_package_data=True,
-    install_requires=[
-        'zeep>=2.5.0',
-        'retrying>=1.1.0',
-    ],
+    name="django-vies",
+    use_scm_version=True,
+    cmdclass={
+        "build": build,
+        "install_lib": install_lib,
+        "compile_translations": compile_translations,
+    },
 )

@@ -1,48 +1,15 @@
-.. image:: https://img.shields.io/badge/Django-CC-ee66dd.svg
-    :target: https://github.com/codingjoe/django-cc
-
-.. image:: https://img.shields.io/pypi/v/django-vies.svg
-    :target: https://pypi.python.org/pypi/django-vies/
-
-.. image:: https://travis-ci.org/codingjoe/django-vies.svg?branch=master
-    :target: https://travis-ci.org/codingjoe/django-vies
-    :alt: Iontinuous Integration
-
-.. image:: https://landscape.io/github/codingjoe/django-vies/master/landscape.svg?style=flat
-    :target: https://landscape.io/github/codingjoe/django-vies/master
-    :alt: Code Health
-
-.. image:: https://coveralls.io/repos/codingjoe/django-vies/badge.svg?branch=master
-    :target: https://coveralls.io/r/codingjoe/django-vies
-    :alt: Test Coverage
-
-.. image:: https://img.shields.io/badge/license-MIT-blue.svg
-    :alt: MIT License
-
-.. image:: https://badges.gitter.im/Join%20Chat.svg
-   :alt: Join the chat at https://gitter.im/codingjoe/django-vies
-   :target: https://gitter.im/codingjoe/django-vies?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
-
-
 ===========
 Django-VIES
 ===========
-Django-VIES is a django extension that allows storing VAT Information Exchange System (VIES) data in django models and validation.
-Provided are a VATIN object, a ModelField and a FormField.
+
+Validate and store VAT Information Exchange System (VIES) data in Django.
 
 Installation
 ------------
-Current Stable
 
 .. code:: shell
 
-    pip install django-vies
-
-Latest Development
-
-.. code:: shell
-
-    pip install -e git://github.com/codingjoe/django-vies.git#egg=django-vies
+    python3 -m pip install django-vies
 
 Usage
 -----
@@ -63,18 +30,19 @@ Usage
 .. code:: python
 
     >>> from vies.types import VATIN
-    >>> vat = VATIN('NL', '124851903B01')
+    >>> vat = VATIN('LU', '26375245')
     >>> vat.is_valid()
     True
     >>> vat.data
-    (reply){
-       countryCode = "NL"
-       vatNumber = "124851903B01"
-       requestDate = 2014-03-25
-       valid = True
-       name = "JIETER"
-       address = "(...)"
-     }
+    {
+        'countryCode': 'LU',
+        'vatNumber': '26375245',
+        'requestDate': datetime.date(2020, 4, 13),
+        'valid': True,
+        'name': 'AMAZON EUROPE CORE S.A R.L.',
+        'address': '38, AVENUE JOHN F. KENNEDY\nL-1855  LUXEMBOURG'
+    }
+
 
 You can also use the classmethod ``VATIN.from_str`` to create ``VATIN``
 from ``str``.
@@ -82,7 +50,7 @@ from ``str``.
 .. code:: python
 
     >>> from vies.types import VATIN
-    >>> vat = VATIN.from_str('NL124851903B01')
+    >>> vat = VATIN.from_str('LU26375245')
     >>> vat.is_valid()
     True
 

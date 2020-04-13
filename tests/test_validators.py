@@ -8,10 +8,14 @@ from vies.validators import VATINValidator
 
 class TestValidators(object):
     """Validate values with VATIN object and string values."""
-    @pytest.mark.parametrize('vatin', [
-        VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER),
-        ''.join([VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER])
-    ])
+
+    @pytest.mark.parametrize(
+        "vatin",
+        [
+            VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER),
+            "".join([VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER]),
+        ],
+    )
     def test_valid(self, vatin):
         validator = VATINValidator()
         validator(vatin)
@@ -22,14 +26,17 @@ class TestValidators(object):
         validator = VATINValidator(verify=True, validate=True)
         validator(vatin)
 
-    @pytest.mark.parametrize('invalid_number_vatin', [
-        VATIN(VALID_VIES_COUNTRY_CODE, '12345678'),
-        ''.join([VALID_VIES_COUNTRY_CODE, '12345678'])
-    ])
-    @pytest.mark.parametrize('invalid_country_vatin', [
-        VATIN('XX', VALID_VIES_NUMBER),
-        ''.join(['XX', VALID_VIES_NUMBER])
-    ])
+    @pytest.mark.parametrize(
+        "invalid_number_vatin",
+        [
+            VATIN(VALID_VIES_COUNTRY_CODE, "12345678"),
+            "".join([VALID_VIES_COUNTRY_CODE, "12345678"]),
+        ],
+    )
+    @pytest.mark.parametrize(
+        "invalid_country_vatin",
+        [VATIN("XX", VALID_VIES_NUMBER), "".join(["XX", VALID_VIES_NUMBER])],
+    )
     def test_invalid(self, invalid_number_vatin, invalid_country_vatin):
         validator = VATINValidator()
         with pytest.raises(ValidationError):

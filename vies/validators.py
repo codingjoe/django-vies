@@ -8,8 +8,8 @@ from vies.types import VATIN
 class VATINValidator(object):
     """Validator for European VIES VAT Identification Number."""
 
-    message = _('Not a valid European VAT number.')
-    code = 'invalid'
+    message = _("Not a valid European VAT number.")
+    code = "invalid"
 
     def __init__(self, verify=True, validate=False):
         if not (verify or validate):

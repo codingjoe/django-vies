@@ -6,16 +6,12 @@ from django.forms.widgets import HiddenInput
 
 from vies.types import VIES_COUNTRY_CHOICES
 
-EMPTY_VALUES = (None, '')
+EMPTY_VALUES = (None, "")
 
 
 class VATINWidget(forms.MultiWidget):
-
     def __init__(self, choices=VIES_COUNTRY_CHOICES, attrs=None):
-        widgets = (
-            forms.Select(choices=choices),
-            forms.TextInput()
-        )
+        widgets = (forms.Select(choices=choices), forms.TextInput())
         super(VATINWidget, self).__init__(widgets, attrs)
 
     def value_from_datadict(self, data, files, name):
@@ -25,12 +21,12 @@ class VATINWidget(forms.MultiWidget):
             if country in EMPTY_VALUES:
                 try:
                     # ex. code="FR09443710785", country="".
-                    empty, country, code = re.split('([a-zA-Z].)', code)
+                    empty, country, code = re.split("([a-zA-Z].)", code)
                 except ValueError:
                     pass
             else:
                 # ex. code ="FR09443710785", country="FR".
-                re_code = re.compile(r'^%s(\d+)$' % country)
+                re_code = re.compile(r"^%s(\d+)$" % country)
                 if re_code.match(code):
                     code = code.replace(country, "", 1)
             try:

@@ -34,9 +34,9 @@ class ModelTestCase(TestCase):
 class ModelFormTestCase(TestCase):
     def test_is_valid(self):
         """Form is valid."""
-        form = VIESModelForm({
-            'vat_0': VALID_VIES_COUNTRY_CODE,
-            'vat_1': VALID_VIES_NUMBER})
+        form = VIESModelForm(
+            {"vat_0": VALID_VIES_COUNTRY_CODE, "vat_1": VALID_VIES_NUMBER}
+        )
         self.assertTrue(form.is_valid())
 
         vies = form.save()
@@ -44,23 +44,19 @@ class ModelFormTestCase(TestCase):
 
     def test_is_not_valid_country(self):
         """Invalid country."""
-        form = VIESModelForm({
-            'vat_0': 'xx',
-            'vat_1': VALID_VIES_NUMBER})
+        form = VIESModelForm({"vat_0": "xx", "vat_1": VALID_VIES_NUMBER})
         self.assertFalse(form.is_valid())
 
     def test_is_not_valid_numbers(self):
         """Invalid number."""
-        form = VIESModelForm({
-            'vat_0': VALID_VIES_COUNTRY_CODE,
-            'vat_1': 'xx123+-'})
+        form = VIESModelForm({"vat_0": VALID_VIES_COUNTRY_CODE, "vat_1": "xx123+-"})
         self.assertFalse(form.is_valid())
 
     def test_save(self):
         """Form is saved."""
-        form = VIESModelForm({
-            'vat_0': VALID_VIES_COUNTRY_CODE,
-            'vat_1': VALID_VIES_NUMBER})
+        form = VIESModelForm(
+            {"vat_0": VALID_VIES_COUNTRY_CODE, "vat_1": VALID_VIES_NUMBER}
+        )
         self.assertTrue(form.is_valid())
         vies_saved = form.save()
 
@@ -70,28 +66,34 @@ class ModelFormTestCase(TestCase):
         self.assertEqual(vies_received.vat, VALID_VIES)
 
     def test_empty(self):
-        form = EmptyVIESModelForm({'name': 'Eva'})
+        form = EmptyVIESModelForm({"name": "Eva"})
         self.assertTrue(form.is_valid())
 
     def test_is_valid_and_has_vatin_data(self):
         """Valid VATINFields' vatin_data() return result dict."""
-        form = VIESModelForm({'vat_0': 'CZ', 'vat_1': '24147931'})
+        form = VIESModelForm({"vat_0": "CZ", "vat_1": "24147931"})
 
         assert form.is_valid()
-        data = form.cleaned_data['vat'].data
-        assert data['name'] == 'Braiins Systems s.r.o.'
+        data = form.cleaned_data["vat"].data
+        assert data["name"] == "Braiins Systems s.r.o."
 
 
 class TestWidget(object):
-    @pytest.mark.parametrize("given_value", [
-        [VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER],
-        ["", "%s%s" % (VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)],
-        [VALID_VIES_COUNTRY_CODE, "%s%s" % (VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)],
-    ])
+    @pytest.mark.parametrize(
+        "given_value",
+        [
+            [VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER],
+            ["", "%s%s" % (VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)],
+            [
+                VALID_VIES_COUNTRY_CODE,
+                "%s%s" % (VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER),
+            ],
+        ],
+    )
     def test_value_from_datadict(self, given_value):
         widget = VATINWidget()
-        data = {'my_field_%s' % i: value for i, value in enumerate(given_value)}
-        v = widget.value_from_datadict(data, [], 'my_field')
+        data = {"my_field_%s" % i: value for i, value in enumerate(given_value)}
+        v = widget.value_from_datadict(data, [], "my_field")
         assert v == [VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER]
 
     def test_decompress(self):
@@ -101,9 +103,7 @@ class TestWidget(object):
         assert (VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER) == VATINWidget().decompress(
             [VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER]
         )
-        assert (None, None) == VATINWidget().decompress(
-            None
-        )
+        assert (None, None) == VATINWidget().decompress(None)
 
 
 class MockRequest(object):
