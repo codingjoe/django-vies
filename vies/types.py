@@ -38,11 +38,6 @@ VIES_OPTIONS = {
     "ES": ("Spain", re.compile(r"^ES[A-Z0-9]\d{7}[A-Z0-9]$")),
     "FI": ("Finland", re.compile(r"^FI\d{8}$")),
     "FR": ("France", re.compile(r"^FR[A-HJ-NP-Z0-9][A-HJ-NP-Z0-9]\d{9}$"), fr_format),
-    "GB": (
-        "United Kingdom",
-        re.compile(r"^(GB(GD|HA)\d{3}|GB\d{9}|GB\d{12})$"),
-        gb_format,
-    ),
     "HU": ("Hungary", re.compile(r"^HU\d{8}$")),
     "IE": ("Ireland", re.compile(r"^IE\d[A-Z0-9\+\*]\d{5}[A-Z]{1,2}$")),
     "IT": ("Italy", re.compile(r"^IT\d{11}$")),
