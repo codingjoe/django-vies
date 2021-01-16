@@ -12,14 +12,6 @@ def dk_format(v):
     return "%s %s %s %s" % (v[:4], v[4:6], v[6:8], v[8:10])
 
 
-def gb_format(v):
-    if len(v) == 11:
-        return "%s %s %s" % (v[:5], v[5:9], v[9:11])
-    if len(v) == 14:
-        return "%s %s" % (gb_format(v[:11]), v[11:14])
-    return v
-
-
 def fr_format(v):
     return "%s %s" % (v[:4], v[4:])
 

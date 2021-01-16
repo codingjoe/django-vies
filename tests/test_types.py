@@ -85,10 +85,6 @@ class TestVATIN(object):
     [
         ("DK99999999", "DK99 99 99 99"),  # DK
         ("FRXX999999999", "FRXX 999999999"),  # FR
-        ("GB999 9999 73", "GB999 9999 73"),  # GB
-        ("GB999999999 733", "GB999 9999 99 733"),  # GB
-        ("GBGD001", "GBGD001"),  # GB
-        ("GBHA599", "GBHA599"),  # GB
     ],
 )
 def test_formater(number, expected_number):
