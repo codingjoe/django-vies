@@ -70,7 +70,8 @@ class VATIN(object):
 
     def __str__(self):
         unformated_number = "{country_code}{number}".format(
-            country_code=self.country_code, number=self.number,
+            country_code=self.country_code,
+            number=self.number,
         )
 
         country = VIES_OPTIONS.get(self.country_code, {})
