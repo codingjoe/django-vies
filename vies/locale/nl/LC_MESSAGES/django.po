@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-04 14:39+0200\n"
+"POT-Creation-Date: 2021-07-08 16:12+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Diederik van der Boor <vdboor@edoburu.nl>\n"
 "Language-Team: \n"
@@ -17,24 +17,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: __init__.py:111
+#: models.py:21
+msgid "A VIES VAT field."
+msgstr "Een VIES BTW-nummer veld."
+
+#: types.py:114
 #, python-format
 msgid "%s is not a valid ISO_3166-1 country code."
 msgstr "%s is geen geldige ISO_3166-1 landcode."
 
-#: __init__.py:114
+#: types.py:117
 #, python-format
-msgid "%s is not a VIES member country."
-msgstr "%s is geen VIES-lidstaat."
+msgid "%s is not a european member state."
+msgstr "%s is geen Europese lidstaat."
 
-#: fields.py:20
+#: types.py:129
+#, python-format
+msgid "%s does not match the country's VAT ID specifications."
+msgstr "%s komt niet overeen met de in dit land geldende BTW specificaties"
+
+#: types.py:138
+#, python-format
+msgid "%s is not a valid VATIN."
+msgstr "%s is geen geldig BTW-nummer"
+
+#: validators.py:11
 msgid "Not a valid European VAT number."
 msgstr "Dit is geen geldig Europees BTW-nummer"
 
-#: fields.py:21
-msgid "VIES check VAT service currently unavailable."
-msgstr "VIES BTW-nummerverificatie is momenteel niet beschikbaar."
-
-#: models.py:12
-msgid "A VIES VAT field."
-msgstr "Een VIES BTW-nummer veld."
