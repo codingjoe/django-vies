@@ -20,22 +20,22 @@ msgstr ""
 
 #: models.py:23
 msgid "A VIES VAT field."
-msgstr "Un campo VIES(VAT Information Exchange System) - IVA "
+msgstr "Un campo VIES(VAT Information Exchange System) - IVA."
 
 #: types.py:132
 #, python-format
 msgid "%s is not a valid ISO_3166-1 country code."
-msgstr "%s non é un codice paese ISO_3166-1 valido "
+msgstr "%s non é un codice paese ISO_3166-1 valido."
 
 #: types.py:135
 #, python-format
 msgid "%s is not a european member state."
-msgstr "%s non e' un paese membro della Comunità Europea"
+msgstr "%s non e' un paese membro della Comunità Europea."
 
 #: types.py:144
 #, python-format
 msgid "%s does not match the country's VAT ID specifications."
-msgstr "%s non corrisponde alla partita IVA del paese specificato"
+msgstr "%s non corrisponde alla partita IVA del paese specificato."
 
 #: types.py:153
 #, python-format

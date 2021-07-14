@@ -34,14 +34,14 @@ msgstr "%s is geen Europese lidstaat."
 #: types.py:129
 #, python-format
 msgid "%s does not match the country's VAT ID specifications."
-msgstr "%s komt niet overeen met de in dit land geldende BTW specificaties"
+msgstr "%s komt niet overeen met de in dit land geldende BTW specificaties."
 
 #: types.py:138
 #, python-format
 msgid "%s is not a valid VATIN."
-msgstr "%s is geen geldig BTW-nummer"
+msgstr "%s is geen geldig BTW-nummer."
 
 #: validators.py:11
 msgid "Not a valid European VAT number."
-msgstr "Dit is geen geldig Europees BTW-nummer"
+msgstr "Dit is geen geldig Europees BTW-nummer."
 
