@@ -46,6 +46,7 @@ class install(_install):
         ("compile_translations", None),
     ]
 
+
 setup(
     name="django-vies",
     use_scm_version=True,
