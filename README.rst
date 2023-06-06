@@ -81,6 +81,8 @@ e.g. using celery
 
     from celery import shared_task
     from vies.models import VATINField
+    from vies.types import VATIN
+    from django.core.exceptions import ValidationError
 
 
     class Company(models.Model):
@@ -89,12 +91,12 @@ e.g. using celery
         vat_is_valid = models.BooleanField(default=False)
 
         def __init__(self, *args, **kwargs):
-            self.__vat = self.vat
             super(Company, self).__init__(*args, **kwargs)
+            self.__vat = self.vat
 
         def save(self, *args, **kwargs):
             if self.__vat != self.vat:
-                validate_vat_field.delay(self)
+                validate_vat_field.delay(self.pk)
             super(Company, self).save(*args, **kwargs)
             self.__vat = self.vat
 
@@ -102,10 +104,13 @@ e.g. using celery
             super(Company, self).refresh_from_db(*args, **kwargs)
             self.__vat = self.vat
 
+
     @shared_task
-    def validate_vat_field(company):
+    def validate_vat_field(company_id):
+        company = Company.objects.get(pk=company_id)
+        vat = VATIN.from_str(company.vat)
         try:
-            company.vat.validate()
+            vat.validate()
         except ValidationError:
             company.vat_is_valid = False
         else:
@@ -113,6 +118,7 @@ e.g. using celery
         finally:
             company.save(update_fields=['vat_is_valid'])
 
+You can also use ``celery.current_app.send_task('validate_vat_field', kwargs={"company_id": self.pk})`` to call asynchronous task to avoid **circular import errors**.
 
 Translations
 ------------
