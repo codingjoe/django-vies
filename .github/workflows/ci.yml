@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-python@v4.6.1
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: sudo apt install -y gettext aspell libenchant-dev
       - uses: actions/cache@v3
         with:
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-python@v4.6.1
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/cache@v3
         with:
           path: ~/.cache/pip
@@ -63,7 +63,7 @@ jobs:
     steps:
       - run: sudo apt install -y gettext
       - uses: actions/setup-python@v4.6.1
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install Python dependencies
         run: python -m pip install --upgrade pip setuptools wheel twine readme-renderer
       - run: python setup.py sdist bdist_wheel
@@ -92,7 +92,7 @@ jobs:
         uses: actions/setup-python@v4.6.1
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: python -m pip install --upgrade setuptools wheel codecov
       - run: python -m pip install django~=${{ matrix.django-version }}
       - run: python setup.py test
