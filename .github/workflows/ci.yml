@@ -23,7 +23,7 @@ jobs:
   msgcheck:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-python@v4.6.1
+      - uses: actions/setup-python@v4.8.0
       - uses: actions/checkout@v4
       - run: sudo apt install -y gettext aspell libenchant-dev
       - uses: actions/cache@v3
@@ -47,7 +47,7 @@ jobs:
           - "pydocstyle ."
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-python@v4.6.1
+      - uses: actions/setup-python@v4.8.0
       - uses: actions/checkout@v4
       - uses: actions/cache@v3
         with:
@@ -62,7 +62,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: sudo apt install -y gettext
-      - uses: actions/setup-python@v4.6.1
+      - uses: actions/setup-python@v4.8.0
       - uses: actions/checkout@v4
       - name: Install Python dependencies
         run: python -m pip install --upgrade pip setuptools wheel twine readme-renderer
@@ -89,7 +89,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4.6.1
+        uses: actions/setup-python@v4.8.0
         with:
           python-version: ${{ matrix.python-version }}
       - uses: actions/checkout@v4
