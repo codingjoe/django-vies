@@ -44,6 +44,7 @@ VIES_OPTIONS = {
     "SE": ("Sweden", re.compile(r"^SE\d{10}01$")),
     "SI": ("Slovenia", re.compile(r"^SI\d{8}$")),
     "SK": ("Slovakia", re.compile(r"^SK\d{10}$")),
+    "XI": ("Northern Ireland", re.compile(r"^XI\d{9}$")),
 }
 
 VIES_COUNTRY_CHOICES = sorted(
