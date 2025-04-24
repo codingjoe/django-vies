@@ -1,0 +1,12 @@
+[build-system]
+requires = [
+  "setuptools>=68.0.0",
+  "wheel",
+  "setuptools_scm",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+# adapt these to your preferred version scheme
+version_scheme = "post-release"
+local_scheme = "node-and-date"
