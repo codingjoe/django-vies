@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/setup-python@v5.6.0
       - uses: actions/checkout@v4
-      - run: sudo apt install -y gettext aspell libenchant-dev
+      - run: sudo apt install -y gettext aspell libenchant-2-dev
       - uses: actions/cache@v4
         with:
           path: ~/.cache/pip
