@@ -89,6 +89,12 @@ jobs:
           - "4.2"
           - "5.1"
           - "5.2"
+        exclude:
+          # Django 5.x requires Python ≥ 3.10
+          - python-version: "3.9"
+            django-version: "5.1"
+          - python-version: "3.9"
+            django-version: "5.2
     runs-on: ${{ matrix.os }}
     steps:
       - name: Set up Python ${{ matrix.python-version }}
@@ -96,9 +102,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - uses: actions/checkout@v4
-      - run: python -m pip install --upgrade setuptools wheel codecov
+      - run: python -m pip install --upgrade setuptools wheel codecov pytest pytest-cov pytest-django zeep
       - run: python -m pip install django~=${{ matrix.django-version }}
-      - run: python setup.py test
+      - run: python -m pytest
       - run: codecov
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
