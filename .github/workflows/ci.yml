@@ -80,7 +80,6 @@ jobs:
         os:
           - ubuntu-latest
         python-version:
-          - "3.8"
           - "3.9"
         django-version:
           - "2.2"
