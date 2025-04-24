@@ -21,6 +21,7 @@ VIES_OPTIONS = {
     "BE": ("Belgium", re.compile(r"^BE(0|1)\d{9}$")),
     "BG": ("Bulgaria", re.compile(r"^BG\d{9,10}$")),
     "HR": ("Croatia", re.compile(r"^HR\d{11}$")),
+    "CHE": ("Switzerland", re.compile(r"^CHE\d{9}$")),
     "CY": ("Cyprus", re.compile(r"^CY\d{8}[A-Z]$")),
     "CZ": ("Czech Republic", re.compile(r"^CZ\d{8,10}$")),
     "DE": ("Germany", re.compile(r"^DE\d{9}$")),
