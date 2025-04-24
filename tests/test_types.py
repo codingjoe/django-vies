@@ -1,8 +1,8 @@
 import logging
+from unittest.mock import patch
 
 import pytest
 from django.core.exceptions import ValidationError
-from mock import patch
 
 from tests import VALID_VIES_COUNTRY_CODE, VALID_VIES_IE, VALID_VIES_NUMBER
 from vies.types import VATIN
