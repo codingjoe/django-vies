@@ -66,6 +66,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Python dependencies
         run: python -m pip install --upgrade pip setuptools wheel twine readme-renderer build
+      - name: Clean previous builds
+        run: |
+          rm -rf build dist *.egg-info
       - name: Build distributions
         run: python -m build
       - run: python -m twine check dist/*
