@@ -14,19 +14,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+        uses: github/codeql-action/init@v3
         with:
           languages: python
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+        uses: github/codeql-action/analyze@v3
 
   msgcheck:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-python@v4.6.1
+      - uses: actions/setup-python@v5.6.0
       - uses: actions/checkout@v4
       - run: sudo apt install -y gettext aspell libenchant-dev
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -47,9 +47,9 @@ jobs:
           - "pydocstyle ."
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-python@v4.6.1
+      - uses: actions/setup-python@v5.6.0
       - uses: actions/checkout@v4
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -62,7 +62,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: sudo apt install -y gettext
-      - uses: actions/setup-python@v4.6.1
+      - uses: actions/setup-python@v5.6.0
       - uses: actions/checkout@v4
       - name: Install Python dependencies
         run: python -m pip install --upgrade pip setuptools wheel twine readme-renderer
@@ -92,7 +92,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4.6.1
+        uses: actions/setup-python@v5.6.0
         with:
           python-version: ${{ matrix.python-version }}
       - uses: actions/checkout@v4
