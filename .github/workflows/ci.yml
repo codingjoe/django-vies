@@ -96,7 +96,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - uses: actions/checkout@v4
-      - run: python -m pip install --upgrade setuptools wheel codecov pytest
+      - run: python -m pip install --upgrade setuptools wheel codecov pytest pytest-cov pytest-django zeep
       - run: python -m pip install django~=${{ matrix.django-version }}
       - run: python -m pytest
       - run: codecov
