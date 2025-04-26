@@ -1,13 +1,11 @@
 #!/usr/bin/env python
-import distutils
 import glob
 import os
 import subprocess  # nosec
-from distutils.cmd import Command
-from distutils.command.build import build as _build
-from distutils.command.install import install as _install
 
-from setuptools import setup
+from setuptools import Command, setup
+from setuptools.command.build import build as _build
+from setuptools.command.install import install as _install
 
 BASE_DIR = os.path.dirname((os.path.abspath(__file__)))
 
@@ -27,9 +25,7 @@ class compile_translations(Command):
         for file in glob.glob(pattern):
             name, ext = os.path.splitext(file)
             cmd = ["msgfmt", "-c", "-o", f"{self.build_lib}/{name}.mo", file]
-            self.announce(
-                "running command: %s" % " ".join(cmd), level=distutils.log.INFO
-            )
+            self.announce("running command: %s" % " ".join(cmd), level=2)
             subprocess.check_call(cmd, cwd=BASE_DIR)  # nosec
 
 
@@ -48,8 +44,6 @@ class install(_install):
 
 
 setup(
-    name="django-vies",
-    use_scm_version=True,
     cmdclass={
         "build": build,
         "install": install,
