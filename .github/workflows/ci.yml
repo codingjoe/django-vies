@@ -41,7 +41,7 @@ jobs:
       matrix:
         lint-command:
           - "bandit -r vies -x tests"
-          - "black --check --diff ."
+          - "ruff format --check --diff ."
           - "flake8 ."
           - "isort --check-only --diff ."
           - "pydocstyle ."

@@ -79,10 +79,7 @@ profile = "black"
 known_first_party = ["measurement", "tests"]
 atomic = true
 
-[tool.black]
+[tool.ruff]
 line-length = 88
-target-version = ["py39", "py310", "py311", "py312", "py313"]
-skip-string-normalization = false
+target-version = "py39"
 
-[tool.flake8]
-ignore = ["E501", "D100", "D101", "D102", "D103", "D105", "D107"]
