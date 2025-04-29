@@ -78,7 +78,9 @@ jobs:
       - name: Validate installability
         run: uv pip install dist/*.whl
       - name: Validate README rendering
-        run: python -m readme_renderer README.rst
+        run: |
+          source .venv/bin/activate
+          python -m readme_renderer README.rst
       - uses: actions/upload-artifact@v4
         with:
           path: dist/*
