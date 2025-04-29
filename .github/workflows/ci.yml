@@ -59,7 +59,9 @@ jobs:
   build-and-validate:
     runs-on: ubuntu-latest
     steps:
-      - run: sudo apt install -y gettext
+      - run: |
+          sudo apt update
+          sudo apt install -y gettext
       - uses: actions/setup-python@v5.6.0
       - uses: actions/checkout@v4
       - name: Install uv and readme-renderer
