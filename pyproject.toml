@@ -74,12 +74,13 @@ omit = [
 [tool.coverage.report]
 show_missing = true
 
-[tool.isort]
-profile = "black"
-known_first_party = ["measurement", "tests"]
-atomic = true
-
 [tool.ruff]
 line-length = 88
 target-version = "py39"
+
+[tool.ruff.lint]
+select = ["I", "E", "F"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["measurement", "tests"]
 

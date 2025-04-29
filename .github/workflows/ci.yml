@@ -43,7 +43,6 @@ jobs:
           - "bandit -r vies -x tests"
           - "ruff format --check --diff ."
           - "ruff check ."
-          - "isort --check-only --diff ."
           - "pydocstyle ."
     runs-on: ubuntu-latest
     steps:
