@@ -42,7 +42,7 @@ jobs:
         lint-command:
           - "bandit -r vies -x tests"
           - "ruff format --check --diff ."
-          - "flake8 ."
+          - "ruff check ."
           - "isort --check-only --diff ."
           - "pydocstyle ."
     runs-on: ubuntu-latest
