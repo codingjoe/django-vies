@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+from types import SimpleNamespace
+from unittest.mock import patch
+
 import pytest
 from django.contrib.admin.options import ModelAdmin
 from django.contrib.admin.sites import AdminSite
@@ -69,13 +72,21 @@ class ModelFormTestCase(TestCase):
         form = EmptyVIESModelForm({"name": "Eva"})
         self.assertTrue(form.is_valid())
 
-    def test_is_valid_and_has_vatin_data(self):
+    @patch("vies.types.Client")
+    def test_is_valid_and_has_vatin_data(self, mock_client):
         """Valid VATINFields' vatin_data() return result dict."""
+        mock_client.return_value.service.checkVat.return_value = SimpleNamespace(
+            countryCode="CZ",
+            vatNumber="24147931",
+            name="Braiins Systems s.r.o.",
+            valid=True,
+        )
+
         form = VIESModelForm({"vat_0": "CZ", "vat_1": "24147931"})
 
         assert form.is_valid()
         data = form.cleaned_data["vat"].data
-        assert data["name"] == "Braiins Systems s.r.o."
+        assert data.name == "Braiins Systems s.r.o."
 
 
 class TestWidget(object):

@@ -1,5 +1,6 @@
 import logging
-from unittest.mock import patch
+from types import SimpleNamespace
+from unittest.mock import MagicMock, patch
 
 import pytest
 from django.core.exceptions import ValidationError
@@ -38,12 +39,21 @@ class TestVATIN(object):
         v = VATIN("XX", VALID_VIES_NUMBER)
         assert not v.is_valid()
 
-    def test_result(self):
+    @patch("vies.types.Client")
+    def test_result(self, mock_client):
+        mock_check_vat = mock_client.return_value.service.checkVat
+        mock_check_vat.return_value = SimpleNamespace(
+            countryCode="CZ",
+            vatNumber="24147931",
+            name="Braiins Systems s.r.o.",
+            valid=True,
+        )
+
         v = VATIN("CZ", "24147931")
         assert v.is_valid()
-        assert v.data["countryCode"] == "CZ"
-        assert v.data["vatNumber"] == "24147931"
-        assert v.data["name"] == "Braiins Systems s.r.o."
+        assert v.data.countryCode == "CZ"
+        assert v.data.vatNumber == "24147931"
+        assert v.data.name == "Braiins Systems s.r.o."
 
     def test_ie_regex_verification(self):
         for vn in VALID_VIES_IE:
