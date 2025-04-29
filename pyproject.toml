@@ -85,4 +85,4 @@ target-version = ["py39", "py310", "py311", "py312", "py313"]
 skip-string-normalization = false
 
 [tool.flake8]
-ignore = ["E501"]
+ignore = ["E501", "D100", "D101", "D102", "D103", "D105", "D107"]
