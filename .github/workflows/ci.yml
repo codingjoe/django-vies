@@ -56,22 +56,27 @@ jobs:
       - run: python -m pip install -r requirements.txt
       - run: ${{ matrix.lint-command }}
 
-  readme:
+  build-and-validate:
     runs-on: ubuntu-latest
     steps:
       - run: sudo apt install -y gettext
       - uses: actions/setup-python@v5.6.0
       - uses: actions/checkout@v4
-      - name: Install Python dependencies
+      - name: Install uv and readme-renderer
         run: |
           python -m pip install --upgrade pip
-          python -m pip install "setuptools>=67.0.0" "wheel>=0.40.0" "twine>=4.0.0" readme-renderer build
+          python -m pip install uv
+          uv pip install readme-renderer
       - name: Clean previous builds
-        run: |
-          rm -rf build dist *.egg-info
+        run: rm -rf build dist *.egg-info
+      - name: Compile translations
+        run: uv run compile-translations
       - name: Build distributions
-        run: python -m build
-      - run: python -m twine check dist/*
+        run: uv build
+      - name: Validate installability
+        run: uv pip install dist/*.whl
+      - name: Validate README rendering
+        run: python -m readme_renderer README.rst
       - uses: actions/upload-artifact@v4
         with:
           path: dist/*
