@@ -51,7 +51,7 @@ test = [
 compile-translations = "scripts.compile_translations:main"
 
 [tool.setuptools.packages.find]
-exclude = ["tests"]
+exclude = ["tests*", "scripts*"]
 
 [tool.setuptools_scm]
 version_scheme = "post-release"
