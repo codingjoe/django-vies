@@ -9,7 +9,6 @@ from .widgets import VATINHiddenWidget, VATINWidget
 
 
 class VATINField(forms.MultiValueField):
-
     hidden_widget = VATINHiddenWidget
     widget = VATINWidget
 
