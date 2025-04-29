@@ -47,6 +47,9 @@ test = [
   "pytest-django",
 ]
 
+[project.scripts]
+compile-translations = "scripts.compile_translations:main"
+
 [tool.setuptools.packages.find]
 exclude = ["tests"]
 
