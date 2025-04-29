@@ -79,7 +79,8 @@ line-length = 88
 target-version = "py39"
 
 [tool.ruff.lint]
-select = ["I", "E", "F"]
+select = ["I", "E", "F", "D"]
+ignore = ["D100", "D101", "D102", "D103", "D104", "D105", "D106", "D107", "D212"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["measurement", "tests"]
