@@ -7,7 +7,7 @@ name = "django-vies"
 readme = "README.rst"
 license = "MIT"
 authors = [{ name = "Johannes Hoppe", email = "info@johanneshoppe.com" }]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = [
   "Django>=4.2",
   "retrying>=1.1.0",
@@ -22,7 +22,6 @@ classifiers = [
   "Intended Audience :: Financial and Insurance Industry",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
