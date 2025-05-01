@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-
+from types import SimpleNamespace
+from unittest.mock import patch
+
 import pytest
 from django.contrib.admin.options import ModelAdmin
 from django.contrib.admin.sites import AdminSite
@@ -69,44 +71,52 @@ class ModelFormTestCase(TestCase):
         form = EmptyVIESModelForm({"name": "Eva"})
         self.assertTrue(form.is_valid())
 
-    def test_is_valid_and_has_vatin_data(self):
+    @patch("vies.types.Client")
+    def test_is_valid_and_has_vatin_data(self, mock_client):
         """Valid VATINFields' vatin_data() return result dict."""
+        mock_client.return_value.service.checkVat.return_value = SimpleNamespace(
+            countryCode="CZ",
+            vatNumber="24147931",
+            name="Braiins Systems s.r.o.",
+            valid=True,
+        )
+
         form = VIESModelForm({"vat_0": "CZ", "vat_1": "24147931"})
 
         assert form.is_valid()
         data = form.cleaned_data["vat"].data
-        assert data["name"] == "Braiins Systems s.r.o."
+        assert data.name == "Braiins Systems s.r.o."
 
 
-class TestWidget(object):
+class TestWidget:
     @pytest.mark.parametrize(
         "given_value",
         [
             [VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER],
-            ["", "%s%s" % (VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)],
+            ["", f"{VALID_VIES_COUNTRY_CODE}{VALID_VIES_NUMBER}"],
             [
                 VALID_VIES_COUNTRY_CODE,
-                "%s%s" % (VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER),
+                f"{VALID_VIES_COUNTRY_CODE}{VALID_VIES_NUMBER}",
             ],
         ],
     )
     def test_value_from_datadict(self, given_value):
         widget = VATINWidget()
-        data = {"my_field_%s" % i: value for i, value in enumerate(given_value)}
+        data = {f"my_field_{i:d}": value for i, value in enumerate(given_value)}
         v = widget.value_from_datadict(data, [], "my_field")
         assert v == [VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER]
 
     def test_decompress(self):
-        assert (VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER) == VATINWidget().decompress(
-            "%s%s" % (VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
-        )
-        assert (VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER) == VATINWidget().decompress(
+        assert VATINWidget().decompress(
+            f"{VALID_VIES_COUNTRY_CODE}{VALID_VIES_NUMBER}"
+        ) == (VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
+        assert VATINWidget().decompress(
             [VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER]
-        )
-        assert (None, None) == VATINWidget().decompress(None)
+        ) == (VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
+        assert VATINWidget().decompress(None) == (None, None)
 
 
-class MockRequest(object):
+class MockRequest:
     pass
 
 

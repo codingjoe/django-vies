@@ -13,3 +13,4 @@ lib/
 docs/_build/
 .coverage
 htmlcov/
+_version.py

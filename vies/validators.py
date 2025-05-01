@@ -5,7 +5,7 @@ from vies.types import VATIN
 
 
 @deconstructible
-class VATINValidator(object):
+class VATINValidator:
     """Validator for European VIES VAT Identification Number."""
 
     message = _("Not a valid European VAT number.")

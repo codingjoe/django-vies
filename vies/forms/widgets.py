@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+import contextlib
 import re
 
 from django import forms
@@ -12,31 +12,27 @@ EMPTY_VALUES = (None, "")
 class VATINWidget(forms.MultiWidget):
     def __init__(self, choices=VIES_COUNTRY_CHOICES, attrs=None):
         widgets = (forms.Select(choices=choices), forms.TextInput())
-        super(VATINWidget, self).__init__(widgets, attrs)
+        super().__init__(widgets, attrs)
 
     def value_from_datadict(self, data, files, name):
-        value = super(VATINWidget, self).value_from_datadict(data, files, name)
+        value = super().value_from_datadict(data, files, name)
         country, code = value
         if code not in EMPTY_VALUES:
             if country in EMPTY_VALUES:
-                try:
+                with contextlib.suppress(ValueError):
                     # ex. code="FR09443710785", country="".
                     empty, country, code = re.split("([a-zA-Z].)", code)
-                except ValueError:
-                    pass
             else:
                 # ex. code ="FR09443710785", country="FR".
-                re_code = re.compile(r"^%s(\d+)$" % country)
+                re_code = re.compile(rf"^{country}(\d+)$")
                 if re_code.match(code):
                     code = code.replace(country, "", 1)
-            try:
+            with contextlib.suppress(AttributeError):
                 country = country.upper()
-            except AttributeError:
-                pass
         return [country, code]
 
     def format_output(self, rendered_widgets):
-        return "%s&nbsp;%s" % (rendered_widgets[0], rendered_widgets[1])
+        return f"{rendered_widgets[0]}&nbsp;{rendered_widgets[1]}"
 
     def decompress(self, value):
         if value:

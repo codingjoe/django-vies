@@ -9,11 +9,11 @@ from vies import VIES_WSDL_URL, logger
 
 
 def dk_format(v):
-    return "%s %s %s %s" % (v[:4], v[4:6], v[6:8], v[8:10])
+    return f"{v[:4]} {v[4:6]} {v[6:8]} {v[8:10]}"
 
 
 def fr_format(v):
-    return "%s %s" % (v[:4], v[4:])
+    return f"{v[:4]} {v[4:]}"
 
 
 VIES_OPTIONS = {
@@ -55,7 +55,7 @@ VIES_COUNTRY_CHOICES = sorted(
 MEMBER_COUNTRY_CODES = VIES_OPTIONS.keys()
 
 
-class VATIN(object):
+class VATIN:
     """Object wrapper for the european VAT Identification Number."""
 
     def __init__(self, country_code, number):
@@ -63,10 +63,7 @@ class VATIN(object):
         self.number = number
 
     def __str__(self):
-        unformated_number = "{country_code}{number}".format(
-            country_code=self.country_code,
-            number=self.number,
-        )
+        unformated_number = f"{self.country_code}{self.number}"
 
         country = VIES_OPTIONS.get(self.country_code, {})
         if len(country) == 3:
@@ -74,7 +71,7 @@ class VATIN(object):
         return unformated_number
 
     def __repr__(self):
-        return "<VATIN {}>".format(self.__str__())
+        return f"<VATIN {self.__str__()}>"
 
     def get_country_code(self):
         return self._country_code
@@ -115,7 +112,7 @@ class VATIN(object):
         if not re.match(r"^[a-zA-Z]", self.country_code):
             msg = gettext("%s is not a valid ISO_3166-1 country code.")
             raise ValidationError(msg % self.country_code)
-        elif self.country_code not in MEMBER_COUNTRY_CODES:
+        if self.country_code not in MEMBER_COUNTRY_CODES:
             msg = gettext("%s is not a european member state.")
             raise ValidationError(msg % self.country_code)
 
@@ -127,7 +124,7 @@ class VATIN(object):
                 VIES_OPTIONS[self.country_code],
             )
         )
-        if not country["validator"].match("%s%s" % (self.country_code, self.number)):
+        if not country["validator"].match(f"{self.country_code}{self.number}"):
             msg = gettext("%s does not match the country's VAT ID specifications.")
             raise ValidationError(msg % self)
 

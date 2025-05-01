@@ -1,4 +1,5 @@
 import logging
+from types import SimpleNamespace
 from unittest.mock import patch
 
 import pytest
@@ -8,15 +9,15 @@ from tests import VALID_VIES_COUNTRY_CODE, VALID_VIES_IE, VALID_VIES_NUMBER
 from vies.types import VATIN
 
 
-class TestVATIN(object):
+class TestVATIN:
     def test_creation(self):
         VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
 
     def test_str(self):
-        assert "AB1234567890" == str(VATIN("AB", "1234567890"))
+        assert str(VATIN("AB", "1234567890")) == "AB1234567890"
 
     def test_repr(self):
-        assert "<VATIN AB1234567890>" == repr(VATIN("AB", "1234567890"))
+        assert repr(VATIN("AB", "1234567890")) == "<VATIN AB1234567890>"
 
     def test_verify(self):
         with pytest.raises(ValidationError) as e:
@@ -38,12 +39,21 @@ class TestVATIN(object):
         v = VATIN("XX", VALID_VIES_NUMBER)
         assert not v.is_valid()
 
-    def test_result(self):
+    @patch("vies.types.Client")
+    def test_result(self, mock_client):
+        mock_check_vat = mock_client.return_value.service.checkVat
+        mock_check_vat.return_value = SimpleNamespace(
+            countryCode="CZ",
+            vatNumber="24147931",
+            name="Braiins Systems s.r.o.",
+            valid=True,
+        )
+
         v = VATIN("CZ", "24147931")
         assert v.is_valid()
-        assert v.data["countryCode"] == "CZ"
-        assert v.data["vatNumber"] == "24147931"
-        assert v.data["name"] == "Braiins Systems s.r.o."
+        assert v.data.countryCode == "CZ"
+        assert v.data.vatNumber == "24147931"
+        assert v.data.name == "Braiins Systems s.r.o."
 
     def test_ie_regex_verification(self):
         for vn in VALID_VIES_IE:

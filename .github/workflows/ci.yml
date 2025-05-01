@@ -2,71 +2,40 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
 
 jobs:
 
-  analyze:
-    name: CodeQL
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
-        with:
-          languages: python
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
-
-  msgcheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/setup-python@v5.6.0
-      - uses: actions/checkout@v4
-      - run: sudo apt install -y gettext aspell libenchant-2-dev
-      - uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-      - run: python -m pip install -r requirements.txt
-      - run: msgcheck -n vies/locale/*/LC_MESSAGES/*.po
-
   lint:
+    runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
         lint-command:
-          - "bandit -r vies -x tests"
-          - "black --check --diff ."
-          - "flake8 ."
-          - "isort --check-only --diff ."
-          - "pydocstyle ."
-    runs-on: ubuntu-latest
+          - "ruff format --check --diff ."
+          - "ruff check --output-format=github ."
+          - "msgcheck -n vies/locale/*/LC_MESSAGES/*.po"
     steps:
-      - uses: actions/setup-python@v5.6.0
       - uses: actions/checkout@v4
-      - uses: actions/cache@v4
+      - run: sudo apt install -y gettext aspell libenchant-2-dev
+      - uses: actions/setup-python@v5
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-      - run: python -m pip install -r requirements.txt
+          python-version: "3.x"
+          cache: 'pip'
+          cache-dependency-path: 'pyproject.toml'
+      - run: python -m pip install -e .[lint]
       - run: ${{ matrix.lint-command }}
 
-  readme:
+  dist:
     runs-on: ubuntu-latest
     steps:
-      - run: sudo apt install -y gettext
-      - uses: actions/setup-python@v5.6.0
       - uses: actions/checkout@v4
-      - name: Install Python dependencies
-        run: python -m pip install --upgrade pip setuptools wheel twine readme-renderer
-      - run: python setup.py sdist bdist_wheel
+      - run: sudo apt install -y gettext
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: python -m pip install --upgrade pip build twine
+      - run: python -m build --sdist --wheel
       - run: python -m twine check dist/*
       - uses: actions/upload-artifact@v4
         with:
@@ -75,6 +44,7 @@ jobs:
   pytest:
     needs:
       - lint
+      - dist
     strategy:
       matrix:
         os:
@@ -88,22 +58,17 @@ jobs:
           - "4.2"
           - "5.1"
           - "5.2"
-        exclude:
-          # Django 5.x requires Python ≥ 3.10
-          - python-version: "3.9"
-            django-version: "5.1"
-          - python-version: "3.9"
-            django-version: "5.2"
     runs-on: ${{ matrix.os }}
     steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt install -y gettext
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5.6.0
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: actions/checkout@v4
-      - run: python -m pip install --upgrade setuptools wheel codecov pytest pytest-cov pytest-django zeep
-      - run: python -m pip install django~=${{ matrix.django-version }}
+      - run: python -m pip install .[test]
+      - run: python -m pip install django~=${{ matrix.django-version }}.0
       - run: python -m pytest
-      - run: codecov
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - uses: codecov/codecov-action@v5
+        with:
+          flags: py${{ matrix.python-version }}-dj${{ matrix.django-version }}

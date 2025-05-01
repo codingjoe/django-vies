@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django import forms
 
 from vies.types import VATIN, VIES_COUNTRY_CHOICES
@@ -9,7 +8,6 @@ from .widgets import VATINHiddenWidget, VATINWidget
 
 
 class VATINField(forms.MultiValueField):
-
     hidden_widget = VATINHiddenWidget
     widget = VATINWidget
 
@@ -28,7 +26,7 @@ class VATINField(forms.MultiValueField):
         # `CharField` superclass at the end of `VATINField.formfield`.
         kwargs.pop("empty_value", None)
 
-        super(VATINField, self).__init__(fields=fields, *args, **kwargs)
+        super().__init__(fields=fields, *args, **kwargs)
 
     def compress(self, data_list):
         if data_list:
