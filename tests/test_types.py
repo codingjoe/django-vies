@@ -9,15 +9,15 @@ from tests import VALID_VIES_COUNTRY_CODE, VALID_VIES_IE, VALID_VIES_NUMBER
 from vies.types import VATIN
 
 
-class TestVATIN(object):
+class TestVATIN:
     def test_creation(self):
         VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
 
     def test_str(self):
-        assert "AB1234567890" == str(VATIN("AB", "1234567890"))
+        assert str(VATIN("AB", "1234567890")) == "AB1234567890"
 
     def test_repr(self):
-        assert "<VATIN AB1234567890>" == repr(VATIN("AB", "1234567890"))
+        assert repr(VATIN("AB", "1234567890")) == "<VATIN AB1234567890>"
 
     def test_verify(self):
         with pytest.raises(ValidationError) as e:

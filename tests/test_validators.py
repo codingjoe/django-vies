@@ -6,7 +6,7 @@ from vies.types import VATIN
 from vies.validators import VATINValidator
 
 
-class TestValidators(object):
+class TestValidators:
     """Validate values with VATIN object and string values."""
 
     @pytest.mark.parametrize(
