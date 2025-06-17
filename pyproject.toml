@@ -41,7 +41,7 @@ test = [
   "pytest-django",
 ]
 lint = [
-  "ruff==0.11.13",
+  "ruff==0.12.0",
   "msgcheck==4.1.0",
 ]
 
