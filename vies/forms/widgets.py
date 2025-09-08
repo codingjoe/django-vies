@@ -11,7 +11,10 @@ EMPTY_VALUES = (None, "")
 
 class VATINWidget(forms.MultiWidget):
     def __init__(self, choices=VIES_COUNTRY_CHOICES, attrs=None):
-        widgets = (forms.Select(choices=choices), forms.TextInput())
+        widgets = (
+            forms.Select(choices=choices, attrs=attrs),
+            forms.TextInput(attrs=attrs),
+        )
         super().__init__(widgets, attrs)
 
     def value_from_datadict(self, data, files, name):
