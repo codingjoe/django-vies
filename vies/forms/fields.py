@@ -9,12 +9,13 @@ from .widgets import VATINHiddenWidget, VATINWidget
 
 class VATINField(forms.MultiValueField):
     hidden_widget = VATINHiddenWidget
-    widget = VATINWidget
 
     def __init__(self, choices=VIES_COUNTRY_CHOICES, *args, **kwargs):
         max_length = kwargs.pop("max_length", VATIN_MAX_LENGTH)
 
-        kwargs["widget"] = self.widget(choices=choices)
+        attrs = kwargs.pop("attrs", None)
+        widget = kwargs.pop("widget", VATINWidget(choices=choices, attrs=attrs))
+        kwargs["widget"] = widget
         kwargs.setdefault("validators", [VATINValidator()])
 
         fields = (

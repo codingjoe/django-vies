@@ -10,6 +10,7 @@ from tests import VALID_VIES, VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER
 from tests.testapp.forms import EmptyVIESModelForm, VIESModelForm
 from tests.testapp.models import VIESModel
 from vies.forms import VATINWidget
+from vies.forms.fields import VATINField
 
 
 class ModelTestCase(TestCase):
@@ -114,6 +115,38 @@ class TestWidget:
             [VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER]
         ) == (VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
         assert VATINWidget().decompress(None) == (None, None)
+
+    def test_no_attrs(self):
+        widget = VATINWidget()
+        assert "class" not in widget.attrs
+        assert "class" not in widget.widgets[0].attrs
+        assert "class" not in widget.widgets[1].attrs
+
+    def test_attrs(self):
+        widget = VATINWidget(attrs={"class": "someclass"})
+        assert widget.attrs["class"] == "someclass"
+        assert widget.widgets[0].attrs["class"] == "someclass"
+        assert widget.widgets[1].attrs["class"] == "someclass"
+
+
+class TestField:
+    def test_no_attrs(self):
+        field = VATINField()
+        assert "class" not in field.widget.attrs
+        assert "class" not in field.widget.widgets[0].attrs
+        assert "class" not in field.widget.widgets[1].attrs
+
+    def test_attrs(self):
+        field = VATINField(attrs={"class": "someclass"})
+        assert field.widget.attrs["class"] == "someclass"
+        assert field.widget.widgets[0].attrs["class"] == "someclass"
+        assert field.widget.widgets[1].attrs["class"] == "someclass"
+
+    def test_attrs_from_widget(self):
+        field = VATINField(widget=VATINWidget(attrs={"class": "otherclass"}))
+        assert field.widget.attrs["class"] == "otherclass"
+        assert field.widget.widgets[0].attrs["class"] == "otherclass"
+        assert field.widget.widgets[1].attrs["class"] == "otherclass"
 
 
 class MockRequest:
