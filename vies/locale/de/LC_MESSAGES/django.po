@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-04 14:39+0200\n"
+"POT-Creation-Date: 2025-11-24 23:39+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Johannes Hoppe <info@johanneshoppe.com>\n"
 "Language-Team: \n"
@@ -10,31 +10,37 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.4\n"
+"X-Generator: Poedit 3.8\n"
 
 # Django VIES VAT field.
 # Copyright (C) 2015 Johannes Hoppe
 # This file is distributed under the same license as the vies package.
 # Johannes Hoppe <info@johanneshoppe.com>, 2015
 #
-#: __init__.py:111
+#: types.py:113
 #, python-format
 msgid "%s is not a valid ISO_3166-1 country code."
 msgstr "%s ist kein gültiger ISO_3166-1 Ländercode."
 
-#: __init__.py:114
+#: types.py:116
 #, python-format
-msgid "%s is not a VIES member country."
-msgstr "%s ist kein VIES Mitgliedsstaat."
+msgid "%s is not a european member state."
+msgstr "%s ist kein europäischer Mitgliedstaat."
 
-#: fields.py:20
+#: types.py:128
+#, python-format
+msgid "%s does not match the country's VAT ID specifications."
+msgstr "%s entspricht nicht den Vorgaben des Landes für die USt-IdNr."
+
+#: types.py:137
+#, python-format
+msgid "%s is not a valid VATIN."
+msgstr "%s ist keine gültige USt-IdNr."
+
+#: validators.py:11
 msgid "Not a valid European VAT number."
 msgstr "Keine gültige europäische Steuernummer."
 
-#: fields.py:21
-msgid "VIES check VAT service currently unavailable."
-msgstr "VIES Validierungsdiest ist zur Zeit nicht erreichbar."
-
-#: models.py:12
+#: models.py:18
 msgid "A VIES VAT field."
 msgstr "Ein USt-IdNr. Feld."
