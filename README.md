@@ -114,7 +114,7 @@ def validate_vat_field(company_id):
     else:
         company.vat_is_valid = True
     finally:
-        company.save(update_fields=['vat_is_valid'])
+        company.save(update_fields=["vat_is_valid"])
 ```
 
 You can also use
