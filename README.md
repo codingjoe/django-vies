@@ -98,7 +98,7 @@ class Company(models.Model):
         super(Company, self).save(*args, **kwargs)
         self.__vat = self.vat
 
-    def refresh_from_db(self, *args, **kwargs)
+    def refresh_from_db(self, *args, **kwargs):
         super(Company, self).refresh_from_db(*args, **kwargs)
         self.__vat = self.vat
 
