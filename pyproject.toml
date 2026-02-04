@@ -4,9 +4,9 @@ build-backend = "flit_gettext.scm"
 
 [project]
 name = "django-vies"
-readme = "README.rst"
+readme = "README.md"
 license = "MIT"
-authors = [{ name = "Johannes Hoppe", email = "info@johanneshoppe.com" }]
+authors = [{ name = "Johannes Maron", email = "johannes@maron.family" }]
 requires-python = ">=3.10"
 dependencies = [
   "Django>=4.2",
@@ -29,22 +29,22 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
   "Framework :: Django",
   "Framework :: Django :: 4.2",
-  "Framework :: Django :: 5.1",
   "Framework :: Django :: 5.2",
+  "Framework :: Django :: 6.0",
   "Topic :: Software Development",
   "Topic :: Office/Business :: Financial :: Accounting",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
+dev = [
+  { include-group = "test" },
+]
 test = [
   "pytest",
   "pytest-cov",
   "pytest-django",
 ]
-lint = [
-  "ruff==0.14.13",
-  "msgcheck==4.1.0",
-]
+
 
 [tool.flit.module]
 name = "vies"
@@ -92,4 +92,3 @@ ignore = ["D1", "PT004"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["measurement", "tests"]
-

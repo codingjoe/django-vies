@@ -1,6 +1,0 @@
-include README.rst
-include LICENSE
-include vies/locale/*/LC_MESSAGES/django.mo
-exclude .*
-exclude CONTRIBUTING.md
-prune .github

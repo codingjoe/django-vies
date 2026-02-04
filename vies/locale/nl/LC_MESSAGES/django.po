@@ -44,4 +44,3 @@ msgstr "%s is geen geldig BTW-nummer."
 #: validators.py:11
 msgid "Not a valid European VAT number."
 msgstr "Dit is geen geldig Europees BTW-nummer."
-

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320" font-family="Segoe UI, system-ui, sans-serif"
+     viewBox="0 0 1280 640">
+    <circle cx="260" cy="320" r="200" fill="#092e20"/>
+    <g fill="none" stroke="#f1fff7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <path stroke-width="18" d="M214.331 433h91.338a52 52 0 0 0 49.504-67.912l-22.178-68.978a65 65 0 0 0-61.88-45.11h-22.23a65 65 0 0 0-61.88 45.11l-22.178 68.978A52 52 0 0 0 214.331 433M299 199q-13 52-39 52t-39-52zm-39 143h-39"/>
+        <path stroke-width="18" d="M286 305.236a39 39 0 1 0 0 73.528"/>
+    </g>
+    <text x="243" y="70" fill="#092e20" font-size="64" font-weight="bold" transform="matrix(1.6 0 0 1.6 120 120)">
+        Django
+    </text>
+    <text x="240" y="174" fill="#444" font-size="120" font-weight="bold" transform="matrix(1.6 0 0 1.6 120 120)">
+        VIES
+    </text>
+    <text x="244" y="220" font-size="24" font-style="italic" transform="matrix(1.6 0 0 1.6 120 120)">
+        VAT Information Exchange System
+    </text>
+</svg>
