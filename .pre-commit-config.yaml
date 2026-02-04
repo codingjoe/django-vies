@@ -59,3 +59,4 @@ ci:
   autoupdate_schedule: weekly
   skip:
     - no-commit-to-branch
+    - msgcheck
