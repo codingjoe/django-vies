@@ -92,4 +92,3 @@ ignore = ["D1", "PT004"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["measurement", "tests"]
-

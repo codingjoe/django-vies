@@ -7,6 +7,7 @@ python setup.py develop
 ```
 
 To test locally simply run:
+
 ```bash
 python setup.py test
 ```

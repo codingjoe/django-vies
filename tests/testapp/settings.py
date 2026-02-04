@@ -32,5 +32,3 @@ TEMPLATES = [
 ]
 
 SECRET_KEY = "123456"
-
-USE_L10N = True

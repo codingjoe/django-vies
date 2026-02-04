@@ -16,6 +16,7 @@ python3 -m pip install django-vies
 from django.db import models
 from vies.models import VATINField
 
+
 class Company(models.Model):
     name = models.CharField(max_length=100)
     vat = VATINField(blank=True, null=True)
@@ -56,7 +57,7 @@ performed in a separate task.
 
 e.g.
 
-``` python
+```python
 from vies.models import VATINField
 from vies.validators import VATINValidator
 
@@ -68,7 +69,7 @@ class Company(models.Model):
 
 `validate=True` will tell the validator to validate against the VIES
 API. `verify` is enabled on by default and will only verify that the
-VATIN matches the country\'s specifications.
+VATIN matches the country's specifications.
 
 It is recommended to perform VIES API validation inside an asynchronous
 task.
@@ -122,7 +123,7 @@ to call asynchronous task to avoid **circular import errors**.
 
 ## Translations
 
-Feel free to contribute translations, it\'s simple!
+Feel free to contribute translations, it's simple!
 
 ```shell
 cd vies
