@@ -1,3 +1,16 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/codingjoe/django-vies/raw/main/images/logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://github.com/codingjoe/django-vies/raw/main/images/logo-light.svg">
+    <img alt="Django VIES: Validate and store VAT Information Exchange System (VIES) data in Django." src="https://github.com/codingjoe/django-vies/raw/main/images/logo-light.svg">
+  </picture>
+<br>
+  <a href="https://github.com/codingjoe/django-vies?tab=readme-ov-file">Documentation</a> |
+  <a href="https://github.com/codingjoe/django-vies/issues/new/choose">Issues</a> |
+  <a href="https://github.com/codingjoe/django-vies/releases">Changelog</a> |
+  <a href="https://github.com/sponsors/codingjoe">Funding</a> 💚
+</p>
+
 # Django-VIES
 
 Validate and store VAT Information Exchange System (VIES) data in Django.
