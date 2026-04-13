@@ -10,7 +10,7 @@ authors = [{ name = "Johannes Maron", email = "johannes@maron.family" }]
 requires-python = ">=3.10"
 dependencies = [
   "Django>=4.2",
-  "retrying>=1.1.0",
+  "retrying>=1.4.2",
   "zeep>=2.5.0",
 ]
 dynamic = ["version", "description"]
