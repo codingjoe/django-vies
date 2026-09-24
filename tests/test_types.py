@@ -4,6 +4,7 @@ from unittest.mock import patch
 
 import pytest
 from django.core.exceptions import ValidationError
+from zeep.exceptions import Fault
 
 from tests import VALID_VIES_COUNTRY_CODE, VALID_VIES_IE, VALID_VIES_NUMBER
 from vies.types import VATIN
@@ -88,6 +89,47 @@ class TestVATIN:
         logging.getLogger("vies").setLevel(logging.NOTSET)
 
         mock_check_vat.assert_called_with(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
+
+    @pytest.mark.parametrize(
+        "fault_message",
+        [
+            "GLOBAL_MAX_CONCURRENT_REQ",
+            "MS_MAX_CONCURRENT_REQ",
+            "MS_UNAVAILABLE",
+            "SERVICE_UNAVAILABLE",
+            "TIMEOUT",
+        ],
+    )
+    @patch("vies.types.Client")
+    def test_transient_zeep_fault_is_validation_error(self, mock_client, fault_message):
+        """Expose temporary VIES faults as field-level validation errors."""
+        mock_check_vat = mock_client.return_value.service.checkVat
+        mock_check_vat.side_effect = Fault(fault_message)
+
+        v = VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
+
+        with pytest.raises(ValidationError) as error:
+            v.validate()
+
+        assert error.value.code == "vies_unavailable"
+        assert error.value.message == (
+            "The VIES service is temporarily unavailable. Please try again later."
+        )
+
+    @patch("vies.types.Client")
+    def test_unknown_zeep_fault_is_raised(self, mock_client):
+        """Do not hide SOAP faults that are not known to be temporary."""
+        mock_check_vat = mock_client.return_value.service.checkVat
+        mock_check_vat.side_effect = Fault("INVALID_INPUT")
+
+        v = VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
+
+        logging.getLogger("vies").setLevel(logging.CRITICAL)
+
+        with pytest.raises(Fault, match="INVALID_INPUT"):
+            v.validate()
+
+        logging.getLogger("vies").setLevel(logging.NOTSET)
 
 
 @pytest.mark.parametrize(
