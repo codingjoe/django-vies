@@ -7,9 +7,9 @@ name = "django-vies"
 readme = "README.md"
 license = "MIT"
 authors = [{ name = "Johannes Maron", email = "johannes@maron.family" }]
-requires-python = ">=3.10"
+requires-python = ">=3.14"
 dependencies = [
-  "Django>=4.2",
+  "Django>=5.2",
   "retrying>=1.1.0",
   "zeep>=2.5.0",
 ]
@@ -22,15 +22,12 @@ classifiers = [
   "Intended Audience :: Financial and Insurance Industry",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
   "Framework :: Django",
-  "Framework :: Django :: 4.2",
   "Framework :: Django :: 5.2",
   "Framework :: Django :: 6.0",
+  "Framework :: Django :: 6.1",
   "Topic :: Software Development",
   "Topic :: Office/Business :: Financial :: Accounting",
 ]
