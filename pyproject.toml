@@ -1,38 +1,38 @@
 [build-system]
-requires = ["flit_core>=3.2", "flit-gettext[scm]", "wheel"]
 build-backend = "flit_gettext.scm"
+requires = [ "flit-core>=3.2", "flit-gettext[scm]", "wheel" ]
 
 [project]
 name = "django-vies"
 readme = "README.md"
 license = "MIT"
-authors = [{ name = "Johannes Maron", email = "johannes@maron.family" }]
+authors = [ { name = "Johannes Maron", email = "johannes@maron.family" } ]
 requires-python = ">=3.10"
-dependencies = [
-  "Django>=4.2",
-  "retrying>=1.1.0",
-  "zeep>=2.5.0",
-]
-dynamic = ["version", "description"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Environment :: Web Environment",
-  "Operating System :: OS Independent",
+  "Framework :: Django",
+  "Framework :: Django :: 4.2",
+  "Framework :: Django :: 5.2",
+  "Framework :: Django :: 6.0",
   "Intended Audience :: Developers",
   "Intended Audience :: Financial and Insurance Industry",
-  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
-  "Framework :: Django",
-  "Framework :: Django :: 4.2",
-  "Framework :: Django :: 5.2",
-  "Framework :: Django :: 6.0",
-  "Topic :: Software Development",
+  "Programming Language :: Python :: 3.15",
   "Topic :: Office/Business :: Financial :: Accounting",
+  "Topic :: Software Development",
+]
+dynamic = [ "description", "version" ]
+dependencies = [
+  "django>=4.2",
+  "retrying>=1.1",
+  "zeep>=2.5",
 ]
 
 [dependency-groups]
@@ -45,50 +45,41 @@ test = [
   "pytest-django",
 ]
 
-
-[tool.flit.module]
-name = "vies"
-
 [tool.setuptools_scm]
 write_to = "vies/_version.py"
 
-[tool.pytest.ini_options]
-norecursedirs = ["venv", "env", ".eggs"]
-addopts = "--cov=vies"
-DJANGO_SETTINGS_MODULE = "tests.testapp.settings"
-
-[tool.coverage.run]
-source = ["."]
-omit = [
-  "*/migrations/*",
-  "*/tests/*",
-  "*/test_*.py",
-  ".tox",
-]
-
-[tool.coverage.report]
-show_missing = true
+[tool.flit]
+module.name = "vies"
 
 [tool.ruff]
-line-length = 88
 target-version = "py39"
-
-[tool.ruff.lint]
-select = [
-    "D", # pydocstyle
-    "E", # pycodestyle errors
-    "EXE", # flake8-executable
-    "F", # pyflakes
-    "I", # isort
-    "S", # flake8-bandit
-    "SIM", # flake8-simplify
-    "UP", # pyupgrade
-    "W", # pycodestyle warnings
+line-length = 88
+lint.select = [
+  "D",   # pydocstyle
+  "E",   # pycodestyle errors
+  "EXE", # flake8-executable
+  "F",   # pyflakes
+  "I",   # isort
+  "S",   # flake8-bandit
+  "SIM", # flake8-simplify
+  "UP",  # pyupgrade
+  "W",   # pycodestyle warnings
 ]
-ignore = ["D1", "PT004"]
+lint.ignore = [ "D1", "PT004" ]
+lint.per-file-ignores."tests/*.py" = [ "PLR2004", "S101", "S105" ]
+lint.isort.known-first-party = [ "measurement", "tests" ]
 
-[tool.ruff.lint.per-file-ignores]
-"tests/*.py" = ["S101", "S105", "PLR2004"]
+[tool.pytest]
+ini_options.norecursedirs = [ ".eggs", "env", "venv" ]
+ini_options.addopts = "--cov=vies"
+ini_options.DJANGO_SETTINGS_MODULE = "tests.testapp.settings"
 
-[tool.ruff.lint.isort]
-known-first-party = ["measurement", "tests"]
+[tool.coverage]
+run.source = [ "." ]
+run.omit = [
+  "*/migrations/*",
+  "*/test_*.py",
+  "*/tests/*",
+  ".tox",
+]
+report.show_missing = true
