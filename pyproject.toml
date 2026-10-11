@@ -6,7 +6,6 @@ requires = [ "flit-core>=3.2", "flit-gettext[scm]", "wheel" ]
 name = "django-vies"
 readme = "README.md"
 license = "MIT"
-authors = [ { name = "Johannes Maron", email = "johannes@maron.family" } ]
 requires-python = ">=3.10"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -34,6 +33,9 @@ dependencies = [
   "retrying>=1.1",
   "zeep>=2.5",
 ]
+[[project.authors]]
+name = "Johannes Maron"
+email = "johannes@maron.family"
 
 [dependency-groups]
 dev = [
@@ -49,12 +51,14 @@ test = [
 write_to = "vies/_version.py"
 
 [tool.flit]
-module.name = "vies"
+[tool.flit.module]
+name = "vies"
 
 [tool.ruff]
 target-version = "py39"
 line-length = 88
-lint.select = [
+[tool.ruff.lint]
+select = [
   "D",   # pydocstyle
   "E",   # pycodestyle errors
   "EXE", # flake8-executable
@@ -65,21 +69,24 @@ lint.select = [
   "UP",  # pyupgrade
   "W",   # pycodestyle warnings
 ]
-lint.ignore = [ "D1", "PT004" ]
-lint.per-file-ignores."tests/*.py" = [ "PLR2004", "S101", "S105" ]
-lint.isort.known-first-party = [ "measurement", "tests" ]
+ignore = [ "D1", "PT004" ]
+per-file-ignores."tests/*.py" = [ "PLR2004", "S101", "S105" ]
+isort.known-first-party = [ "measurement", "tests" ]
 
 [tool.pytest]
-ini_options.norecursedirs = [ ".eggs", "env", "venv" ]
-ini_options.addopts = "--cov=vies"
-ini_options.DJANGO_SETTINGS_MODULE = "tests.testapp.settings"
+[tool.pytest.ini_options]
+norecursedirs = [ ".eggs", "env", "venv" ]
+addopts = "--cov=vies"
+DJANGO_SETTINGS_MODULE = "tests.testapp.settings"
 
 [tool.coverage]
-run.source = [ "." ]
-run.omit = [
+[tool.coverage.run]
+source = [ "." ]
+omit = [
   "*/migrations/*",
   "*/test_*.py",
   "*/tests/*",
   ".tox",
 ]
-report.show_missing = true
+[tool.coverage.report]
+show_missing = true
