@@ -13,7 +13,7 @@ class TestValidators:
         "vatin",
         [
             VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER),
-            "".join([VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER]),
+            f"{VALID_VIES_COUNTRY_CODE}{VALID_VIES_NUMBER}",
         ],
     )
     def test_valid(self, vatin):
@@ -30,12 +30,12 @@ class TestValidators:
         "invalid_number_vatin",
         [
             VATIN(VALID_VIES_COUNTRY_CODE, "12345678"),
-            "".join([VALID_VIES_COUNTRY_CODE, "12345678"]),
+            f"{VALID_VIES_COUNTRY_CODE}12345678",
         ],
     )
     @pytest.mark.parametrize(
         "invalid_country_vatin",
-        [VATIN("XX", VALID_VIES_NUMBER), "".join(["XX", VALID_VIES_NUMBER])],
+        [VATIN("XX", VALID_VIES_NUMBER), f"XX{VALID_VIES_NUMBER}"],
     )
     def test_invalid(self, invalid_number_vatin, invalid_country_vatin):
         validator = VATINValidator()
@@ -54,5 +54,5 @@ class TestValidators:
             validator(invalid_number_vatin)
 
     def test_no_check_exception(self):
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError, match='"verify" and "validate" can not both be false'):
             VATINValidator(verify=False, validate=False)
