@@ -54,5 +54,7 @@ class TestValidators:
             validator(invalid_number_vatin)
 
     def test_no_check_exception(self):
-        with pytest.raises(ValueError, match='"verify" and "validate" can not both be false'):
+        with pytest.raises(
+            ValueError, match='"verify" and "validate" can not both be false'
+        ):
             VATINValidator(verify=False, validate=False)
