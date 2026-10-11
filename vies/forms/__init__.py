@@ -1,4 +1,4 @@
-from .fields import *  # NoQA
-from .widgets import *  # NoQA
+from .fields import *
+from .widgets import *
 
-__all__ = ["VATINField", "VATINWidget"]  # NoQA
+__all__ = ["VATINField", "VATINWidget"]
