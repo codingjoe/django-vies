@@ -19,8 +19,8 @@ class ModelTestCase(TestCase):
     def test_create(self):
         """Object is correctly created."""
         vies = VIESModel.objects.create(vat=VALID_VIES)
-        self.assertNotEqual(VIESModel.objects.count(), 0)
-        self.assertEqual(vies.vat, VALID_VIES)
+        assert VIESModel.objects.count() != 0
+        assert vies.vat == VALID_VIES
 
     def test_save(self):
         """Object is correctly saved."""
@@ -29,8 +29,8 @@ class ModelTestCase(TestCase):
         vies_saved.save()
 
         vies_received = VIESModel.objects.get(pk=vies_saved.pk)
-        self.assertNotEqual(VIESModel.objects.count(), 0)
-        self.assertEqual(vies_received.vat, VALID_VIES)
+        assert VIESModel.objects.count() != 0
+        assert vies_received.vat == VALID_VIES
 
 
 class ModelFormTestCase(TestCase):
@@ -39,37 +39,37 @@ class ModelFormTestCase(TestCase):
         form = VIESModelForm(
             {"vat_0": VALID_VIES_COUNTRY_CODE, "vat_1": VALID_VIES_NUMBER}
         )
-        self.assertTrue(form.is_valid())
+        assert form.is_valid()
 
         vies = form.save()
-        self.assertEqual(vies.vat, VALID_VIES)
+        assert vies.vat == VALID_VIES
 
     def test_is_not_valid_country(self):
         """Invalid country."""
         form = VIESModelForm({"vat_0": "xx", "vat_1": VALID_VIES_NUMBER})
-        self.assertFalse(form.is_valid())
+        assert not form.is_valid()
 
     def test_is_not_valid_numbers(self):
         """Invalid number."""
         form = VIESModelForm({"vat_0": VALID_VIES_COUNTRY_CODE, "vat_1": "xx123+-"})
-        self.assertFalse(form.is_valid())
+        assert not form.is_valid()
 
     def test_save(self):
         """Form is saved."""
         form = VIESModelForm(
             {"vat_0": VALID_VIES_COUNTRY_CODE, "vat_1": VALID_VIES_NUMBER}
         )
-        self.assertTrue(form.is_valid())
+        assert form.is_valid()
         vies_saved = form.save()
 
         vies_received = VIESModel.objects.get(pk=vies_saved.pk)
-        self.assertEqual(vies_received, vies_saved)
-        self.assertNotEqual(VIESModel.objects.count(), 0)
-        self.assertEqual(vies_received.vat, VALID_VIES)
+        assert vies_received == vies_saved
+        assert VIESModel.objects.count() != 0
+        assert vies_received.vat == VALID_VIES
 
     def test_empty(self):
         form = EmptyVIESModelForm({"name": "Eva"})
-        self.assertTrue(form.is_valid())
+        assert form.is_valid()
 
     @patch("vies.types.Client")
     def test_is_valid_and_has_vatin_data(self, mock_client):
@@ -131,7 +131,4 @@ class AdminTestCase(TestCase):
         """Admin form is generated."""
         ma = ModelAdmin(VIESModel, self.site)
 
-        try:
-            ma.get_form(request)
-        except Exception as e:
-            self.fail(e.message)
+        ma.get_form(request)

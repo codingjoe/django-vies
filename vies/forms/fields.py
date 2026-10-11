@@ -26,8 +26,9 @@ class VATINField(forms.MultiValueField):
         # `CharField` superclass at the end of `VATINField.formfield`.
         kwargs.pop("empty_value", None)
 
-        super().__init__(fields=fields, *args, **kwargs)
+        super().__init__(*args, fields=fields, **kwargs)
 
     def compress(self, data_list):
         if data_list:
             return VATIN(*data_list)
+        return None
