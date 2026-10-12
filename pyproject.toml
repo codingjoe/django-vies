@@ -6,7 +6,7 @@ requires = [ "flit-core>=3.2", "flit-gettext[scm]", "wheel" ]
 name = "django-vies"
 readme = "README.md"
 license = "MIT"
-requires-python = ">=3.10"
+requires-python = ">=3.14"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Environment :: Web Environment",
@@ -18,10 +18,6 @@ classifiers = [
   "Intended Audience :: Financial and Insurance Industry",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
   "Programming Language :: Python :: 3.15",
   "Topic :: Office/Business :: Financial :: Accounting",

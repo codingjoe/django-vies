@@ -25,20 +25,11 @@ jobs:
         os:
           - ubuntu-latest
         python-version:
-          - "3.10"
-          - "3.11"
-          - "3.12"
-          - "3.13"
           - "3.14"
         django-version:
-          - "4.2"
           - "5.2"
           - "6.0"
-        exclude:
-          - python-version: "3.10"
-            django-version: "6.0"
-          - python-version: "3.11"
-            django-version: "6.0"
+          - "6.1"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7
@@ -46,7 +37,7 @@ jobs:
       - uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
-      - run: uv run --with django~=${{ matrix.django-version }}.0 pytest
+      - run: uv run --with django~=${{ matrix.django-version }}.0 pytest --cov=vies --cov-report=xml
       - uses: codecov/codecov-action@v7
         with:
           use_oidc: true
