@@ -5,7 +5,8 @@ from . import VATIN_MAX_LENGTH, forms
 
 
 class VATINField(CharField):
-    """Database field for European VIES VAT Identification Number.
+    """
+    Database field for European VIES VAT Identification Number.
 
     This field stores and validates VATINs.
 
