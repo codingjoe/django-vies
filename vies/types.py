@@ -55,14 +55,6 @@ VIES_COUNTRY_CHOICES = sorted(
 
 MEMBER_COUNTRY_CODES = VIES_OPTIONS.keys()
 
-TRANSIENT_VIES_FAULTS = {
-    "GLOBAL_MAX_CONCURRENT_REQ",
-    "MS_MAX_CONCURRENT_REQ",
-    "MS_UNAVAILABLE",
-    "SERVICE_UNAVAILABLE",
-    "TIMEOUT",
-}
-
 
 class VATIN:
     """Object wrapper for the european VAT Identification Number."""
@@ -105,17 +97,22 @@ class VATIN:
         try:
             return client.service.checkVat(self.country_code, self.number)
         except Fault as e:
-            if e.message in TRANSIENT_VIES_FAULTS:
-                logger.warning("Transient VIES fault: %s", e.message)
-                msg = gettext(
-                    "The VIES service is temporarily unavailable. "
-                    "Please try again later."
-                )
-                raise ValidationError(msg, code="vies_unavailable") from e
-            logger.exception(e)
-            raise
-        except Exception as e:
-            logger.exception(e)
+            match e.message:
+                case "GLOBAL_MAX_CONCURRENT_REQ" | "MS_MAX_CONCURRENT_REQ":
+                    logger.warning("Rate limited by VIES: %r", e, exc_info=True)
+                case "MS_UNAVAILABLE" | "SERVICE_UNAVAILABLE":
+                    logger.warning("VIES service unavailable: %r", e, exc_info=True)
+                case "TIMEOUT":
+                    logger.error("VIES request timed out: %r", e, exc_info=True)
+                case _:
+                    logger.exception("Unexpected error")
+                    raise
+            msg = gettext(
+                "The VIES service is temporarily unavailable. Please try again later."
+            )
+            raise ValidationError(msg, code="vies_unavailable") from e
+        except Exception:
+            logger.exception("Unexpected error")
             raise
 
     def is_valid(self):
