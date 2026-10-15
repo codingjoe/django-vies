@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 import pytest
 from django.core.exceptions import ValidationError
-from zeep.exceptions import TransportError
+from zeep.exceptions import Fault, TransportError
 
 from tests import VALID_VIES_COUNTRY_CODE, VALID_VIES_IE, VALID_VIES_NUMBER
 from vies.types import VATIN
@@ -74,21 +74,75 @@ class TestVATIN:
         assert not vatin.is_valid()
 
     @patch("vies.types.Client")
-    def test_raises_when_zeep_exception(self, mock_client):
+    def test_raises_when_zeep_exception(self, mock_client, caplog):
         """Raise an error if zeep raises an exception."""
         mock_check_vat = mock_client.return_value.service.checkVat
         mock_check_vat.side_effect = TransportError("error")
 
         v = VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
 
-        logging.getLogger("vies").setLevel(logging.CRITICAL)
+        caplog.set_level(logging.ERROR, logger="vies")
 
         with pytest.raises(TransportError):
             v.validate()
 
-        logging.getLogger("vies").setLevel(logging.NOTSET)
+        record = caplog.records[-1]
+        assert record.levelno == logging.ERROR
+        assert record.exc_info is not None
 
         mock_check_vat.assert_called_with(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
+
+    @pytest.mark.parametrize(
+        ("fault_message", "expected_level", "expected_message"),
+        [
+            ("GLOBAL_MAX_CONCURRENT_REQ", logging.WARNING, "Rate limited by VIES"),
+            ("MS_MAX_CONCURRENT_REQ", logging.WARNING, "Rate limited by VIES"),
+            ("MS_UNAVAILABLE", logging.WARNING, "VIES service unavailable"),
+            ("SERVICE_UNAVAILABLE", logging.WARNING, "VIES service unavailable"),
+            ("TIMEOUT", logging.ERROR, "VIES request timed out"),
+        ],
+    )
+    @patch("vies.types.Client")
+    def test_transient_zeep_fault_is_validation_error(
+        self, mock_client, caplog, fault_message, expected_level, expected_message
+    ):
+        """Expose temporary VIES faults as field-level validation errors."""
+        mock_check_vat = mock_client.return_value.service.checkVat
+        mock_check_vat.side_effect = Fault(fault_message)
+
+        v = VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
+
+        caplog.set_level(logging.WARNING, logger="vies")
+
+        with pytest.raises(ValidationError) as error:
+            v.validate()
+
+        assert error.value.code == "vies_unavailable"
+        assert error.value.message == (
+            "The VIES service is temporarily unavailable. Please try again later."
+        )
+
+        record = caplog.records[-1]
+        assert record.levelno == expected_level
+        assert record.getMessage() == expected_message
+        assert record.exc_info[1].message == fault_message
+
+    @patch("vies.types.Client")
+    def test_unknown_zeep_fault_is_raised(self, mock_client, caplog):
+        """Do not hide SOAP faults that are not known to be temporary."""
+        mock_check_vat = mock_client.return_value.service.checkVat
+        mock_check_vat.side_effect = Fault("INVALID_INPUT")
+
+        v = VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
+
+        caplog.set_level(logging.ERROR, logger="vies")
+
+        with pytest.raises(Fault, match="INVALID_INPUT"):
+            v.validate()
+
+        record = caplog.records[-1]
+        assert record.levelno == logging.ERROR
+        assert record.exc_info is not None
 
 
 @pytest.mark.parametrize(

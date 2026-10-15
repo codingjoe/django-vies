@@ -5,11 +5,13 @@ import pytest
 from django.contrib.admin.options import ModelAdmin
 from django.contrib.admin.sites import AdminSite
 from django.test import TestCase
+from zeep.exceptions import Fault
 
 from tests import VALID_VIES, VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER
 from tests.testapp.forms import EmptyVIESModelForm, VIESModelForm
 from tests.testapp.models import VIESModel
 from vies.forms import VATINWidget
+from vies.validators import VATINValidator
 
 
 class ModelTestCase(TestCase):
@@ -86,6 +88,20 @@ class ModelFormTestCase(TestCase):
         assert form.is_valid()
         data = form.cleaned_data["vat"].data
         assert data.name == "Braiins Systems s.r.o."
+
+    @patch("vies.types.Client")
+    def test_transient_vies_fault_is_form_error(self, mock_client):
+        """A temporary VIES fault must not escape form validation as a 500."""
+        mock_check_vat = mock_client.return_value.service.checkVat
+        mock_check_vat.side_effect = Fault("MS_MAX_CONCURRENT_REQ")
+
+        form = VIESModelForm(
+            {"vat_0": VALID_VIES_COUNTRY_CODE, "vat_1": VALID_VIES_NUMBER}
+        )
+        form.fields["vat"].validators.append(VATINValidator(validate=True))
+
+        assert not form.is_valid()
+        assert form.errors.as_data()["vat"][0].code == "vies_unavailable"
 
 
 class TestWidget:

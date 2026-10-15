@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.utils.functional import cached_property
 from django.utils.translation import gettext
 from zeep import Client
+from zeep.exceptions import Fault
 
 from vies import VIES_WSDL_URL, logger
 
@@ -95,8 +96,23 @@ class VATIN:
         client = Client(VIES_WSDL_URL)
         try:
             return client.service.checkVat(self.country_code, self.number)
-        except Exception as e:
-            logger.exception(e)
+        except Fault as e:
+            match e.message:
+                case "GLOBAL_MAX_CONCURRENT_REQ" | "MS_MAX_CONCURRENT_REQ":
+                    logger.warning("Rate limited by VIES", exc_info=True)
+                case "MS_UNAVAILABLE" | "SERVICE_UNAVAILABLE":
+                    logger.warning("VIES service unavailable", exc_info=True)
+                case "TIMEOUT":
+                    logger.error("VIES request timed out", exc_info=True)
+                case _:
+                    logger.exception("Unexpected error")
+                    raise
+            msg = gettext(
+                "The VIES service is temporarily unavailable. Please try again later."
+            )
+            raise ValidationError(msg, code="vies_unavailable") from e
+        except Exception:
+            logger.exception("Unexpected error")
             raise
 
     def is_valid(self):
