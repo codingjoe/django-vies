@@ -12,5 +12,7 @@ include/
 lib/
 docs/_build/
 .coverage
+coverage.xml
 htmlcov/
 _version.py
+uv.lock

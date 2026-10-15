@@ -21,7 +21,7 @@ class VATINWidget(forms.MultiWidget):
             if country in EMPTY_VALUES:
                 with contextlib.suppress(ValueError):
                     # ex. code="FR09443710785", country="".
-                    empty, country, code = re.split("([a-zA-Z].)", code)
+                    _empty, country, code = re.split("([a-zA-Z].)", code)
             else:
                 # ex. code ="FR09443710785", country="FR".
                 re_code = re.compile(rf"^{country}(\d+)$")

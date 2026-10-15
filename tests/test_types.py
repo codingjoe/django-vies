@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 import pytest
 from django.core.exceptions import ValidationError
-from zeep.exceptions import Fault
+from zeep.exceptions import Fault, TransportError
 
 from tests import VALID_VIES_COUNTRY_CODE, VALID_VIES_IE, VALID_VIES_NUMBER
 from vies.types import VATIN
@@ -77,13 +77,13 @@ class TestVATIN:
     def test_raises_when_zeep_exception(self, mock_client, caplog):
         """Raise an error if zeep raises an exception."""
         mock_check_vat = mock_client.return_value.service.checkVat
-        mock_check_vat.side_effect = Exception(500, "error")
+        mock_check_vat.side_effect = TransportError("error")
 
         v = VATIN(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
 
         caplog.set_level(logging.ERROR, logger="vies")
 
-        with pytest.raises(Exception):
+        with pytest.raises(TransportError):
             v.validate()
 
         record = caplog.records[-1]
@@ -93,7 +93,7 @@ class TestVATIN:
         mock_check_vat.assert_called_with(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
 
     @pytest.mark.parametrize(
-        "fault_message,expected_level",
+        ("fault_message", "expected_level"),
         [
             ("GLOBAL_MAX_CONCURRENT_REQ", logging.WARNING),
             ("MS_MAX_CONCURRENT_REQ", logging.WARNING),
@@ -146,7 +146,7 @@ class TestVATIN:
 
 
 @pytest.mark.parametrize(
-    "number,expected_number",
+    ("number", "expected_number"),
     [
         ("DK99999999", "DK99 99 99 99"),  # DK
         ("FRXX999999999", "FRXX 999999999"),  # FR

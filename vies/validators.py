@@ -13,7 +13,8 @@ class VATINValidator:
 
     def __init__(self, verify=True, validate=False):
         if not (verify or validate):
-            raise ValueError('"verify" and "validate" can not both be false.')
+            msg = '"verify" and "validate" can not both be false.'
+            raise ValueError(msg)
         self.verify = verify
         self.validate = validate
 
