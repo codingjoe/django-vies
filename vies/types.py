@@ -99,11 +99,11 @@ class VATIN:
         except Fault as e:
             match e.message:
                 case "GLOBAL_MAX_CONCURRENT_REQ" | "MS_MAX_CONCURRENT_REQ":
-                    logger.warning("Rate limited by VIES: %r", e, exc_info=True)
+                    logger.warning("Rate limited by VIES", exc_info=True)
                 case "MS_UNAVAILABLE" | "SERVICE_UNAVAILABLE":
-                    logger.warning("VIES service unavailable: %r", e, exc_info=True)
+                    logger.warning("VIES service unavailable", exc_info=True)
                 case "TIMEOUT":
-                    logger.error("VIES request timed out: %r", e, exc_info=True)
+                    logger.error("VIES request timed out", exc_info=True)
                 case _:
                     logger.exception("Unexpected error")
                     raise

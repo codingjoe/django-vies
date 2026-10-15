@@ -93,18 +93,18 @@ class TestVATIN:
         mock_check_vat.assert_called_with(VALID_VIES_COUNTRY_CODE, VALID_VIES_NUMBER)
 
     @pytest.mark.parametrize(
-        ("fault_message", "expected_level"),
+        ("fault_message", "expected_level", "expected_message"),
         [
-            ("GLOBAL_MAX_CONCURRENT_REQ", logging.WARNING),
-            ("MS_MAX_CONCURRENT_REQ", logging.WARNING),
-            ("MS_UNAVAILABLE", logging.WARNING),
-            ("SERVICE_UNAVAILABLE", logging.WARNING),
-            ("TIMEOUT", logging.ERROR),
+            ("GLOBAL_MAX_CONCURRENT_REQ", logging.WARNING, "Rate limited by VIES"),
+            ("MS_MAX_CONCURRENT_REQ", logging.WARNING, "Rate limited by VIES"),
+            ("MS_UNAVAILABLE", logging.WARNING, "VIES service unavailable"),
+            ("SERVICE_UNAVAILABLE", logging.WARNING, "VIES service unavailable"),
+            ("TIMEOUT", logging.ERROR, "VIES request timed out"),
         ],
     )
     @patch("vies.types.Client")
     def test_transient_zeep_fault_is_validation_error(
-        self, mock_client, caplog, fault_message, expected_level
+        self, mock_client, caplog, fault_message, expected_level, expected_message
     ):
         """Expose temporary VIES faults as field-level validation errors."""
         mock_check_vat = mock_client.return_value.service.checkVat
@@ -124,8 +124,8 @@ class TestVATIN:
 
         record = caplog.records[-1]
         assert record.levelno == expected_level
-        assert fault_message in record.getMessage()
-        assert record.exc_info is not None
+        assert record.getMessage() == expected_message
+        assert record.exc_info[1].message == fault_message
 
     @patch("vies.types.Client")
     def test_unknown_zeep_fault_is_raised(self, mock_client, caplog):
