@@ -37,7 +37,7 @@ jobs:
       - uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
-      - run: uv run --with django~=${{ matrix.django-version }}.0 pytest --cov=vies --cov-report=xml
+      - run: uv run --with=pytest-github-actions-annotate-failures --with django~=${{ matrix.django-version }}.0 pytest --cov=vies --cov-report=xml
       - uses: codecov/codecov-action@v7
         with:
           use_oidc: true
